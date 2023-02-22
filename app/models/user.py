@@ -14,6 +14,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
+    goals = db.relationship("Goal", back_populates="user", cascade="all, delete")
+    tasks = db.relationship("Task", back_populates="user", cascade="all, delete")
+
     @property
     def password(self):
         return self.hashed_password
@@ -29,5 +32,7 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            "goals": {goal.id:goal.to_dict() for goal in self.goals},
+            "tasks": {task.id:task.to_dict() for task in self.tasks}
         }
