@@ -31,8 +31,6 @@ const deleteTask = (taskId) => ({
   payload: taskId,
 });
 
-const initialState = { user: null };
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export const getTasksThunk = () => async (dispatch) => {
@@ -43,10 +41,10 @@ export const getTasksThunk = () => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await response.json();
+    const data = await res.json();
     dispatch(getTasks(data));
   } else {
-    const data = await response.json();
+    const data = await res.json();
     if (data.errors) return res;
   }
 };
@@ -59,10 +57,10 @@ export const getTaskThunk = (taskId) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await response.json();
+    const data = await res.json();
     dispatch(getTask(data));
   } else {
-    const data = await response.json();
+    const data = await res.json();
     if (data.errors) return res;
   }
 };
@@ -77,10 +75,10 @@ export const editTaskThunk = (task, taskId) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await response.json();
+    const data = await res.json();
     dispatch(editTask(data));
   } else {
-    const data = await response.json();
+    const data = await res.json();
     if (data.errors) return res;
   }
 };
@@ -91,15 +89,15 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await response.json();
+    const data = await res.json();
     dispatch(deleteTask(data));
   } else {
-    const data = await response.json();
+    const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-initialState = {
+const initialState = {
   allTasks: {},
   task: {},
 };
@@ -112,7 +110,7 @@ export default function reducer(state = initialState, action) {
       return { ...state, task: action.payload };
     case EDIT_TASK: {
       const editedTask = action.payload;
-      newState = { ...state };
+      const newState = { ...state };
       newState.allTasks = { ...newState.allTasks };
       newState.allTasks[editedTask.id] = {
         ...state.allTasks[editedTask.id],
@@ -124,13 +122,13 @@ export default function reducer(state = initialState, action) {
     }
     case DELETE_TASK: {
       const taskId = action.payload;
-      newState = { ...state };
+      const newState = { ...state };
       newState.allTasks = { ...newState.allTasks };
-      newState.allTasks[editedTask.id] = {
-        ...state.allTasks[editedTask.id],
+      newState.allTasks[taskId] = {
+        ...state.allTasks[taskId],
       };
 
-      delete newState.allTasks[editedTask.id];
+      delete newState.allTasks[taskId];
       newState.singleTask = {};
       return newState;
     }
