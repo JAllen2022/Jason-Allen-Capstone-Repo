@@ -21,16 +21,12 @@ class Task(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
 
     children=db.relationship("Task", backref=db.backref('parent', remote_side=[id]))
-    goals = db.relationship("Goal", secondary=goal_tasks, back_populates="goals")
+    goals = db.relationship("Goal", secondary=goal_tasks, back_populates="tasks")
     tags = db.relationship("Tag", secondary=tag_tasks, back_populates="tasks")
 
     user = db.relationship("User", back_populates="tasks")
     notes= db.relationship("Note", back_populates="task", cascade="all, delete")
 
-
-    def __init__(self, name, parent=None):
-        self.name = name
-        self.parent = parent
 
     def to_dict(self):
         return {
