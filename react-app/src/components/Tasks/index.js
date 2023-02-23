@@ -7,7 +7,6 @@ import "./Tasks.css";
 export default function Tasks({ tab }) {
   const dispatch = useDispatch();
   const allTasks = useSelector((state) => state.tasks.allTasks);
-  console.log("checking taskls", Object.values(allTasks));
 
   useEffect(() => {
     dispatch(getTasksThunk());

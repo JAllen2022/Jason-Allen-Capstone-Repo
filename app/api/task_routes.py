@@ -13,6 +13,13 @@ def tasks():
     Query for all tasks and returns them in a dictionary of task dictionaries key value pairs
     """
     tasks = Task.query.all()
+    # tasks = Task.query.order_by(Task.completed.desc()).all()
+
+    # print("checking tasks", [task.id for task in tasks])
+    # print("checking tasks unordered", [task.id for task in task_unordered])
+
+    # print("checking this", {task.id:task.to_dict() for task in tasks})
+
     return {'tasks': {task.id:task.to_dict() for task in tasks}}
 
 

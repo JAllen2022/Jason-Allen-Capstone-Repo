@@ -125,7 +125,7 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 };
 
 const initialState = {
-  allTasks: {},
+  allTasks: [],
   task: {},
 };
 

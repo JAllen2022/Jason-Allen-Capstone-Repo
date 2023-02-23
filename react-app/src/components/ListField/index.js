@@ -9,12 +9,14 @@ export default function ListField({ tab, taskBool, incommingList }) {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
-  console.log("checking tab", tab);
+  console.log("checking tab", incommingList);
 
   let listToDisplay;
   if (tab === "all") {
-    listToDisplay = incommingList;
-    
+    listToDisplay = incommingList.sort((x, y) => {
+      if (x.completed) return 1;
+      else return -1;
+    });
   } else if (tab === "complete")
     listToDisplay = incommingList.filter((ele) => ele.completed);
   else if (tab === "incomplete")
