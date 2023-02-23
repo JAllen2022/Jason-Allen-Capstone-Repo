@@ -1,0 +1,93 @@
+.list-container-div {
+  border: 1px solid gray;
+  width: 25rem;
+  height: 35rem;
+  border-radius: 5px;
+}
+
+.list-header-tab-organizer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dotted gray;
+}
+
+.list-tab-heading {
+  cursor: pointer;
+  padding: 0 1rem;
+}
+
+.list-tab-cog {
+  padding: 0 1rem;
+  cursor: pointer;
+}
+
+.list-input-field-container {
+  box-sizing: border-box;
+  padding: 15px 5px;
+  border-bottom: 1px dotted gray;
+}
+
+.list-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.list-create-list-item-input-field {
+  width: 95%;
+}
+
+.list-view-section {
+  /* border: 2px solid red; */
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 28rem;
+}
+
+.list-item-container {
+  border-bottom: 1px dotted gray;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.inner-list-item-text-container {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  position: relative;
+  width: 92%;
+  /* border: 1px solid red; */
+}
+
+.tag-color {
+  border-left: 2px solid orange;
+}
+
+.inner-list-item-text {
+  /* border: 1px solid red; */
+  width: 100%;
+}
+
+.inner-list-edit-buttons-container {
+  /* border: 1px solid red; */
+  position: absolute;
+  top: -0rem;
+  right: -0rem;
+}
+
+.inner-list-open-modal-button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.edit {
+  opacity: 0;
+}
+
+.list-item-container:hover .edit {
+  opacity: 1;
+}

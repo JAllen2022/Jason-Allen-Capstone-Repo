@@ -8,3 +8,8 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+.body-container-nav-right {
+  padding-left: 1rem;
+  width: 100%;
+}

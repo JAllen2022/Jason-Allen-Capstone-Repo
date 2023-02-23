@@ -42,7 +42,7 @@ export const getTasksThunk = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getTasks(data));
+    dispatch(getTasks(data.tasks));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -65,9 +65,29 @@ export const getTaskThunk = (taskId) => async (dispatch) => {
   }
 };
 
+export const addTaskThunk = (task) => async (dispatch) => {
+  console.log("right before dispatch", task);
+  const res = await fetch(`/api/tasks`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+
+  console.log("right after dispatch");
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(addTask(data));
+    console.log("we are checking the data", data);
+  } else {
+    const data = await res.json();
+    if (data.errors) return res;
+  }
+};
+
 export const editTaskThunk = (task, taskId) => async (dispatch) => {
   const res = await fetch(`/api/tasks/${taskId}`, {
-    method: "POST",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
@@ -89,8 +109,7 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await res.json();
-    dispatch(deleteTask(data));
+    dispatch(deleteTask(taskId));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -108,6 +127,12 @@ export default function reducer(state = initialState, action) {
       return { ...state, allTasks: action.payload };
     case GET_TASK:
       return { ...state, task: action.payload };
+    case ADD_TASK: {
+      const newState = { ...state };
+      newState.allTasks = { ...state.allTasks };
+      newState.allTasks[action.payload.id] = action.payload;
+      return newState;
+    }
     case EDIT_TASK: {
       const editedTask = action.payload;
       const newState = { ...state };
