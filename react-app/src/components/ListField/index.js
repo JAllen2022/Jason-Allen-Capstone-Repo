@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import ListItem from "./ListItem";
 import "./ListField.css";
 import { useDispatch } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
 
-export default function ListField({ taskBool, incommingList }) {
+export default function ListField({ tab, taskBool, incommingList }) {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
-  const filteredComplete = incommingList.filter((ele) => ele.complete);
-  const filteredNotComplete = incommingList.filter((ele) => !ele.complete);
+  console.log("checking tab", tab);
+
+  let listToDisplay;
+  if (tab === "all") listToDisplay = incommingList;
+  else if (tab === "complete")
+    listToDisplay = incommingList.filter((ele) => ele.completed);
+  else if (tab === "incomplete")
+    listToDisplay = incommingList.filter((ele) => !ele.completed);
+
+  console.log("checking list to display", listToDisplay);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,16 +43,16 @@ export default function ListField({ taskBool, incommingList }) {
     setTitle("");
   };
 
-  // Minimum number of list items on the page is 12
+  // Minimum number of list items on the page set to a constant
   let displayList;
-  const defaultListHeight = 18;
+  const defaultListHeight = 17;
 
-  if (incommingList) {
-    displayList = incommingList.map((item) => (
+  if (listToDisplay) {
+    displayList = listToDisplay.map((item) => (
       <ListItem key={item.id} item={item} />
     ));
 
-    if (displayList.length < 12) {
+    if (displayList.length < defaultListHeight) {
       for (let i = displayList.length; i < defaultListHeight; i++) {
         displayList.push(<ListItem empty={true} />);
       }
@@ -54,9 +63,15 @@ export default function ListField({ taskBool, incommingList }) {
   return (
     <div className="list-container-div">
       <div className="list-header-tab-organizer">
-        <div className="list-tab-heading">All Tasks</div>
-        <div className="list-tab-heading">Incomplete</div>
-        <div className="list-tab-heading">Completed</div>
+        <NavLink className="list-tab-heading" to="/tasks/all">
+          All Tasks
+        </NavLink>
+        <NavLink className="list-tab-heading" to="/tasks/incomplete">
+          Incomplete
+        </NavLink>
+        <NavLink className="list-tab-heading" to="/tasks/complete">
+          Completed
+        </NavLink>
         <div className="list-tab-cog">
           <i class="fa-solid fa-gear"></i>
         </div>

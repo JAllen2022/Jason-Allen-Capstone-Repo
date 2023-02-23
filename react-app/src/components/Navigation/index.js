@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
       <NavLink className="nav-bar-nav-link" exact to="/">
         <i class="fa-solid fa-house-chimney"></i>
       </NavLink>
-      <NavLink className="nav-bar-nav-link" exact to="/tasks">
+      <NavLink className="nav-bar-nav-link" exact to="/tasks/all">
         <i class="fa-solid fa-list-check"></i>
       </NavLink>
     </div>

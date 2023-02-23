@@ -32,8 +32,14 @@ function App() {
             <Route path="/signup">
               <SignupFormPage />
             </Route>
-            <Route path="/tasks">
-              <Tasks />
+            <Route path="/tasks/all">
+              <Tasks tab="all" />
+            </Route>
+            <Route path="/tasks/incomplete">
+              <Tasks tab="incomplete" />
+            </Route>
+            <Route path="/tasks/complete">
+              <Tasks tab="complete" />
             </Route>
           </Switch>
         )}

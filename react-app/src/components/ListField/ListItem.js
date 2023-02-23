@@ -28,5 +28,8 @@ export default function ListItem({ item, empty }) {
         </div>
       </div>
     );
-  return <div className="list-item-container"> {innerDiv}</div>;
+
+  let containerStyling = "list-item-container";
+  if (!empty) containerStyling += " add-pointer";
+  return <div className={containerStyling}> {innerDiv}</div>;
 }
