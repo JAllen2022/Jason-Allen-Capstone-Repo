@@ -94,6 +94,14 @@
   position: absolute;
   top: -0rem;
   right: -0rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.list-edit-button-checkbox-form {
+  padding-right: 0.4rem;
 }
 
 .inner-list-open-modal-button {

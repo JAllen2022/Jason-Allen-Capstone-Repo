@@ -53,7 +53,7 @@ export default function ListField({ tab, taskBool, incommingList }) {
 
   if (listToDisplay) {
     displayList = listToDisplay.map((item) => (
-      <ListItem key={item.id} item={item} />
+      <ListItem key={item.id} item={item} taskBool={taskBool} />
     ));
 
     if (displayList.length < defaultListHeight) {
