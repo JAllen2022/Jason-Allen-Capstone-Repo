@@ -86,6 +86,8 @@ export const addTaskThunk = (task) => async (dispatch) => {
 };
 
 export const editTaskThunk = (task, taskId) => async (dispatch) => {
+  console.log("we here 1");
+
   const res = await fetch(`/api/tasks/${taskId}`, {
     method: "PUT",
     headers: {
@@ -93,12 +95,18 @@ export const editTaskThunk = (task, taskId) => async (dispatch) => {
     },
     body: JSON.stringify(task),
   });
+  console.log("we here 2", res);
 
   if (res.ok) {
+    console.log("we here 3");
+
     const data = await res.json();
     dispatch(editTask(data));
   } else {
+    console.log("we here 4");
+
     const data = await res.json();
+    console.log("what are errors", data);
     if (data.errors) return res;
   }
 };

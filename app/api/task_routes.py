@@ -64,21 +64,23 @@ def edit_task(id):
     if not task:
         return {"errors":"Task not found"}, 404
 
-    if not current_user.id == task.id:
+    if not current_user.id == task.user_id:
         return {"errors":"User cannot authorized to edit task"}, 400
 
     form= TaskForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        task.name=form.data["name"],
-        task.description=form.data["description"],
-        task.priority=form.data["priority"],
-        task.task_duration=form.data["task_duration"],
-        task.due_date=form.data["due_date"],
-        task.recurring_frequency=form.data["recurring_frequency"],
-        task.recurring_date=form.data["recurring_date"],
+        task.name=form.data["name"]
+        task.description=form.data["description"]
+        task.priority=form.data["priority"]
+        task.task_duration=form.data["task_duration"]
+        task.due_date=form.data["due_date"]
+        task.assign_date=form.data["assign_date"]
+        task.recurring_frequency=form.data["recurring_frequency"]
+        task.recurring_date=form.data["recurring_date"]
         task.completed=form.data["completed"]
+
         # Need to be able to add relationships once we have the other features added
         # task.goals.apppend=form.data["goals"]
         # task.notes.apppend=form.data["notes"]

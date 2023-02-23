@@ -12,8 +12,10 @@ export default function ListField({ tab, taskBool, incommingList }) {
   console.log("checking tab", tab);
 
   let listToDisplay;
-  if (tab === "all") listToDisplay = incommingList;
-  else if (tab === "complete")
+  if (tab === "all") {
+    listToDisplay = incommingList;
+    
+  } else if (tab === "complete")
     listToDisplay = incommingList.filter((ele) => ele.completed);
   else if (tab === "incomplete")
     listToDisplay = incommingList.filter((ele) => !ele.completed);

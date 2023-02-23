@@ -1,35 +1,66 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTasksThunk } from "../../../store/tasks";
+import { getTasksThunk, editTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 
 import "./EditListField.css";
-export default function EditListField() {
-  const singleTask = useSelector((state) => state.tasks.task);
+export default function EditListField({ item }) {
   const dispatch = useDispatch();
-  const [name, setName] = useState(singleTask.name || "");
-  const [description, setDescription] = useState(singleTask.description || "");
-  const [priority, setPriority] = useState(singleTask.priority || "");
-  const [taskDuration, setTaskDuration] = useState(
-    singleTask.task_duration || ""
-  );
-  const [dueDate, setDueDate] = useState(singleTask.due_date || "");
+  const [name, setName] = useState(item.name || "");
+  const [description, setDescription] = useState(item.description || "");
+  const [priority, setPriority] = useState(item.priority || "");
+  const [taskDuration, setTaskDuration] = useState(item.task_duration || "");
+  const [dueDate, setDueDate] = useState(item.due_date || "");
   const [recurringFrequency, setRecurringFrequency] = useState(
-    singleTask.recurring_frequency || ""
+    item.recurring_frequency || ""
   );
-  const [recurringDate, setRecurringDate] = useState(
-    singleTask.recurring_date || ""
-  );
-  const [completed, setCompleted] = useState(singleTask.completed || "");
-
+  const [recurringDate, setRecurringDate] = useState(item.recurring_date || "");
+  const [assignDate, setAssignDate] = useState(item.assign_date || "");
+  const [completed, setCompleted] = useState(item.completed || false);
+  console.log("checking completed", completed);
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let editItem = {
+      ...item,
+      name,
+      description,
+      priority,
+      task_duration: taskDuration,
+      assign_date: assignDate,
+      due_date: dueDate,
+      recurring_frequency: recurringFrequency,
+      recurring_date: recurringDate,
+      completed: completed ? true : false,
+    };
+
+    console.log("checking edit itm", editItem);
+    const res = dispatch(editTaskThunk(editItem, item.id));
+
+    closeModal();
   };
 
   const { closeModal } = useModal();
   useEffect(() => {
     dispatch(getTasksThunk);
   }, [dispatch]);
+
+  const durationOptions = [
+    <option value={null}>None</option>,
+    <option value="15">15 minutes</option>,
+    <option value="30">30 minutes</option>,
+    <option value="45">45 minutes</option>,
+  ];
+  for (let i = 1; i < 5; i++) {
+    for (let j = 0; j <= 45; j += 15) {
+      const value = i * 60 + j;
+      durationOptions.push(
+        <option value={`${value}`}>
+          {i} hours, {j} minutes
+        </option>
+      );
+    }
+  }
 
   return (
     <>
@@ -44,7 +75,7 @@ export default function EditListField() {
             // className="song-input-field"
             required
             name="name"
-            minLength="4"
+            minLength="1"
             maxLength="20"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -58,7 +89,6 @@ export default function EditListField() {
           <textarea
             className=""
             // className="song-input-field"
-            required
             name="description"
             maxlength="500"
             value={description}
@@ -92,11 +122,7 @@ export default function EditListField() {
             value={taskDuration}
             onChange={(e) => setTaskDuration(e.target.value)}
           >
-            <option value={null}>None</option>
-            <option value="15">15 minutes</option>
-            <option value="30">30 minutes</option>
-            <option value="45">45 minutes</option>
-            <option value="60">1 hour</option>
+            {durationOptions}
           </select>
         </div>
         <div className="">
@@ -118,17 +144,53 @@ export default function EditListField() {
         </div>
 
         <div>
+          <label htmlFor="start-date" className="">
+            Assign Date
+          </label>
+          <input
+            className=""
+            name="start-date"
+            type="datetime-local"
+            value={assignDate}
+            onChange={(e) => setAssignDate(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label htmlFor="due-date" className="">
+            Due Date
+          </label>
+          <input
+            className=""
+            name="due-date"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+          ></input>
+        </div>
+        <div>
+          <label htmlFor="recurring-date" className="">
+            Recurring Date Start
+          </label>
+          <input
+            className=""
+            name="recurring"
+            type="datetime-local"
+            value={recurringDate}
+            onChange={(e) => setRecurringDate(e.target.value)}
+          ></input>
+        </div>
+
+        <div>
           <label htmlFor="completed" className="">
             Completed?
           </label>
           <input
             className=""
             // className="song-input-field"
-            required
             name="completed"
-            value={completed}
+            checked={completed}
             type="checkbox"
-            onChange={(e) => setCompleted(e.target.value)}
+            onChange={() => setCompleted((prev) => !prev)}
           />
         </div>
 

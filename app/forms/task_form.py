@@ -9,6 +9,7 @@ class TaskForm(FlaskForm):
     priority = StringField("Priority")
     task_duration = StringField("Task duration")
     due_date=StringField("Due date")
+    assign_date=StringField("Due date")
     recurring_frequency=StringField("Recurring frequency")
     recurring_date=StringField("Recurring date")
     completed=BooleanField("Completed", default=False)

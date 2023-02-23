@@ -31,5 +31,6 @@ export default function ListItem({ item, empty }) {
 
   let containerStyling = "list-item-container";
   if (!empty) containerStyling += " add-pointer";
+  if (item?.completed) containerStyling += " list-item-strike-through";
   return <div className={containerStyling}> {innerDiv}</div>;
 }

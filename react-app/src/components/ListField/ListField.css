@@ -68,6 +68,10 @@
   cursor: pointer;
 }
 
+.list-item-strike-through {
+  text-decoration: line-through;
+}
+
 .inner-list-item-text-container {
   margin-left: 0.5rem;
   padding-left: 0.5rem;
