@@ -30,7 +30,9 @@ def task(id):
     Query for a task by id and returns that task in a dictionary
     """
     task = Task.query.get(id)
-    return task.to_dict_detailed()
+    task_dict= task.to_dict()
+    task_dict["sub_tasks"] = {task.id:task.to_dict() for task in task.children}
+    return task_dict
 
 
 @task_routes.route('', methods=["POST"])

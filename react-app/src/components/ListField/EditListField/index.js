@@ -35,7 +35,6 @@ export default function EditListField({ itemId }) {
   }, [singleTask]);
 
   // Formatting time constraints for google doc form
-  const currDay = new Date().toISOString().split("T")[0];
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth() + 1;

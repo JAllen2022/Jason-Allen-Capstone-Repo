@@ -129,33 +129,85 @@ export default function reducer(state = initialState, action) {
     case GET_TASK:
       return { ...state, singleTask: action.payload };
     case ADD_TASK: {
-      const newState = { ...state };
-      newState.allTasks = { ...state.allTasks };
-      newState.allTasks[action.payload.id] = action.payload;
-      return newState;
-    }
-    case EDIT_TASK: {
-      const editedTask = action.payload;
-      const newState = { ...state };
-      newState.allTasks = { ...newState.allTasks };
-      newState.allTasks[editedTask.id] = {
-        ...state.allTasks[editedTask.id],
-        ...editedTask,
+      // Refactored
+      const { id } = action.payload;
+      const newState = {
+        ...state,
+        allTasks: {
+          ...state.allTasks,
+          [id]: action.payload,
+        },
       };
 
-      newState.singleTask = { ...state.singleTask, ...editedTask };
+      if (state.singleTask.id) {
+        newState.singleTask = {
+          ...state.singleTask,
+          sub_tasks: { ...state.singleTask.sub_tasks, [id]: action.payload },
+        };
+      }
       return newState;
+      // Old Code
+      // const newState = { ...state };
+      // newState.allTasks = { ...state.allTasks };
+      // newState.allTasks[action.payload.id] = action.payload;
+
+      // newState.singleTask = { ...state.singleTask };
+      // if (state.singleTask.id) {
+      //   newState.singleTask.sub_tasks = { ...state.singleTask.sub_tasks };
+      //   newState.singleTask.sub_tasks[action.payload.id] = action.payload;
+      // }
+      // return newState;
+    }
+    case EDIT_TASK: {
+      // Refactored
+      const editedTask = action.payload;
+      const { id } = editedTask;
+      const newState = {
+        ...state,
+        allTasks: {
+          ...state.allTasks,
+          [id]: {
+            ...state.allTasks[id],
+            ...editedTask,
+          },
+        },
+        singleTask: {
+          ...state.singleTask,
+          ...editedTask,
+          sub_tasks: editedTask.sub_tasks || state.singleTask.sub_tasks,
+        },
+      };
+
+      return newState;
+      //   const editedTask = action.payload;
+      //   const newState = { ...state };
+      //   newState.allTasks = { ...newState.allTasks };
+      //   newState.allTasks[editedTask.id] = {
+      //     ...state.allTasks[editedTask.id],
+      //     ...editedTask,
+      //   };
+
+      //   newState.singleTask = { ...state.singleTask, ...editedTask };
+      //   newState.singleTask.sub_tasks = { ...editedTask.sub_tasks };
+      //   return newState;
     }
     case DELETE_TASK: {
       const taskId = action.payload;
-      const newState = { ...state };
-      newState.allTasks = { ...newState.allTasks };
-      newState.allTasks[taskId] = {
-        ...state.allTasks[taskId],
+      const { allTasks, singleTask } = state;
+      const newState = {
+        allTasks: { ...allTasks },
+        singleTask: { ...singleTask },
       };
 
       delete newState.allTasks[taskId];
-      newState.singleTask = {};
+
+      if (singleTask.id === taskId) {
+        newState.singleTask = {};
+      } else if (singleTask.id && singleTask.sub_tasks[taskId]) {
+        newState.singleTask.sub_tasks = { ...singleTask.sub_tasks };
+        delete newState.singleTask.sub_tasks[taskId];
+      }
+
       return newState;
     }
     default:

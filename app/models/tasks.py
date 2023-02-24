@@ -45,21 +45,3 @@ class Task(db.Model):
             "completed":self.completed,
             "parent_id":self.parent_id
         }
-
-    def to_dict_detailed(self):
-        print("checking children", self.children, self.parent_id)
-        return {
-            "id":self.id,
-            "user_id":self.user_id,
-            "name": self.name,
-            "description":self.description,
-            "priority":self.priority,
-            "task_duration":self.task_duration,
-            "assign_date":self.assign_date,
-            "due_date": self.due_date,
-            "recurring_frequency":self.recurring_frequency,
-            "recurring_date":self.recurring_date,
-            "completed":self.completed,
-            "parent_id":self.parent_id,
-            "sub_tasks": {task.id:task for task in self.children}
-        }
