@@ -12,9 +12,16 @@ def goals():
     """
     Query for all goals and returns them in a dictionary of goal dictionaries key value pairs
     """
-    goals = Goal.query.all()
+    yearly_goals = Goal.query.filter(Goal.time_frame == "year").all()
+    monthly_goals = Goal.query.filter(Goal.time_frame == "month").all()
+    weekly_goals = Goal.query.filter(Goal.time_frame == "week").all()
+    other_goals = Goal.query.filter(Goal.time_frame == "other").all()
 
-    return {'goals': {goal.id:goal.to_dict() for goal in goals}}
+    return {'year': {goal.id:goal.to_dict() for goal in yearly_goals},
+            'month': {goal.id:goal.to_dict() for goal in monthly_goals},
+            'week': {goal.id:goal.to_dict() for goal in weekly_goals},
+            'other':{goal.id:goal.to_dict() for goal in other_goals}
+            }
 
 
 @goal_routes.route('/<int:id>')

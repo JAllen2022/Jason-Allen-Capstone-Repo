@@ -42,7 +42,7 @@ export const getGoalsThunk = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getGoals(data.goals));
+    dispatch(getGoals(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -116,12 +116,14 @@ const initialState = {
   year: {},
   month: {},
   week: {},
+  singleGoal: {},
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_GOALS:
-      return { ...state, allTasks: action.payload };
+      const { year, month, week, other } = action.payload.goals;
+      return { ...state, year, month, week, other };
     case GET_GOAL:
       return { ...state, singleTask: action.payload };
     case ADD_GOAL: {
