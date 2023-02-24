@@ -1,19 +1,27 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTaskThunk, editTaskThunk } from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
 import EditListField from "./EditListField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";
 
 export default function ListItem({ item, empty, taskBool }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
+  const currTask = useSelector((state) => state.tasks.singleTask);
   const [completed, setCompleted] = useState(item?.completed || false);
 
-  const deleteClick = () => {
-    dispatch(deleteTaskThunk);
-  };
+  // Eventually - need to cut down on the re-renders here when checkbox is checked
+  // Many re-renders occuring here if we console.log here
+  // console.log("checking currtask", currTask);
+  useEffect(() => {
+    if (item && currTask.id === item.id) {
+      if (currTask.completed !== completed) {
+        setCompleted(currTask.completed);
+      }
+    }
+  }, [currTask]);
 
   // Handle check box click on the right side of the container to mark something complete
   const handleSubmit = (e) => {
@@ -33,7 +41,7 @@ export default function ListItem({ item, empty, taskBool }) {
 
   // Modal functionality
   const onClick = () => {
-    setModalContent(<EditListField item={item} />);
+    setModalContent(<EditListField itemId={item.id} />);
   };
 
   let innerDiv;

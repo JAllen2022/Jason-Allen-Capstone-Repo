@@ -86,8 +86,6 @@ export const addTaskThunk = (task) => async (dispatch) => {
 };
 
 export const editTaskThunk = (task, taskId) => async (dispatch) => {
-  console.log("we here 1");
-
   const res = await fetch(`/api/tasks/${taskId}`, {
     method: "PUT",
     headers: {
@@ -95,16 +93,11 @@ export const editTaskThunk = (task, taskId) => async (dispatch) => {
     },
     body: JSON.stringify(task),
   });
-  console.log("we here 2", res);
 
   if (res.ok) {
-    console.log("we here 3");
-
     const data = await res.json();
     dispatch(editTask(data));
   } else {
-    console.log("we here 4");
-
     const data = await res.json();
     console.log("what are errors", data);
     if (data.errors) return res;
@@ -125,8 +118,8 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 };
 
 const initialState = {
-  allTasks: [],
-  task: {},
+  allTasks: {},
+  singleTask: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -134,7 +127,7 @@ export default function reducer(state = initialState, action) {
     case GET_TASKS:
       return { ...state, allTasks: action.payload };
     case GET_TASK:
-      return { ...state, task: action.payload };
+      return { ...state, singleTask: action.payload };
     case ADD_TASK: {
       const newState = { ...state };
       newState.allTasks = { ...state.allTasks };

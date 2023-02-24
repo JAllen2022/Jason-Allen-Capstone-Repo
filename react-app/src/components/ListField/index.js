@@ -9,8 +9,6 @@ export default function ListField({ tab, taskBool, incommingList }) {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
-  console.log("checking tab", incommingList);
-
   let listToDisplay;
   if (tab === "all") {
     listToDisplay = incommingList.sort((x, y) => {
@@ -21,8 +19,6 @@ export default function ListField({ tab, taskBool, incommingList }) {
     listToDisplay = incommingList.filter((ele) => ele.completed);
   else if (tab === "incomplete")
     listToDisplay = incommingList.filter((ele) => !ele.completed);
-
-  console.log("checking list to display", listToDisplay);
 
   const handleSubmit = (e) => {
     e.preventDefault();

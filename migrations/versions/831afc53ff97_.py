@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6a7aa32ee34d
+Revision ID: 831afc53ff97
 Revises: 
-Create Date: 2023-02-22 20:40:49.115724
+Create Date: 2023-02-23 15:54:14.154736
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6a7aa32ee34d'
+revision = '831afc53ff97'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,7 +36,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('description', sa.Text(), nullable=True),
     sa.Column('start_date', sa.String(length=30), nullable=True),
     sa.Column('end_date', sa.String(length=30), nullable=True),
     sa.Column('accomplished', sa.Boolean(), nullable=True),
@@ -50,7 +50,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('description', sa.Text(), nullable=True),
     sa.Column('priority', sa.String(length=30), nullable=True),
     sa.Column('task_duration', sa.String(length=30), nullable=True),
     sa.Column('assign_date', sa.String(length=30), nullable=True),
@@ -73,7 +73,7 @@ def upgrade():
     op.create_table('notes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.Column('body', sa.String(length=500), nullable=True),
+    sa.Column('body', sa.Text(), nullable=True),
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('file_url', sa.String(length=255), nullable=True),
     sa.Column('goal_id', sa.Integer(), nullable=True),

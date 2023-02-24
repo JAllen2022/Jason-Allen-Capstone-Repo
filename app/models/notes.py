@@ -8,7 +8,7 @@ class Note(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String(50), nullable=False)
-    body = db.Column(db.String(500))
+    body = db.Column(db.Text)
     image_url = db.Column(db.String(255))
     file_url = db.Column(db.String(255))
 

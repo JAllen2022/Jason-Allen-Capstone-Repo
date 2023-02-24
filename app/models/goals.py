@@ -11,7 +11,7 @@ class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name= db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(500))
+    description = db.Column(db.Text)
     start_date=db.Column(db.String(30))
     end_date=db.Column(db.String(30))
     accomplished=db.Column(db.Boolean)

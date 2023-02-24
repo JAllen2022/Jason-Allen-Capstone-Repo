@@ -11,7 +11,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     name = db.Column(db.String(50), nullable=False)
-    description = db.Column(db.String(500))
+    description = db.Column(db.Text)
     priority = db.Column(db.String(30))
     task_duration = db.Column(db.String(30))
     assign_date=db.Column(db.String(30))
@@ -22,6 +22,7 @@ class Task(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
 
     children=db.relationship("Task", backref=db.backref('parent', remote_side=[id]))
+
     goals = db.relationship("Goal", secondary=goal_tasks, back_populates="tasks")
     tags = db.relationship("Tag", secondary=tag_tasks, back_populates="tasks")
 
@@ -43,4 +44,22 @@ class Task(db.Model):
             "recurring_date":self.recurring_date,
             "completed":self.completed,
             "parent_id":self.parent_id
+        }
+
+    def to_dict_detailed(self):
+        print("checking children", self.children, self.parent_id)
+        return {
+            "id":self.id,
+            "user_id":self.user_id,
+            "name": self.name,
+            "description":self.description,
+            "priority":self.priority,
+            "task_duration":self.task_duration,
+            "assign_date":self.assign_date,
+            "due_date": self.due_date,
+            "recurring_frequency":self.recurring_frequency,
+            "recurring_date":self.recurring_date,
+            "completed":self.completed,
+            "parent_id":self.parent_id,
+            "sub_tasks": {task.id:task for task in self.children}
         }

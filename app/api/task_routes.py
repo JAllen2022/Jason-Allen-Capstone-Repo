@@ -30,7 +30,7 @@ def task(id):
     Query for a task by id and returns that task in a dictionary
     """
     task = Task.query.get(id)
-    return task.to_dict()
+    return task.to_dict_detailed()
 
 
 @task_routes.route('', methods=["POST"])
@@ -45,10 +45,10 @@ def add_task():
 
 
     if form.validate_on_submit():
-
         task=Task(
             user_id=current_user.id,
             name=form.data["name"],
+            parent_id= form.data["parent_id"] if form.data["parent_id"] else False
         )
 
         db.session.add(task)

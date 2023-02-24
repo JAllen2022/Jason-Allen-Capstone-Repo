@@ -1,28 +1,65 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTasksThunk, editTaskThunk } from "../../../store/tasks";
+import { getTaskThunk, editTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
-
+import CreateSubTask from "./CreateSubTask";
 import "./EditListField.css";
-export default function EditListField({ item }) {
+
+export default function EditListField({ itemId }) {
   const dispatch = useDispatch();
-  const [name, setName] = useState(item.name || "");
-  const [description, setDescription] = useState(item.description || "");
-  const [priority, setPriority] = useState(item.priority || "");
-  const [taskDuration, setTaskDuration] = useState(item.task_duration || "");
-  const [dueDate, setDueDate] = useState(item.due_date || "");
-  const [recurringFrequency, setRecurringFrequency] = useState(
-    item.recurring_frequency || ""
-  );
-  const [recurringDate, setRecurringDate] = useState(item.recurring_date || "");
-  const [assignDate, setAssignDate] = useState(item.assign_date || "");
-  const [completed, setCompleted] = useState(item.completed || false);
-  console.log("checking completed", completed);
+  const { closeModal } = useModal();
+  const singleTask = useSelector((state) => state.tasks.singleTask);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
+  const [taskDuration, setTaskDuration] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [recurringFrequency, setRecurringFrequency] = useState("");
+  const [recurringDate, setRecurringDate] = useState("");
+  const [assignDate, setAssignDate] = useState("");
+  const [completed, setCompleted] = useState(false);
+
+  useEffect(() => {
+    if (singleTask.id) {
+      setName(singleTask.name);
+      setDescription(singleTask.description);
+      setPriority(singleTask.priority);
+      setTaskDuration(singleTask.task_duration);
+      setDueDate(singleTask.due_date);
+      setRecurringFrequency(singleTask.recurring_frequency);
+      setRecurringDate(singleTask.recurring_date);
+      setAssignDate(singleTask.assign_date);
+      setCompleted(singleTask.completed);
+    }
+  }, [singleTask]);
+
+  // Formatting time constraints for google doc form
+  const currDay = new Date().toISOString().split("T")[0];
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const addZero = (num) => (num < 10 ? "0" + num : num);
+  const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
+  const restrictedDateInput =
+    year +
+    "-" +
+    addZero(month) +
+    "-" +
+    addZero(day) +
+    "T" +
+    addZero(hour) +
+    ":" +
+    addZero(minute);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let editItem = {
-      ...item,
+      ...singleTask,
       name,
       description,
       priority,
@@ -34,15 +71,17 @@ export default function EditListField({ item }) {
       completed: completed ? true : false,
     };
 
-    console.log("checking edit itm", editItem);
-    const res = dispatch(editTaskThunk(editItem, item.id));
+    const res = dispatch(editTaskThunk(editItem, singleTask.id));
 
     closeModal();
   };
 
-  const { closeModal } = useModal();
+  const cancelClick = () => {
+    closeModal();
+  };
+
   useEffect(() => {
-    dispatch(getTasksThunk);
+    dispatch(getTaskThunk(itemId));
   }, [dispatch]);
 
   const durationOptions = [
@@ -63,144 +102,190 @@ export default function EditListField({ item }) {
   }
 
   return (
-    <>
-      <h1>Editing list field</h1>
-      <form className="" onSubmit={handleSubmit} type="submit">
-        <div>
-          <label htmlFor="name" className="">
-            Name
-          </label>
-          <input
-            className=""
-            // className="song-input-field"
-            required
-            name="name"
-            minLength="1"
-            maxLength="20"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+    <div className="edit-task-form-container">
+      <h1 className="edit-task-form-container-title">
+        Edit Task: {singleTask.name}
+      </h1>
+      <div className="edit-task-form-body-container">
+        <div className="edit-task-form-left-container">
+          <form className="" onSubmit={handleSubmit} type="submit">
+            <div className="edit-task-form-div-field">
+              <label htmlFor="name" className="edit-task-form-labels">
+                Name <span style={{ color: "red" }}>*</span>
+              </label>
+              <input
+                className=""
+                // className="song-input-field"
+                required
+                name="name"
+                minLength="1"
+                maxLength="20"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
 
-        <div className="">
-          <label htmlFor="description" className="">
-            Description
-          </label>
-          <textarea
-            className=""
-            // className="song-input-field"
-            name="description"
-            maxlength="500"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-        <div className="">
-          <label htmlFor="priority" className="">
-            Priority
-          </label>
-          <select
-            className=""
-            name="priority"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
-            <option value={null}>None</option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-            <option value="c">C</option>
-            <option value="d">D</option>
-          </select>
-        </div>
-        <div className="">
-          <label htmlFor="duration" className="">
-            Task Duration
-          </label>
-          <select
-            className=""
-            name="duration"
-            value={taskDuration}
-            onChange={(e) => setTaskDuration(e.target.value)}
-          >
-            {durationOptions}
-          </select>
-        </div>
-        <div className="">
-          <label htmlFor="recurring-frequency" className="">
-            Recurring Frequency
-          </label>
-          <select
-            className=""
-            name="recurring-frequency"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
-            <option value={null}>None</option>
-            <option value="1">Daily</option>
-            <option value="7">Weekly</option>
-            <option value="30">Monthly</option>
-            <option value="365">Yearly</option>
-          </select>
-        </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="description" className="edit-task-form-labels">
+                Description
+              </label>
+              <textarea
+                className=""
+                // className="song-input-field"
+                name="description"
+                maxlength="500"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="priority" className="edit-task-form-labels">
+                Priority
+              </label>
+              <select
+                className=""
+                name="priority"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+              >
+                <option value={null}>None</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+              </select>
+            </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="add-goal" className="edit-task-form-labels">
+                Add to a goal{" "}
+                <span style={{ color: "red", border: "1px solid red" }}>
+                  {" "}
+                  NOT SET UP YET
+                </span>
+              </label>
+              <select
+                className=""
+                name="add-goal"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+              >
+                <option value={null}>None</option>
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+                <option value="d">D</option>
+              </select>
+            </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="duration" className="edit-task-form-labels">
+                Task Duration
+              </label>
+              <select
+                className=""
+                name="duration"
+                value={taskDuration}
+                onChange={(e) => setTaskDuration(e.target.value)}
+              >
+                {durationOptions}
+              </select>
+            </div>
+            <div className="edit-task-form-div-field">
+              <label
+                htmlFor="recurring-frequency"
+                className="edit-task-form-labels"
+              >
+                Recurring Frequency
+              </label>
+              <select
+                className=""
+                name="recurring-frequency"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+              >
+                <option value={null}>None</option>
+                <option value="1">Daily</option>
+                <option value="7">Weekly</option>
+                <option value="30">Monthly</option>
+                <option value="365">Yearly</option>
+              </select>
+            </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="recurring-date" className="edit-task-form-labels">
+                Recurring Date Start
+              </label>
+              <input
+                className=""
+                name="recurring"
+                type="datetime-local"
+                min={restrictedDateInput}
+                value={recurringDate}
+                onChange={(e) => setRecurringDate(e.target.value)}
+              ></input>
+            </div>
 
-        <div>
-          <label htmlFor="start-date" className="">
-            Assign Date
-          </label>
-          <input
-            className=""
-            name="start-date"
-            type="datetime-local"
-            value={assignDate}
-            onChange={(e) => setAssignDate(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="due-date" className="">
-            Due Date
-          </label>
-          <input
-            className=""
-            name="due-date"
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          <label htmlFor="recurring-date" className="">
-            Recurring Date Start
-          </label>
-          <input
-            className=""
-            name="recurring"
-            type="datetime-local"
-            value={recurringDate}
-            onChange={(e) => setRecurringDate(e.target.value)}
-          ></input>
-        </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="start-date" className="edit-task-form-labels">
+                Assign Date to Complete
+              </label>
+              <input
+                className=""
+                min={restrictedDateInput}
+                name="start-date"
+                type="datetime-local"
+                value={assignDate}
+                onChange={(e) => setAssignDate(e.target.value)}
+              ></input>
+            </div>
+            <div className="edit-task-form-div-field">
+              <label htmlFor="due-date" className="edit-task-form-labels">
+                Due Date
+              </label>
+              <input
+                className=""
+                name="due-date"
+                type="date"
+                min={restrictedDay}
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              ></input>
+            </div>
 
-        <div>
-          <label htmlFor="completed" className="">
-            Completed?
-          </label>
-          <input
-            className=""
-            // className="song-input-field"
-            name="completed"
-            checked={completed}
-            type="checkbox"
-            onChange={() => setCompleted((prev) => !prev)}
-          />
-        </div>
+            <div className="edit-task-check-box-container">
+              <label htmlFor="completed" className="edit-task-form-labels">
+                Completed?
+              </label>
+              <input
+                className=""
+                // className="song-input-field"
+                name="completed"
+                checked={completed}
+                type="checkbox"
+                onChange={() => setCompleted((prev) => !prev)}
+              />
+            </div>
 
-        <div className="up-buttons">
-          <div onClick={() => closeModal()}>Cancel</div>
-          <button id="" className="" type="submit">
-            Save
-          </button>
+            <div className="edit-task-buttons">
+              <div className="cancel-button" onClick={cancelClick}>
+                Cancel
+              </div>
+              <div
+                className="cancel-button"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Save
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </>
+        <div className="edit-task-form-right-container">
+          <div className="edit-task-create-subtasks-container">
+            <h4 className="create-subtask-header">Create a SubTask</h4>
+            <CreateSubTask parentId={singleTask.id} />
+          </div>
+          <div className="edit-task-create-note-container"> Create Note</div>
+        </div>
+      </div>
+    </div>
   );
 }
