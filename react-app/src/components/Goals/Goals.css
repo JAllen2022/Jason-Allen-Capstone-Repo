@@ -1,0 +1,12 @@
+.goals-outer-container {
+  width: 100%;
+  /* border: 1px solid red; */
+}
+
+.goals-inner-container {
+  display: flex;
+}
+
+.goals-container {
+  margin: 0 0.5rem;
+}

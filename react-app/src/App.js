@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Tasks from "./components/Tasks";
+import Goals from "./components/Goals";
 import SplashPage from "./components/SplashPage";
 
 function App() {
@@ -32,14 +33,11 @@ function App() {
             <Route path="/signup">
               <SignupFormPage />
             </Route>
-            <Route path="/tasks/all">
-              <Tasks tab="all" />
+            <Route path="/tasks">
+              <Tasks />
             </Route>
-            <Route path="/tasks/incomplete">
-              <Tasks tab="incomplete" />
-            </Route>
-            <Route path="/tasks/complete">
-              <Tasks tab="complete" />
+            <Route path="/goals">
+              <Goals />
             </Route>
           </Switch>
         )}

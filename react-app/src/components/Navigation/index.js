@@ -17,8 +17,14 @@ function Navigation({ isLoaded }) {
       <NavLink className="nav-bar-nav-link" exact to="/">
         <i class="fa-solid fa-house-chimney"></i>
       </NavLink>
-      <NavLink className="nav-bar-nav-link" exact to="/tasks/all">
+      <NavLink className="nav-bar-nav-link" exact to="/tasks">
         <i class="fa-solid fa-list-check"></i>
+      </NavLink>
+      <NavLink className="nav-bar-nav-link" exact to="/goals">
+        <i class="fa-solid fa-bullseye"></i>
+      </NavLink>
+      <NavLink className="nav-bar-nav-link" exact to="/notes">
+        <i class="fa-solid fa-book-open"></i>
       </NavLink>
     </div>
   );

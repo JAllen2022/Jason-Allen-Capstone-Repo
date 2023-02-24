@@ -5,20 +5,23 @@ import "./ListField.css";
 import { useDispatch } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
 
-export default function ListField({ tab, taskBool, incommingList }) {
+export default function ListField({ taskBool, incommingList }) {
   const [title, setTitle] = useState("");
+  const [tab, setTab] = useState("all");
   const dispatch = useDispatch();
 
   let listToDisplay;
-  if (tab === "all") {
-    listToDisplay = incommingList.sort((x, y) => {
-      if (x.completed) return 1;
-      else return -1;
-    });
-  } else if (tab === "complete")
-    listToDisplay = incommingList.filter((ele) => ele.completed);
-  else if (tab === "incomplete")
-    listToDisplay = incommingList.filter((ele) => !ele.completed);
+  useEffect(() => {
+    if (tab === "all") {
+      listToDisplay = incommingList.sort((x, y) => {
+        if (x.completed) return 1;
+        else return -1;
+      });
+    } else if (tab === "complete")
+      listToDisplay = incommingList.filter((ele) => ele.completed);
+    else if (tab === "incomplete")
+      listToDisplay = incommingList.filter((ele) => !ele.completed);
+  }, [tab]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,20 +61,19 @@ export default function ListField({ tab, taskBool, incommingList }) {
       }
     }
   }
-  // Iterate through task items, if items are less than 12, insert default
 
   return (
     <div className="list-container-div">
       <div className="list-header-tab-organizer">
-        <NavLink className="list-tab-heading" to="/tasks/all">
-          All Tasks
-        </NavLink>
-        <NavLink className="list-tab-heading" to="/tasks/incomplete">
+        <div className="list-tab-heading" onClick={() => setTab("all")}>
+          All {taskBool ? "Tasks" : "Goals"}
+        </div>
+        <div className="list-tab-heading" onClick={() => setTab("incomplete")}>
           Incomplete
-        </NavLink>
-        <NavLink className="list-tab-heading" to="/tasks/complete">
+        </div>
+        <div className="list-tab-heading" onClick={() => setTab("complete")}>
           Completed
-        </NavLink>
+        </div>
         <div className="list-tab-cog">
           <i class="fa-solid fa-gear"></i>
         </div>
