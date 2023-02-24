@@ -1,40 +1,40 @@
 // constants
-const GET_TASKS = "tasks/GET_TASKS";
-const GET_TASK = "tasks/GET_TASK";
-const ADD_TASK = "tasks/ADD_TASK";
-const EDIT_TASK = "tasks/EDIT_TASK";
-const DELETE_TASK = "tasks/DELETE_TASK";
+const GET_GOALS = "goals/GET_GOALS";
+const GET_GOAL = "goals/GET_GOAL";
+const ADD_GOAL = "goals/ADD_GOAL";
+const EDIT_GOAL = "goals/EDIT_GOAL";
+const DELETE_GOAL = "goals/DELETE_GOAL";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const getTasks = (tasks) => ({
-  type: GET_TASKS,
-  payload: tasks,
+const getGoals = (goals) => ({
+  type: GET_GOALS,
+  payload: goals,
 });
 
-const getTask = (task) => ({
-  type: GET_TASK,
-  payload: task,
+const getGoal = (goal) => ({
+  type: GET_GOAL,
+  payload: goal,
 });
 
-const addTask = (task) => ({
-  type: ADD_TASK,
-  payload: task,
+const addGoal = (goal) => ({
+  type: ADD_GOAL,
+  payload: goal,
 });
 
-const editTask = (task) => ({
-  type: EDIT_TASK,
-  payload: task,
+const editGoal = (goal) => ({
+  type: EDIT_GOAL,
+  payload: goal,
 });
 
-const deleteTask = (taskId) => ({
-  type: DELETE_TASK,
-  payload: taskId,
+const deleteGoal = (goalId) => ({
+  type: DELETE_GOAL,
+  payload: goalId,
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export const getTasksThunk = () => async (dispatch) => {
-  const res = await fetch("/api/tasks/", {
+export const getGoalsThunk = () => async (dispatch) => {
+  const res = await fetch("/api/goals/", {
     headers: {
       "Content-Type": "application/json",
     },
@@ -42,15 +42,15 @@ export const getTasksThunk = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getTasks(data.tasks));
+    dispatch(getGoals(data.goals));
   } else {
     const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-export const getTaskThunk = (taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}`, {
+export const getGoalThunk = (goalId) => async (dispatch) => {
+  const res = await fetch(`/api/goals/${goalId}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -58,54 +58,54 @@ export const getTaskThunk = (taskId) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(getTask(data));
+    dispatch(getGoal(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-export const addTaskThunk = (task) => async (dispatch) => {
-  const res = await fetch(`/api/tasks`, {
+export const addGoalThunk = (goal) => async (dispatch) => {
+  const res = await fetch(`/api/goals`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
+    body: JSON.stringify(goal),
   });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(addTask(data));
+    dispatch(addGoal(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-export const editTaskThunk = (task, taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}`, {
+export const editGoalThunk = (goal, goalId) => async (dispatch) => {
+  const res = await fetch(`/api/goals/${goalId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(task),
+    body: JSON.stringify(goal),
   });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(editTask(data));
+    dispatch(editGoal(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-export const deleteTaskThunk = (taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}`, {
+export const deleteGoalThunk = (goalId) => async (dispatch) => {
+  const res = await fetch(`/api/goals/${goalId}`, {
     method: "DELETE",
   });
 
   if (res.ok) {
-    dispatch(deleteTask(taskId));
+    dispatch(deleteGoal(goalId));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -113,18 +113,18 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 };
 
 const initialState = {
-  allTasks: {},
-  singleTask: {},
+  year: {},
+  month: {},
+  week: {},
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case GET_TASKS:
+    case GET_GOALS:
       return { ...state, allTasks: action.payload };
-    case GET_TASK:
+    case GET_GOAL:
       return { ...state, singleTask: action.payload };
-    case ADD_TASK: {
-      // Refactored
+    case ADD_GOAL: {
       const { id } = action.payload;
       const newState = {
         ...state,
@@ -141,20 +141,8 @@ export default function reducer(state = initialState, action) {
         };
       }
       return newState;
-      // Old Code
-      // const newState = { ...state };
-      // newState.allTasks = { ...state.allTasks };
-      // newState.allTasks[action.payload.id] = action.payload;
-
-      // newState.singleTask = { ...state.singleTask };
-      // if (state.singleTask.id) {
-      //   newState.singleTask.sub_tasks = { ...state.singleTask.sub_tasks };
-      //   newState.singleTask.sub_tasks[action.payload.id] = action.payload;
-      // }
-      // return newState;
     }
-    case EDIT_TASK: {
-      // Refactored
+    case EDIT_GOAL: {
       const editedTask = action.payload;
       const { id } = editedTask;
       const newState = {
@@ -174,19 +162,8 @@ export default function reducer(state = initialState, action) {
       };
 
       return newState;
-      //   const editedTask = action.payload;
-      //   const newState = { ...state };
-      //   newState.allTasks = { ...newState.allTasks };
-      //   newState.allTasks[editedTask.id] = {
-      //     ...state.allTasks[editedTask.id],
-      //     ...editedTask,
-      //   };
-
-      //   newState.singleTask = { ...state.singleTask, ...editedTask };
-      //   newState.singleTask.sub_tasks = { ...editedTask.sub_tasks };
-      //   return newState;
     }
-    case DELETE_TASK: {
+    case DELETE_GOAL: {
       const taskId = action.payload;
       const { allTasks, singleTask } = state;
       const newState = {
