@@ -4,6 +4,7 @@ import ListItem from "./ListItem";
 import "./ListField.css";
 import { useDispatch } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
+import { addGoalThunk } from "../../store/goals";
 
 // Helper function to get the week for a date object passed in
 function getCurrentWeek(currentDate) {
@@ -37,7 +38,7 @@ export default function ListField({
 
   // Code to determine the header to display on each column
   let displayHeader = "";
-  if (timeFrame === "Year") {
+  if (timeFrame === "year") {
     displayHeader = (
       <h4 className="list-header">
         <span className="list-header-date-buttons" onClick={decrease}>
@@ -50,7 +51,7 @@ export default function ListField({
       </h4>
     );
   }
-  if (timeFrame === "Monthly") {
+  if (timeFrame === "month") {
     const month = date.toLocaleString("default", { month: "long" });
     displayHeader = (
       <h4 className="list-header">
@@ -64,7 +65,7 @@ export default function ListField({
       </h4>
     );
   }
-  if (timeFrame === "Weekly") {
+  if (timeFrame === "week") {
     displayHeader = (
       <h4 className="list-header">
         <span className="list-header-date-buttons" onClick={decrease}>
@@ -114,6 +115,11 @@ export default function ListField({
         }
       } else {
         //Dispatch create goal thunk
+        newListItem.time_frame = timeFrame;
+        const res = dispatch(addGoalThunk(newListItem));
+        if (res) {
+          console.log("checking response", res);
+        }
       }
     }
     setTitle("");
@@ -136,7 +142,11 @@ export default function ListField({
 
   return (
     <div className="list-container-div">
-      {taskBool ? <h4 className="list-header-task">All Tasks</h4> : displayHeader}
+      {taskBool ? (
+        <h4 className="list-header-task">All Tasks</h4>
+      ) : (
+        displayHeader
+      )}
       <div className="list-header-tab-organizer">
         <div
           className="list-tab-heading"

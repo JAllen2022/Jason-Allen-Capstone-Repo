@@ -7,6 +7,7 @@ class GoalForm(FlaskForm):
     description = StringField("Description")
     start_date = StringField("Start date")
     end_date = StringField("End date")
+    time_frame=StringField("Time frame")
     parent_id=IntegerField("ParentId")
     priority=StringField("Priority")
     accomplished=BooleanField("Accomplished", default=False)

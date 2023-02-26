@@ -26,10 +26,6 @@ class Goal(db.Model):
     notes= db.relationship("Note", back_populates="goal", cascade="all, delete")
 
 
-    def __init__(self, name, parent=None):
-        self.name = name
-        self.parent = parent
-
     def to_dict(self):
         return {
             "id": self.id,
@@ -39,5 +35,6 @@ class Goal(db.Model):
             "start_date":self.start_date,
             "end_date":self.end_date,
             "accomplished": self.accomplished,
-            "priority":self.priority
+            "priority":self.priority,
+            "time_frame": self.time_frame
         }

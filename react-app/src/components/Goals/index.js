@@ -9,6 +9,8 @@ export default function Goals() {
   const monthly_goals = useSelector((state) => state.goals.month);
   const weekly_goals = useSelector((state) => state.goals.week);
   const dispatch = useDispatch();
+
+  console.log("checking for year_goals re-render", year_goals);
   // Use state here to determine date and pass down date object to children elements
   const currDate = new Date();
   const [month, setMonth] = useState(currDate.getMonth());
@@ -41,7 +43,7 @@ export default function Goals() {
         <div className="goals-container">
           <ListField
             incommingList={Object.values(year_goals)}
-            timeFrame={"Year"}
+            timeFrame={"year"}
             year={year}
             setYear={setYear}
             month={month}
@@ -57,7 +59,7 @@ export default function Goals() {
         <div className="goals-container">
           <ListField
             incommingList={Object.values(monthly_goals)}
-            timeFrame={"Monthly"}
+            timeFrame={"month"}
             year={year}
             setYear={setYear}
             month={month}
@@ -73,7 +75,7 @@ export default function Goals() {
         <div className="goals-container">
           <ListField
             incommingList={Object.values(weekly_goals)}
-            timeFrame={"Weekly"}
+            timeFrame={"week"}
             year={year}
             setYear={setYear}
             month={month}

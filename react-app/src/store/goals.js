@@ -122,26 +122,34 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_GOALS:
-      const { year, month, week, other } = action.payload;
+      const { year, month, week } = action.payload;
       return { year, month, week, singleGoal: {} };
     case GET_GOAL:
       return { ...state, singleTask: action.payload };
     case ADD_GOAL: {
-      const { id } = action.payload;
+      const { id, time_frame } = action.payload;
       const newState = {
         ...state,
-        allTasks: {
-          ...state.allTasks,
-          [id]: action.payload,
-        },
       };
-
-      if (state.singleTask.id) {
-        newState.singleTask = {
-          ...state.singleTask,
-          sub_tasks: { ...state.singleTask.sub_tasks, [id]: action.payload },
-        };
+      console.log("we are checking goal", action.payload);
+      if (time_frame === "year") {
+        newState.year = { ...state.year };
+        newState.year[id] = action.payload;
+      } else if (time_frame === "month") {
+        newState.month = { ...state.month };
+        newState.month[id] = action.payload;
+      } else if (time_frame === "week") {
+        newState.week = { ...state.week };
+        newState.week[id] = action.payload;
       }
+
+      // Adding a sub_goal
+      // if (state.singleTask.id) {
+      //   newState.singleTask = {
+      //     ...state.singleTask,
+      //     sub_tasks: { ...state.singleTask.sub_tasks, [id]: action.payload },
+      //   };
+      // }
       return newState;
     }
     case EDIT_GOAL: {

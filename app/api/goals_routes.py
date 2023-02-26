@@ -47,10 +47,12 @@ def add_goal():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        print("checking this input", current_user.id)
         goal=Goal(
             user_id=current_user.id,
             name=form.data["name"],
-            parent_id= form.data["parent_id"] if form.data["parent_id"] else False
+            parent_id= form.data["parent_id"] if form.data["parent_id"] else False,
+            time_frame=form.data["time_frame"]
         )
 
         db.session.add(goal)
