@@ -16,10 +16,23 @@ export default function Goals() {
   const [day, setDay] = useState(currDate.getDate());
   const [date, setDate] = useState(currDate);
 
+  // Code to allow for scrolling through each column
+  const decreaseWeek = () => setDay(day - 7);
+  const increaseWeek = () => setDay(day + 7);
+
+  const decreaseMonth = () => setMonth(month - 1);
+  const increaseMonth = () => setMonth(month + 1);
+
+  const decreaseYear = () => setYear(year - 1);
+  const increaseYear = () => setYear(year + 1);
+
+  useEffect(() => {
+    setDate(new Date(year, month, day));
+  }, [month, day, year]);
+
   useEffect(() => {
     dispatch(getGoalsThunk());
   }, []);
-
 
   return (
     <div className="goals-outer-container">
@@ -37,6 +50,8 @@ export default function Goals() {
             setDay={setDay}
             date={date}
             setDate={setDate}
+            increase={increaseYear}
+            decrease={decreaseYear}
           />
         </div>
         <div className="goals-container">
@@ -51,6 +66,8 @@ export default function Goals() {
             setDay={setDay}
             date={date}
             setDate={setDate}
+            decrease={decreaseMonth}
+            increase={increaseMonth}
           />
         </div>
         <div className="goals-container">
@@ -65,6 +82,8 @@ export default function Goals() {
             setDay={setDay}
             date={date}
             setDate={setDate}
+            increase={increaseWeek}
+            decrease={decreaseWeek}
           />
         </div>
       </div>

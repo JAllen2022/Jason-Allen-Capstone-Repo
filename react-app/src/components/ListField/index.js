@@ -8,17 +8,10 @@ import { addTaskThunk } from "../../store/tasks";
 // Helper function to get the week for a date object passed in
 function getCurrentWeek(currentDate) {
   const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
-  console.log("checking current date", currentDate);
-  console.log("checking current day of week", currentDayOfWeek);
   const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-  console.log("checking day to monday", daysToMonday);
-
   const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
-  console.log("checking day from sunday", daysFromSunday);
-
   const monday = new Date(currentDate.getTime() - daysToMonday * 86400000); // 86400000 = 1 day in milliseconds
   const sunday = new Date(currentDate.getTime() + daysFromSunday * 86400000);
-  console.log("checking monday and sunday", monday, sunday);
   const mondayString = monday.toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -27,8 +20,6 @@ function getCurrentWeek(currentDate) {
     month: "long",
     day: "numeric",
   });
-
-  console.log("checking monday and sunday string", mondayString, sundayString);
   return `Weekly Goals: ${mondayString} - ${sundayString}`;
 }
 
@@ -37,67 +28,37 @@ export default function ListField({
   incommingList,
   timeFrame,
   year,
-  setYear,
-  month,
-  setMonth,
-  day,
-  setDay,
   date,
-  setDate,
+  increase,
+  decrease,
 }) {
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
-
-  // Code below to determine the scrollable date options for each goal
-
-  const [weekString, setWeekString] = useState(getCurrentWeek(date));
-  const [monthString, setMonthString] = useState(
-    date.toLocaleString("default", { month: "long" })
-  );
-
-  useEffect(() => {
-    setMonthString(
-      new Date(year, month, day).toLocaleString("default", {
-        month: "long",
-      })
-    );
-    setYear(new Date(year, month, day).getFullYear());
-    setWeekString(getCurrentWeek(new Date(year, month, day)));
-  }, [month, year, day]);
-
-  // Code to allow for scrolling through each column
-  const decreaseWeek = () => setDay(day - 7);
-  const increaseWeek = () => setDay(day + 7);
-
-  const decreaseMonth = () => setMonth(month - 1);
-  const increaseMonth = () => setMonth(month + 1);
-
-  const decreaseYear = () => setYear(year - 1);
-  const increaseYear = () => setYear(year + 1);
 
   // Code to determine the header to display on each column
   let displayHeader = "";
   if (timeFrame === "Year") {
     displayHeader = (
-      <h4>
-        <span onClick={decreaseYear}>
+      <h4 className="list-header">
+        <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {`${year} Goals`}
-        <span onClick={increaseYear}>
+        <span className="header-timefame-text">{`${year} Goals`}</span>
+        <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
       </h4>
     );
   }
   if (timeFrame === "Monthly") {
+    const month = date.toLocaleString("default", { month: "long" });
     displayHeader = (
-      <h4>
-        <span onClick={decreaseMonth}>
+      <h4 className="list-header">
+        <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {`${monthString} Goals`}
-        <span onClick={increaseMonth}>
+        {`${month} Goals`}
+        <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
       </h4>
@@ -105,12 +66,12 @@ export default function ListField({
   }
   if (timeFrame === "Weekly") {
     displayHeader = (
-      <h4>
-        <span onClick={decreaseWeek}>
+      <h4 className="list-header">
+        <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {weekString}
-        <span onClick={increaseWeek}>
+        {getCurrentWeek(date)}
+        <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
       </h4>
@@ -175,7 +136,7 @@ export default function ListField({
 
   return (
     <div className="list-container-div">
-      {taskBool ? "" : displayHeader}
+      {taskBool ? <h4 className="list-header-task">All Tasks</h4> : displayHeader}
       <div className="list-header-tab-organizer">
         <div
           className="list-tab-heading"
