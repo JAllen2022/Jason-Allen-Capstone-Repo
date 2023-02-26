@@ -4,19 +4,38 @@ import { getGoalsThunk } from "../../store/goals";
 import ListField from "../ListField";
 import "./Goals.css";
 
+// Helper function to get the week for a date object passed in
+function getCurrentWeek(currentDate) {
+  const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
+  const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+  const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
+  const monday = new Date(currentDate.getTime() - daysToMonday * 86400000); // 86400000 = 1 day in milliseconds
+  const sunday = new Date(currentDate.getTime() + daysFromSunday * 86400000);
+  const mondayString = monday.toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+  const sundayString = sunday.toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+  return `Weekly Goals: ${mondayString} - ${sundayString}`;
+}
+
 export default function Goals() {
   const year_goals = useSelector((state) => state.goals.year);
   const monthly_goals = useSelector((state) => state.goals.month);
   const weekly_goals = useSelector((state) => state.goals.week);
   const dispatch = useDispatch();
 
-  console.log("checking for year_goals re-render", year_goals);
   // Use state here to determine date and pass down date object to children elements
   const currDate = new Date();
   const [month, setMonth] = useState(currDate.getMonth());
   const [year, setYear] = useState(currDate.getFullYear());
   const [day, setDay] = useState(currDate.getDate());
   const [date, setDate] = useState(currDate);
+  const monthstring = date.toLocaleString("default", { month: "long" });
+  const week = getCurrentWeek(date);
 
   // Code to allow for scrolling through each column
   const decreaseWeek = () => setDay(day - 7);
@@ -33,8 +52,14 @@ export default function Goals() {
   }, [month, day, year]);
 
   useEffect(() => {
-    dispatch(getGoalsThunk());
-  }, []);
+    dispatch(
+      getGoalsThunk({
+        year: date.getFullYear(),
+        month: `${monthstring}, ${date.getFullYear()}`,
+        week,
+      })
+    );
+  }, [date]);
 
   return (
     <div className="goals-outer-container">
@@ -47,13 +72,13 @@ export default function Goals() {
             year={year}
             setYear={setYear}
             month={month}
-            setMonth={setMonth}
             day={day}
             setDay={setDay}
             date={date}
             setDate={setDate}
             increase={increaseYear}
             decrease={decreaseYear}
+            monthString={monthstring}
           />
         </div>
         <div className="goals-container">
@@ -63,13 +88,13 @@ export default function Goals() {
             year={year}
             setYear={setYear}
             month={month}
-            setMonth={setMonth}
             day={day}
             setDay={setDay}
             date={date}
             setDate={setDate}
             decrease={decreaseMonth}
             increase={increaseMonth}
+            monthString={monthstring}
           />
         </div>
         <div className="goals-container">
@@ -79,13 +104,14 @@ export default function Goals() {
             year={year}
             setYear={setYear}
             month={month}
-            setMonth={setMonth}
             day={day}
             setDay={setDay}
             date={date}
             setDate={setDate}
             increase={increaseWeek}
             decrease={decreaseWeek}
+            week={week}
+            monthString={monthstring}
           />
         </div>
       </div>

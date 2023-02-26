@@ -6,21 +6,23 @@ from app.forms import GoalForm
 goal_routes = Blueprint('goals', __name__)
 
 
-@goal_routes.route('/')
+@goal_routes.route('')
 @login_required
 def goals():
     """
     Query for all goals and returns them in a dictionary of goal dictionaries key value pairs
     """
-    yearly_goals = Goal.query.filter(Goal.time_frame == "year").all()
-    monthly_goals = Goal.query.filter(Goal.time_frame == "month").all()
-    weekly_goals = Goal.query.filter(Goal.time_frame == "week").all()
-    other_goals = Goal.query.filter(Goal.time_frame == "other").all()
+    year = request.args.get("year")
+    month = request.args.get("month")
+    week = request.args.get("week")
+
+    yearly_goals = Goal.query.filter(Goal.year == year).all()
+    monthly_goals = Goal.query.filter(Goal.month == month).all()
+    weekly_goals = Goal.query.filter(Goal.week == week).all()
 
     return {'year': {goal.id:goal.to_dict() for goal in yearly_goals},
             'month': {goal.id:goal.to_dict() for goal in monthly_goals},
-            'week': {goal.id:goal.to_dict() for goal in weekly_goals},
-            'other':{goal.id:goal.to_dict() for goal in other_goals}
+            'week': {goal.id:goal.to_dict() for goal in weekly_goals}
             }
 
 
@@ -52,7 +54,10 @@ def add_goal():
             user_id=current_user.id,
             name=form.data["name"],
             parent_id= form.data["parent_id"] if form.data["parent_id"] else False,
-            time_frame=form.data["time_frame"]
+            time_frame=form.data["time_frame"],
+            year=form.data["year"],
+            month=form.data["month"],
+            week=form.data["week"]
         )
 
         db.session.add(goal)
@@ -84,11 +89,16 @@ def edit_goal(id):
     if form.validate_on_submit():
         goal.name=form.data["name"]
         goal.description=form.data["description"]
-        goal.start_date=form.data["start_date"]
-        goal.end_date=form.data["end_date"]
         goal.completed=form.data["completed"]
+        if form.data["year"] is not None:
+            goal.year=form.data["year"]
+        if form.data["month"] is not None:
+            goal.month=form.data["month"]
+        if form.data["week"] is not None:
+            goal.week=form.data["week"]
         goal.priority=form.data["priority"]
-        goal.parent_id=form.data["parent_id"]
+        if form.data["parent_id"] is not None:
+            goal.parent_id=form.data["parent_id"]
 
         # Need to be able to add relationships once we have the other features added
         # task.goals.apppend=form.data["goals"]

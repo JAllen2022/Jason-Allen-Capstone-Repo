@@ -33,8 +33,10 @@ const deleteGoal = (goalId) => ({
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export const getGoalsThunk = () => async (dispatch) => {
-  const res = await fetch("/api/goals/", {
+export const getGoalsThunk = (data) => async (dispatch) => {
+  const searchParameters = new URLSearchParams(data).toString();
+  const res = await fetch(`/api/goals?${searchParameters}`, {
+    method: "get",
     headers: {
       "Content-Type": "application/json",
     },
@@ -82,8 +84,8 @@ export const addGoalThunk = (goal) => async (dispatch) => {
 };
 
 export const editGoalThunk = (goal, goalId) => async (dispatch) => {
-  console.log("track edit", 1);
-  console.log("Checking inputs", goalId, goal);
+  // console.log("track edit", 1);
+  // console.log("Checking inputs", goalId, goal);
   const res = await fetch(`/api/goals/${goalId}`, {
     method: "PUT",
     headers: {
@@ -91,13 +93,13 @@ export const editGoalThunk = (goal, goalId) => async (dispatch) => {
     },
     body: JSON.stringify(goal),
   });
-  console.log("track edit", 2);
+  // console.log("track edit", 2);
 
   if (res.ok) {
-    console.log("track edit", 3);
+    // console.log("track edit", 3);
 
     const data = await res.json();
-    console.log("track edit 4", data);
+    // console.log("track edit 4", data);
 
     dispatch(editGoal(data));
   } else {

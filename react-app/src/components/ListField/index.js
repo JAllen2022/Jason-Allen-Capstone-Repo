@@ -6,24 +6,6 @@ import { useDispatch } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
 import { addGoalThunk } from "../../store/goals";
 
-// Helper function to get the week for a date object passed in
-function getCurrentWeek(currentDate) {
-  const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
-  const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-  const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
-  const monday = new Date(currentDate.getTime() - daysToMonday * 86400000); // 86400000 = 1 day in milliseconds
-  const sunday = new Date(currentDate.getTime() + daysFromSunday * 86400000);
-  const mondayString = monday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-  const sundayString = sunday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-  return `Weekly Goals: ${mondayString} - ${sundayString}`;
-}
-
 export default function ListField({
   taskBool,
   incommingList,
@@ -32,6 +14,8 @@ export default function ListField({
   date,
   increase,
   decrease,
+  week,
+  monthString,
 }) {
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
@@ -44,7 +28,7 @@ export default function ListField({
         <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        <span className="header-timefame-text">{`${year} Goals`}</span>
+        <span className="header-timefame-text">{`${date.getFullYear()} Goals`}</span>
         <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
@@ -52,13 +36,12 @@ export default function ListField({
     );
   }
   if (timeFrame === "month") {
-    const month = date.toLocaleString("default", { month: "long" });
     displayHeader = (
       <h4 className="list-header">
         <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {`${month} Goals`}
+        {`${monthString} Goals`}
         <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
@@ -71,7 +54,7 @@ export default function ListField({
         <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {getCurrentWeek(date)}
+        {week}
         <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
@@ -92,7 +75,6 @@ export default function ListField({
   // Determine which list to display
   let listToDisplay;
   if (tab === "all") {
-    console.log("we are doing all tasks");
     listToDisplay = allTasks;
   } else if (tab === "complete") listToDisplay = completed;
   else if (tab === "incomplete") listToDisplay = incompleted;
@@ -116,6 +98,14 @@ export default function ListField({
       } else {
         //Dispatch create goal thunk
         newListItem.time_frame = timeFrame;
+
+        // Assign values to associate timeFrame to a specific date. I.e. Goals for 2023, Goals for February, 2023, etc.
+        if (timeFrame === "year") newListItem.year = date.getFullYear();
+        else if (timeFrame === "month") {
+          newListItem.month = `${monthString}, ${date.getFullYear()}`;
+        } else if (timeFrame === "week") {
+          newListItem.week = week;
+        }
         const res = dispatch(addGoalThunk(newListItem));
         if (res) {
           console.log("checking response", res);
