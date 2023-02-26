@@ -122,8 +122,8 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_GOALS:
-      const { year, month, week, other } = action.payload.goals;
-      return { ...state, year, month, week, other };
+      const { year, month, week, other } = action.payload;
+      return { year, month, week, singleGoal: {} };
     case GET_GOAL:
       return { ...state, singleTask: action.payload };
     case ADD_GOAL: {

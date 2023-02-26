@@ -5,6 +5,7 @@ import EditListField from "./EditListField";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";
+import { editGoalThunk } from "../../store/goals";
 
 export default function ListItem({ item, empty, taskBool }) {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export default function ListItem({ item, empty, taskBool }) {
       dispatch(editTaskThunk(updatedItem, item.id));
     } else {
       // Dispatch for goals
+      dispatch(editGoalThunk(updatedItem, item.id));
     }
   };
 
