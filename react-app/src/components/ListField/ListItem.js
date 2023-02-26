@@ -5,7 +5,7 @@ import EditListField from "./EditListField";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";
-import { editGoalThunk } from "../../store/goals";
+import { deleteGoalThunk, editGoalThunk } from "../../store/goals";
 
 export default function ListItem({ item, empty, taskBool }) {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ export default function ListItem({ item, empty, taskBool }) {
       completed: !completed,
     };
 
+    console.log("checkign task bool,", taskBool, updatedItem);
     if (taskBool) {
       dispatch(editTaskThunk(updatedItem, item.id));
     } else {
@@ -44,6 +45,11 @@ export default function ListItem({ item, empty, taskBool }) {
   // Modal functionality
   const onClick = () => {
     setModalContent(<EditListField itemId={item.id} />);
+  };
+
+  const deleteClick = () => {
+    if (taskBool) dispatch(deleteTaskThunk(item.id));
+    else dispatch(deleteGoalThunk(item.id));
   };
 
   let innerDiv;
@@ -70,10 +76,7 @@ export default function ListItem({ item, empty, taskBool }) {
               style={{ position: "absolute", display: "none" }}
             />
           </form>
-          <i
-            class="fa-solid fa-trash edit"
-            onClick={() => dispatch(deleteTaskThunk(item.id))}
-          ></i>
+          <i class="fa-solid fa-trash edit" onClick={deleteClick}></i>
         </div>
       </div>
     );

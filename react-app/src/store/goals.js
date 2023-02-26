@@ -183,21 +183,20 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case DELETE_GOAL: {
-      const taskId = action.payload;
-      const { allTasks, singleTask } = state;
-      const newState = {
-        allTasks: { ...allTasks },
-        singleTask: { ...singleTask },
-      };
-
-      delete newState.allTasks[taskId];
-
-      if (singleTask.id === taskId) {
-        newState.singleTask = {};
-      } else if (singleTask.id && singleTask.sub_tasks[taskId]) {
-        newState.singleTask.sub_tasks = { ...singleTask.sub_tasks };
-        delete newState.singleTask.sub_tasks[taskId];
+      const goalId = action.payload;
+      const { year, month, week, singleGoal } = state;
+      if (newState.year[goalId]) {
+        newState.year = { ...state.year };
+        delete newState.year[goalId];
+      } else if (newState.month[goalId]) {
+        newState.month = { ...state.month };
+        delete newState.month[goalId];
+      } else if (newState.week[goalId]) {
+        newState.week = { ...state.week };
+        delete newState.week[goalId];
       }
+
+      if (newState.singleGoal.id === goalId) newState.singleGoal = {};
 
       return newState;
     }
