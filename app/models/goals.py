@@ -15,7 +15,7 @@ class Goal(db.Model):
     time_frame=db.Column(db.String(30))
     start_date=db.Column(db.String(30))
     end_date=db.Column(db.String(30))
-    accomplished=db.Column(db.Boolean)
+    completed=db.Column(db.Boolean)
     priority = db.Column(db.String(30))
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
 
@@ -34,7 +34,7 @@ class Goal(db.Model):
             "description": self.description,
             "start_date":self.start_date,
             "end_date":self.end_date,
-            "accomplished": self.accomplished,
+            "completed": self.completed,
             "priority":self.priority,
             "time_frame": self.time_frame
         }

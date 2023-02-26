@@ -82,6 +82,8 @@ export const addGoalThunk = (goal) => async (dispatch) => {
 };
 
 export const editGoalThunk = (goal, goalId) => async (dispatch) => {
+  console.log("track edit", 1);
+  console.log("Checking inputs", goalId, goal);
   const res = await fetch(`/api/goals/${goalId}`, {
     method: "PUT",
     headers: {
@@ -89,9 +91,14 @@ export const editGoalThunk = (goal, goalId) => async (dispatch) => {
     },
     body: JSON.stringify(goal),
   });
+  console.log("track edit", 2);
 
   if (res.ok) {
+    console.log("track edit", 3);
+
     const data = await res.json();
+    console.log("track edit 4", data);
+
     dispatch(editGoal(data));
   } else {
     const data = await res.json();
@@ -120,18 +127,18 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  const newState = {
+    ...state,
+  };
   switch (action.type) {
     case GET_GOALS:
       const { year, month, week } = action.payload;
       return { year, month, week, singleGoal: {} };
     case GET_GOAL:
       return { ...state, singleTask: action.payload };
-    case ADD_GOAL: {
+    case ADD_GOAL:
       const { id, time_frame } = action.payload;
-      const newState = {
-        ...state,
-      };
-      console.log("we are checking goal", action.payload);
+
       if (time_frame === "year") {
         newState.year = { ...state.year };
         newState.year[id] = action.payload;
@@ -151,25 +158,27 @@ export default function reducer(state = initialState, action) {
       //   };
       // }
       return newState;
-    }
+
     case EDIT_GOAL: {
-      const editedTask = action.payload;
-      const { id } = editedTask;
-      const newState = {
-        ...state,
-        allTasks: {
-          ...state.allTasks,
-          [id]: {
-            ...state.allTasks[id],
-            ...editedTask,
-          },
-        },
-        singleTask: {
-          ...state.singleTask,
-          ...editedTask,
-          sub_tasks: editedTask.sub_tasks || state.singleTask.sub_tasks,
-        },
-      };
+      const { id, time_frame } = action.payload;
+      if (time_frame === "year") {
+        newState.year = { ...state.year };
+        newState.year[id] = action.payload;
+      } else if (time_frame === "month") {
+        newState.month = { ...state.month };
+        newState.month[id] = action.payload;
+      } else if (time_frame === "week") {
+        newState.week = { ...state.week };
+        newState.week[id] = action.payload;
+      }
+
+      // Need to update single task later
+      //   singleTask: {
+      //     ...state.singleTask,
+      //     ...editedTask,
+      //     sub_tasks: editedTask.sub_tasks || state.singleTask.sub_tasks,
+      //   },
+      // };
 
       return newState;
     }

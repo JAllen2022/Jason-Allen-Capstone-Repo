@@ -86,7 +86,7 @@ def edit_goal(id):
         goal.description=form.data["description"]
         goal.start_date=form.data["start_date"]
         goal.end_date=form.data["end_date"]
-        goal.accomplished=form.data["accomplished"]
+        goal.completed=form.data["completed"]
         goal.priority=form.data["priority"]
         goal.parent_id=form.data["parent_id"]
 

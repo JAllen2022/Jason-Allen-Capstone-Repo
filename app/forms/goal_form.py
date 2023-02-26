@@ -10,4 +10,4 @@ class GoalForm(FlaskForm):
     time_frame=StringField("Time frame")
     parent_id=IntegerField("ParentId")
     priority=StringField("Priority")
-    accomplished=BooleanField("Accomplished", default=False)
+    completed=BooleanField("Completed", default=False)
