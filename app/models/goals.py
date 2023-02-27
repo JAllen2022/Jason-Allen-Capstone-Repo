@@ -22,8 +22,10 @@ class Goal(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
 
     children=db.relationship("Goal", backref=db.backref('parent', remote_side=[id]))
+
     tasks = db.relationship("Task", secondary=goal_tasks, back_populates="goals")
     tags = db.relationship("Tag", secondary=tag_goals, back_populates="goals")
+
     user = db.relationship("User", back_populates="goals")
     notes= db.relationship("Note", back_populates="goal", cascade="all, delete")
 
@@ -34,10 +36,12 @@ class Goal(db.Model):
             "user_id": self.user_id,
             "name": self.name,
             "description": self.description,
+            "time_frame": self.time_frame,
             "year":self.year,
             "month":self.month,
             "week":self.week,
+            "status":self.status,
             "completed": self.completed,
             "priority":self.priority,
-            "time_frame": self.time_frame
+            "parent_id":self.parent_id
         }

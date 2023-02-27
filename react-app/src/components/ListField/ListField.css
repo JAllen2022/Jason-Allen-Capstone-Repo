@@ -37,18 +37,18 @@
 
 .list-tab-heading {
   cursor: pointer;
-  text-decoration: none;
   color: black;
   margin: 0 1rem;
   /* border: 1px solid red; */
   padding-bottom: 0.15rem;
 }
 
-.list-tab-heading.active {
+.list-tab-heading-active {
   font-weight: 600;
   color: teal;
   border-bottom: 1px solid teal;
-  padding: 0;
+  margin: 0 1rem;
+  padding-bottom: 0.15rem;
 }
 
 .list-tab-cog {

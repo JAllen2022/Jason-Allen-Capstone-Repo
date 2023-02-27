@@ -137,7 +137,7 @@ export default function reducer(state = initialState, action) {
       const { year, month, week } = action.payload;
       return { year, month, week, singleGoal: {} };
     case GET_GOAL:
-      return { ...state, singleTask: action.payload };
+      return { ...state, singleGoal: action.payload };
     case ADD_GOAL:
       const { id, time_frame } = action.payload;
 

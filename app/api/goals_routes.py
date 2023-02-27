@@ -34,7 +34,7 @@ def goal(id):
     """
     goal = Goal.query.get(id)
     goal_dict= goal.to_dict()
-    goal_dict["sub_goals"] = {goal.id:goal.to_dict() for goal in goals.children}
+    goal_dict["sub_goals"] = {goal.id:goal.to_dict() for goal in goal.children}
     return goal_dict
 
 
@@ -86,10 +86,18 @@ def edit_goal(id):
     form= GoalForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    print("checking goal 1 ", goal.to_dict())
+    print("checking goal 2 ", form.data)
+
+
     if form.validate_on_submit():
+        print("checking 3")
         goal.name=form.data["name"]
         goal.description=form.data["description"]
         goal.completed=form.data["completed"]
+        goal.time_frame=form.data["time_frame"]
+        goal.status=form.data["status"]
+        goal.priority=form.data["priority"]
         if form.data["year"] is not None:
             goal.year=form.data["year"]
         if form.data["month"] is not None:
@@ -104,6 +112,8 @@ def edit_goal(id):
         # task.goals.apppend=form.data["goals"]
         # task.notes.apppend=form.data["notes"]
         # task.tags.apppend=form.data["tags"]
+
+        print("checking goal 2 ", goal)
 
         db.session.add(goal)
         db.session.commit()

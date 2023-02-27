@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, BooleanField
+from wtforms import StringField, IntegerField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Optional, NumberRange
 
 class GoalForm(FlaskForm):
     name= StringField("Name", validators=[DataRequired()])
     description = StringField("Description")
     year=StringField("Year", default=None)
+    status=StringField('status')
     month = StringField("Month")
     week = StringField("Week")
     time_frame=StringField("Time frame")

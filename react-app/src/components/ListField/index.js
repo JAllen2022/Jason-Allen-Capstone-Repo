@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import ListItem from "./ListItem";
 import "./ListField.css";
 import { useDispatch } from "react-redux";
@@ -139,19 +138,27 @@ export default function ListField({
       )}
       <div className="list-header-tab-organizer">
         <div
-          className="list-tab-heading"
+          className={
+            tab === "all" ? "list-tab-heading-active" : "list-tab-heading"
+          }
           onClick={() => (tab === "all" ? "" : setTab("all"))}
         >
           All {taskBool ? "Tasks" : "Goals"}
         </div>
         <div
-          className="list-tab-heading"
+          className={
+            tab === "incomplete"
+              ? "list-tab-heading-active"
+              : "list-tab-heading"
+          }
           onClick={() => (tab === "incomplete" ? "" : setTab("incomplete"))}
         >
           Incomplete
         </div>
         <div
-          className="list-tab-heading"
+          className={
+            tab === "complete" ? "list-tab-heading-active" : "list-tab-heading"
+          }
           onClick={() => (tab === "complete" ? "" : setTab("complete"))}
         >
           Completed

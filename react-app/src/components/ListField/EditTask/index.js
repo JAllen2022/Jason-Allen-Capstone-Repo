@@ -132,7 +132,7 @@ export default function EditListField({ itemId }) {
                 className=""
                 // className="song-input-field"
                 name="description"
-                maxlength="500"
+                maxLength="500"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />

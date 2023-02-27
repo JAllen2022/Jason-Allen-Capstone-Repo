@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTaskThunk, editTaskThunk } from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
-import EditListField from "./EditListField";
+import EditTask from "./EditTask";
+import EditGoal from "./EditGoal";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";
@@ -44,7 +45,8 @@ export default function ListItem({ item, empty, taskBool }) {
 
   // Modal functionality
   const onClick = () => {
-    setModalContent(<EditListField itemId={item.id} />);
+    if (taskBool) setModalContent(<EditTask itemId={item.id} />);
+    else setModalContent(<EditGoal itemId={item.id} />);
   };
 
   const deleteClick = () => {
