@@ -12,10 +12,24 @@ export default function Tasks() {
     dispatch(getTasksThunk());
   }, [dispatch]);
 
+  <>
+    <h1>All Tasks</h1>
+  </>;
+
   return (
     <>
-      <h1>All Tasks</h1>
-      <ListField taskBool={true} incommingList={Object.values(allTasks)} />
+      <div class="magazine">
+        <div class="left-page">
+          <div class="title">
+            <h1>To-Do</h1>
+          </div>
+          <ListField taskBool={true} incommingList={Object.values(allTasks)} />
+        </div>
+        <div class="right-page">
+          <div class="content"></div>
+        </div>
+      </div>
+      ;
     </>
   );
 }

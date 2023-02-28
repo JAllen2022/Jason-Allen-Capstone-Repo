@@ -1,0 +1,12 @@
+.title {
+  grid-area: title;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  color: #cead87;
+}
+.title h1 {
+  font: 50px/1 "Lobster", cursive;
+  margin: 0;
+  padding: 0;
+}

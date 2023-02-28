@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTaskThunk, editTaskThunk } from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
-import EditTask from "./EditTask";
-import EditGoal from "./EditGoal";
+import EditTask from "./TaskModal";
+import EditGoal from "./GoalModal";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";

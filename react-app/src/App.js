@@ -7,7 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Tasks from "./components/Tasks";
 import Goals from "./components/Goals";
-import SplashPage from "./components/SplashPage";
+import HomePage from "./components/HomePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function App() {
         {isLoaded && (
           <Switch>
             <Route exact path="/">
-              <SplashPage />
+              <HomePage />
             </Route>
             <Route path="/login">
               <LoginFormPage />

@@ -61,27 +61,47 @@ export default function Goals() {
     );
   }, [date]);
 
+  <div className="goals-outer-container">
+    <h1>All Goals</h1>
+    <div className="goals-inner-container">
+      <div className="goals-container">
+        <ListField
+          incommingList={Object.values(year_goals)}
+          timeFrame={"year"}
+          year={year}
+          setYear={setYear}
+          month={month}
+          day={day}
+          setDay={setDay}
+          date={date}
+          setDate={setDate}
+          increase={increaseYear}
+          decrease={decreaseYear}
+          monthString={monthstring}
+        />
+      </div>
+    </div>
+  </div>;
   return (
-    <div className="goals-outer-container">
-      <h1>All Goals</h1>
-      <div className="goals-inner-container">
-        <div className="goals-container">
-          <ListField
-            incommingList={Object.values(year_goals)}
-            timeFrame={"year"}
-            year={year}
-            setYear={setYear}
-            month={month}
-            day={day}
-            setDay={setDay}
-            date={date}
-            setDate={setDate}
-            increase={increaseYear}
-            decrease={decreaseYear}
-            monthString={monthstring}
-          />
-        </div>
-        <div className="goals-container">
+    <div class="magazine">
+      <div class="left-page">
+        <ListField
+          incommingList={Object.values(year_goals)}
+          timeFrame={"year"}
+          year={year}
+          setYear={setYear}
+          month={month}
+          day={day}
+          setDay={setDay}
+          date={date}
+          setDate={setDate}
+          increase={increaseYear}
+          decrease={decreaseYear}
+          monthString={monthstring}
+        />
+      </div>
+      <div class="right-page">
+        <div className="goals-container-right">
           <ListField
             incommingList={Object.values(monthly_goals)}
             timeFrame={"month"}
@@ -95,9 +115,10 @@ export default function Goals() {
             decrease={decreaseMonth}
             increase={increaseMonth}
             monthString={monthstring}
+            truncate={true}
           />
         </div>
-        <div className="goals-container">
+        <div className="goals-container-right">
           <ListField
             incommingList={Object.values(weekly_goals)}
             timeFrame={"week"}
@@ -112,6 +133,7 @@ export default function Goals() {
             decrease={decreaseWeek}
             week={week}
             monthString={monthstring}
+            truncate={true}
           />
         </div>
       </div>

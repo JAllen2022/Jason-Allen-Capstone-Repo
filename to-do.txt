@@ -1,0 +1,20 @@
+Goals for Monday:
+- Finish Goal modal
+   - summary, sub-goal Tabs
+- Add demo-user button
+- Fix log in Modal
+- Push to render - EOD
+- Finish user-home page
+- draft the reflections page
+
+
+Finish css for Group modal
+ - Tabs for Summary
+ - Tab for Sub-Goals
+ - Tab for Reflections
+
+
+
+Done:
+- Finish css for notebook background
+- Edit goals page to fit into a notebook layout

@@ -174,6 +174,11 @@ export default function reducer(state = initialState, action) {
         newState.week[id] = action.payload;
       }
 
+      if (newState.singleGoal.id) {
+        newState.singleGoal = { ...state.singleGoal };
+        newState.singleGoal = action.payload;
+      }
+
       // Need to update single task later
       //   singleTask: {
       //     ...state.singleTask,

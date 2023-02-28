@@ -1,0 +1,145 @@
+.edit-goal-form-container {
+  width: 90vw;
+  min-height: 90vh;
+  border-radius: 5px;
+}
+
+.x-marks-the-spot {
+  display: flex;
+  justify-content: flex-end;
+  /* border: 1px solid red; */
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+}
+
+.x-close {
+  cursor: pointer;
+}
+
+.edit-task-form-body-container {
+  display: flex;
+  height: 100%;
+}
+
+.edit-goal-form-container-title {
+  padding: 0.5rem 0.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.edit-goal-form-nav-container {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  font-weight: 400;
+}
+
+.edit-goal-form-custom-nav-link {
+  padding: 0.5rem 2rem;
+}
+
+.edit-goal-form-left-container {
+  width: 100%;
+}
+
+.edit-goal-form-div-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-task-check-box-container {
+  padding: 0.25rem 0;
+}
+
+.edit-goal-form-labels {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.edit-task-form-right-container {
+  width: 50%;
+}
+
+.edit-task-create-subtasks-container {
+  box-sizing: border-box;
+  height: 40%;
+  margin: 0.5rem;
+  border: 1px solid lightgray;
+}
+
+.edit-task-create-note-container {
+  border: 3px solid orange;
+  height: 56%;
+}
+
+.edit-task-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  /* border: 1px solid red; */
+}
+
+.cancel-button {
+  background-color: black;
+  border: none;
+  width: 6rem;
+  height: 2rem;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4rem;
+  cursor: pointer;
+}
+
+.create-subtask-header {
+  padding: 0;
+  margin: 0;
+}
+
+.sub-task-list-input-field-container {
+  box-sizing: border-box;
+  padding: 5px 5px;
+  border-bottom: 1px dotted gray;
+}
+
+.sub-task-list-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sub-task-list-display {
+  overflow-y: scroll;
+  /* border: 1px solid red; */
+  max-height: 70%;
+}
+
+.summary-page-container {
+  width: 50%;
+  padding-left: 1rem;
+  border: 1px solid red;
+}
+
+.summary-body-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+}
+
+.summary-page-button-container {
+  display: flex;
+}
+
+.summary-page-buttons {
+  background-color: black;
+  border: none;
+  width: 6rem;
+  height: 2rem;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4rem;
+  cursor: pointer;
+}

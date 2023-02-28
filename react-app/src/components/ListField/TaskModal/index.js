@@ -102,6 +102,10 @@ export default function EditListField({ itemId }) {
 
   return (
     <div className="edit-task-form-container">
+      <div className="x-marks-the-spot">
+        {" "}
+        <i onClick={closeModal} class="fa-solid fa-x x-close"></i>
+      </div>
       <h1 className="edit-task-form-container-title">
         Edit Task: {singleTask.name}
       </h1>

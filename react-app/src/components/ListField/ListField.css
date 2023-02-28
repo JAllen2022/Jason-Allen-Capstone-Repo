@@ -1,7 +1,7 @@
 .list-container-div {
-  border: 1px solid gray;
-  width: 25rem;
-  height: 35rem;
+  /* border: 1px solid lightgray; */
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
 }
 
@@ -31,7 +31,7 @@
   display: flex;
   justify-content: space-around;
   padding-top: 1rem;
-  border-bottom: 1px dotted gray;
+  border-bottom: 1px dotted lightgray;
   padding-bottom: 0.5rem;
 }
 
@@ -59,7 +59,7 @@
 .list-input-field-container {
   box-sizing: border-box;
   padding: 15px 5px;
-  border-bottom: 1px dotted gray;
+  border-bottom: 1px dotted lightgray;
 }
 
 .list-form-container {
@@ -75,11 +75,17 @@
   /* border: 2px solid red; */
   overflow-y: scroll;
   height: 100%;
-  max-height: 26rem;
+  max-height: 31.5rem;
+}
+
+.list-view-section-truncated {
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 11rem;
 }
 
 .list-item-container {
-  border-bottom: 1px dotted gray;
+  border-bottom: 1px dotted lightgray;
   height: 1.5rem;
   display: flex;
   align-items: center;

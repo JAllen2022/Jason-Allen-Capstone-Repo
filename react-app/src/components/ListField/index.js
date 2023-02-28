@@ -15,6 +15,7 @@ export default function ListField({
   decrease,
   week,
   monthString,
+  truncate,
 }) {
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
@@ -131,11 +132,7 @@ export default function ListField({
 
   return (
     <div className="list-container-div">
-      {taskBool ? (
-        <h4 className="list-header-task">All Tasks</h4>
-      ) : (
-        displayHeader
-      )}
+      {taskBool ? "" : displayHeader}
       <div className="list-header-tab-organizer">
         <div
           className={
@@ -187,7 +184,7 @@ export default function ListField({
           />
         </form>
       </div>
-      <div className="list-view-section">{displayList}</div>
+      <div className={truncate? "list-view-section-truncated" : "list-view-section"}>{displayList}</div>
     </div>
   );
 }

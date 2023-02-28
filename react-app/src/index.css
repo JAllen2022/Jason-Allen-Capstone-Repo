@@ -10,6 +10,9 @@ body {
 }
 
 .body-container-nav-right {
-  padding-left: 1rem;
   width: 100%;
+  background: #f8f8f8;
+  /* overflow:scroll */
+  /* font-family: "Gochi Hand", sans-serif; */
+  color: #333;
 }
