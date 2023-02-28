@@ -7,7 +7,7 @@ import CreateSubGoal from "./CreateSubGoal";
 import "./EditGoal.css";
 import "./EditGoal.css";
 
-export default function EditGoal({ setEdit }) {
+export default function EditGoal({ setEdit, setTab }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -81,12 +81,12 @@ export default function EditGoal({ setEdit }) {
     <>
       <div className="edit-goal-form-left-container">
         <form className="" onSubmit={handleSubmit} type="submit">
-          <div className="edit-goal-form-div-field">
-            <label htmlFor="name" className="edit-goal-form-labels">
+          <div className="edit-task-form-div-field">
+            <label htmlFor="name" className="edit-task-form-labels">
               Name <span style={{ color: "red" }}>*</span>
             </label>
             <input
-              className=""
+              className="edit-form-input"
               // className="song-input-field"
               required
               name="name"
@@ -102,7 +102,7 @@ export default function EditGoal({ setEdit }) {
               Description
             </label>
             <textarea
-              className=""
+              className="edit-form-input"
               // className="song-input-field"
               name="description"
               maxLength="500"
@@ -115,7 +115,7 @@ export default function EditGoal({ setEdit }) {
               Time Frame
             </label>
             <select
-              className=""
+              className="edit-form-input"
               name="time-frame"
               value={timeFrame}
               onChange={(e) => setTimeFrame(e.target.value)}
@@ -131,7 +131,7 @@ export default function EditGoal({ setEdit }) {
               Priority
             </label>
             <select
-              className=""
+              className="edit-form-input"
               name="priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
@@ -148,7 +148,7 @@ export default function EditGoal({ setEdit }) {
               Set a parent goal - NOT FUNCTIONAL YET
             </label>
             <select
-              className=""
+              className="edit-form-input"
               name="parent-goal"
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
@@ -165,7 +165,7 @@ export default function EditGoal({ setEdit }) {
               Status
             </label>
             <select
-              className=""
+              className="edit-form-input"
               name="status"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -179,7 +179,7 @@ export default function EditGoal({ setEdit }) {
               Change Goal Date
             </label>
             <input
-              className=""
+              className="edit-form-input"
               name="year"
               type="datetime-local"
               min={restrictedDateInput}
@@ -202,7 +202,13 @@ export default function EditGoal({ setEdit }) {
           </div>
 
           <div className="edit-task-buttons">
-            <div className="cancel-button" onClick={() => setEdit(false)}>
+            <div
+              className="cancel-button"
+              onClick={() => {
+                setEdit(false);
+                setTab("summary");
+              }}
+            >
               Cancel
             </div>
             <div className="cancel-button" type="submit" onClick={handleSubmit}>

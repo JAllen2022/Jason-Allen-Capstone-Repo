@@ -23,7 +23,7 @@ function Navigation({ isLoaded }) {
       <NavLink className="nav-bar-nav-link" exact to="/goals">
         <i class="fa-solid fa-bullseye"></i>
       </NavLink>
-      <NavLink className="nav-bar-nav-link" exact to="/notes">
+      <NavLink className="nav-bar-nav-link" exact to="/reflections">
         <i class="fa-solid fa-book-open"></i>
       </NavLink>
     </div>

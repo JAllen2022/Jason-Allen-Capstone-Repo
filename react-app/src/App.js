@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Reflections from "./components/Reflections";
 import Tasks from "./components/Tasks";
 import Goals from "./components/Goals";
 import HomePage from "./components/HomePage";
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="/goals">
               <Goals />
+            </Route>
+            <Route path="/reflections">
+              <Reflections />
             </Route>
           </Switch>
         )}

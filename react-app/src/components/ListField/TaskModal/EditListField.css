@@ -30,8 +30,9 @@
 }
 
 .edit-task-form-labels {
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.2rem;
+  font-size: 0.85rem;
 }
 
 .edit-task-form-right-container {

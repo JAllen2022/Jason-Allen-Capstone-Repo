@@ -3,9 +3,10 @@ Goals for Monday:
    - summary, sub-goal Tabs
 - Add demo-user button
 - Fix log in Modal
-- Push to render - EOD
+- Hover effect to determine what each button is
 - Finish user-home page
 - draft the reflections page
+- Push to render - EOD
 
 
 Finish css for Group modal

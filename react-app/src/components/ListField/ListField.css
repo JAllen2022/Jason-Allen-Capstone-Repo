@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.header-timefame-text {
+  color: #cead87;
+}
+
 .list-header-date-buttons {
   margin: 0 0.5rem;
 }
@@ -44,9 +48,9 @@
 }
 
 .list-tab-heading-active {
-  font-weight: 600;
-  color: teal;
-  border-bottom: 1px solid teal;
+  border-bottom: 1px dotted;
+  font-weight: 500;
+  color: #cead87;
   margin: 0 1rem;
   padding-bottom: 0.15rem;
 }
@@ -69,6 +73,10 @@
 
 .list-create-list-item-input-field {
   width: 95%;
+  border-radius: 3px;
+  border: 1px dotted lightgray;
+  background-color: transparent;
+  padding: 0.25rem;
 }
 
 .list-view-section {
@@ -76,6 +84,7 @@
   overflow-y: scroll;
   height: 100%;
   max-height: 31.5rem;
+  margin-right: 0.2rem;
 }
 
 .list-view-section-truncated {
@@ -145,4 +154,25 @@
 
 .list-item-container:hover .edit {
   opacity: 1;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: lightgray;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
 }

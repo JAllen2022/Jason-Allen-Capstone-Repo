@@ -41,7 +41,7 @@ export default function ListField({
         <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {`${monthString} Goals`}
+        <span className="header-timefame-text">{`${monthString} Goals`}</span>
         <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
@@ -54,7 +54,7 @@ export default function ListField({
         <span className="list-header-date-buttons" onClick={decrease}>
           <i class="fa-solid fa-circle-chevron-left"></i>
         </span>
-        {week}
+        <span className="header-timefame-text">{week}</span>
         <span className="list-header-date-buttons" onClick={increase}>
           <i class="fa-solid fa-circle-chevron-right"></i>
         </span>
@@ -117,7 +117,8 @@ export default function ListField({
 
   // Minimum number of list items on the page set to a constant
   let displayList;
-  const defaultListHeight = 17;
+  let defaultListHeight = 20;
+  if (truncate) defaultListHeight = 7;
   if (listToDisplay) {
     displayList = listToDisplay.map((item) => (
       <ListItem key={item.id} item={item} taskBool={taskBool} />
@@ -184,7 +185,13 @@ export default function ListField({
           />
         </form>
       </div>
-      <div className={truncate? "list-view-section-truncated" : "list-view-section"}>{displayList}</div>
+      <div
+        className={
+          truncate ? "list-view-section-truncated" : "list-view-section"
+        }
+      >
+        {displayList}
+      </div>
     </div>
   );
 }
