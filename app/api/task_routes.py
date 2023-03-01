@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, Task
+from app.models import db, Task, Goal
 from app.forms import TaskForm
 
 task_routes = Blueprint('tasks', __name__)
@@ -45,13 +45,21 @@ def add_task():
     form= TaskForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    if form.data["goal_id"]:
+        goal = Goal.query.get(form.data["goal_id"])
+
+
 
     if form.validate_on_submit():
         task=Task(
             user_id=current_user.id,
             name=form.data["name"],
-            parent_id= form.data["parent_id"] if form.data["parent_id"] else False
+            parent_id= form.data["parent_id"] if form.data["parent_id"] else None,
+            due_date = form.data["due_date"]
         )
+
+        if form.data["goal_id"]:
+            task.goals.append(goal)
 
         db.session.add(task)
         db.session.commit()

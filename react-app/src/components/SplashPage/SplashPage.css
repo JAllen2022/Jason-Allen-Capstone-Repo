@@ -1,0 +1,125 @@
+.splash-page-container {
+  background-color: #e3e3e3;
+  width: 100%;
+  height: 100vh;
+}
+
+.splash-page-notebook {
+  min-width: 800px;
+  width: 80%;
+  max-width: 1250px;
+  height: 650px;
+  position: relative;
+  margin: 1.5rem auto;
+  /* border: 1px solid red; */
+  display: flex;
+}
+
+.splash-page-left-page {
+  width: 50%;
+  height: 100%;
+  /* position: absolute; */
+  left: 0;
+  /* background-color: #e2e0d3; */
+  background-image: linear-gradient(
+    to left,
+    rgba(226, 224, 211, 1),
+    rgba(226, 224, 211, 0.7)
+  );
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  overflow: hidden;
+  transform-origin: right center;
+  transform: perspective(500px) rotateY(0deg);
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.splash-page-left-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 45rem;
+}
+
+.splash-page-title {
+  color: #cead87;
+  margin-top: 4rem;
+}
+
+.splash-page-left-content h1 {
+  margin-bottom: 0;
+}
+
+.log-in-button {
+  background-color: rgba(206, 206, 206, 0.3);
+  border: 1px solid lightgray;
+  font-size: 1.07rem;
+  color: black;
+  width: 10rem;
+  height: 3rem;
+  border-radius: 30%;
+  opacity: 0.7;
+  cursor: pointer;
+  margin: 2rem 0;
+}
+
+.log-in-button:hover {
+  background-color: rgba(206, 206, 206, 0.9);
+}
+
+.splash-page-right-page {
+  width: 50%;
+  height: 100%;
+  /* position: absolute; */
+  right: 0;
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 224, 211, 1),
+    rgba(226, 224, 211, 0.85)
+  );
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  overflow: hidden;
+  transform-origin: left center;
+  transform: perspective(500px) rotateY(0deg);
+  /* border: 1px solid orange; */
+}
+
+.splash-page-right-page:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 10px;
+  height: 100%;
+  box-shadow: 10px 0 10px -10px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.splash-page-right-page:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40px;
+  width: 0;
+  height: 0;
+  border-top: 250px solid transparent;
+  border-bottom: 250px solid transparent;
+  border-right: 40px solid #ffffff;
+  z-index: -1;
+}
+
+.splash-title {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  color: #cead87;
+}
+.splash-title h1 {
+  font: 50px/1 "Lobster", cursive;
+  margin: 0;
+  padding: 0;
+}

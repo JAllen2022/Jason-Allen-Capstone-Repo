@@ -35,6 +35,7 @@ def goal(id):
     goal = Goal.query.get(id)
     goal_dict= goal.to_dict()
     goal_dict["sub_goals"] = {goal.id:goal.to_dict() for goal in goal.children}
+    goal_dict["sub_tasks"] = {task.id:task.to_dict() for task in goal.tasks}
     return goal_dict
 
 
@@ -53,11 +54,12 @@ def add_goal():
         goal=Goal(
             user_id=current_user.id,
             name=form.data["name"],
-            parent_id= form.data["parent_id"] if form.data["parent_id"] else False,
+            parent_id= form.data["parent_id"] if form.data["parent_id"] else None,
             time_frame=form.data["time_frame"],
             year=form.data["year"],
             month=form.data["month"],
-            week=form.data["week"]
+            week=form.data["week"],
+            due_date=form.data["due_date"]
         )
 
         db.session.add(goal)
@@ -86,12 +88,7 @@ def edit_goal(id):
     form= GoalForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print("checking goal 1 ", goal.to_dict())
-    print("checking goal 2 ", form.data)
-
-
     if form.validate_on_submit():
-        print("checking 3")
         goal.name=form.data["name"]
         goal.description=form.data["description"]
         goal.completed=form.data["completed"]
@@ -107,13 +104,13 @@ def edit_goal(id):
         goal.priority=form.data["priority"]
         if form.data["parent_id"] is not None:
             goal.parent_id=form.data["parent_id"]
+        if form.data["due_date"] is not None:
+            goal.due_date=form.data["due_date"]
 
         # Need to be able to add relationships once we have the other features added
         # task.goals.apppend=form.data["goals"]
         # task.notes.apppend=form.data["notes"]
         # task.tags.apppend=form.data["tags"]
-
-        print("checking goal 2 ", goal)
 
         db.session.add(goal)
         db.session.commit()

@@ -16,6 +16,7 @@ class Goal(db.Model):
     year=db.Column(db.Integer)
     month=db.Column(db.String(30))
     week=db.Column(db.String(30))
+    due_date=db.Column(db.String(30))
     status=db.Column(db.String(30))
     completed=db.Column(db.Boolean)
     priority = db.Column(db.String(30))

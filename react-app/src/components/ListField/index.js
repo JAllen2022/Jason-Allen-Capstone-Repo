@@ -7,6 +7,7 @@ import { addGoalThunk } from "../../store/goals";
 
 export default function ListField({
   taskBool,
+  subTask,
   incommingList,
   timeFrame,
   year,

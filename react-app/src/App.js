@@ -9,6 +9,7 @@ import Reflections from "./components/Reflections";
 import Tasks from "./components/Tasks";
 import Goals from "./components/Goals";
 import HomePage from "./components/HomePage";
+import SplashPage from "./components/SplashPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,31 +22,36 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      <div className="body-container-nav-right">
-        {isLoaded && (
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/login">
-              <LoginFormPage />
-            </Route>
-            <Route path="/signup">
-              <SignupFormPage />
-            </Route>
-            <Route path="/tasks">
-              <Tasks />
-            </Route>
-            <Route path="/goals">
-              <Goals />
-            </Route>
-            <Route path="/reflections">
-              <Reflections />
-            </Route>
-          </Switch>
-        )}
-      </div>
+      {!currentUser && <SplashPage />}
+      {currentUser && currentUser.id && (
+        <>
+          <Navigation isLoaded={isLoaded} />
+          <div className="body-container-nav-right">
+            {isLoaded && (
+              <Switch>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+                <Route path="/login">
+                  <LoginFormPage />
+                </Route>
+                <Route path="/signup">
+                  <SignupFormPage />
+                </Route>
+                <Route path="/tasks">
+                  <Tasks />
+                </Route>
+                <Route path="/goals">
+                  <Goals />
+                </Route>
+                <Route path="/reflections">
+                  <Reflections />
+                </Route>
+              </Switch>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }

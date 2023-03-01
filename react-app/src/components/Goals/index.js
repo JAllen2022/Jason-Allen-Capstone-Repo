@@ -5,7 +5,7 @@ import ListField from "../ListField";
 import "./Goals.css";
 
 // Helper function to get the week for a date object passed in
-function getCurrentWeek(currentDate) {
+export function getCurrentWeek(currentDate) {
   const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
   const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
   const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;

@@ -6,9 +6,14 @@ import EditGoal from "./GoalModal";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
 import "./ListField.css";
-import { deleteGoalThunk, editGoalThunk } from "../../store/goals";
+import {
+  deleteGoalThunk,
+  editGoalThunk,
+  editSubTask,
+  deleteGoalSubTask,
+} from "../../store/goals";
 
-export default function ListItem({ item, empty, taskBool }) {
+export default function ListItem({ item, empty, taskBool, subTask }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const currTask = useSelector((state) => state.tasks.singleTask);
@@ -34,9 +39,11 @@ export default function ListItem({ item, empty, taskBool }) {
       completed: !completed,
     };
 
-    console.log("checkign task bool,", taskBool, updatedItem);
     if (taskBool) {
       dispatch(editTaskThunk(updatedItem, item.id));
+      if (subTask) {
+        dispatch(editSubTask(updatedItem));
+      }
     } else {
       // Dispatch for goals
       dispatch(editGoalThunk(updatedItem, item.id));
@@ -51,7 +58,10 @@ export default function ListItem({ item, empty, taskBool }) {
 
   const deleteClick = () => {
     if (taskBool) dispatch(deleteTaskThunk(item.id));
+    // This is to handle sub tasks that are a subtask of a task
     else dispatch(deleteGoalThunk(item.id));
+    // Deleteing tasks that are a subtask of a goal
+    if (subTask) dispatch(deleteGoalSubTask(item));
   };
 
   let innerDiv;

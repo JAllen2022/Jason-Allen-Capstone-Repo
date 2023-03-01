@@ -12,6 +12,7 @@ body {
 .body-container-nav-right {
   width: 100%;
   background: #f8f8f8;
+  height: 100vh;
   /* overflow:scroll */
   /* font-family: "Gochi Hand", sans-serif; */
   color: #333;

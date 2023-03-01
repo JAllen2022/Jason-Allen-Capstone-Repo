@@ -7,9 +7,7 @@
 .x-marks-the-spot {
   display: flex;
   justify-content: flex-end;
-  /* border: 1px solid red; */
-  padding-top: 0.5rem;
-  padding-right: 1rem;
+  padding-right: 0.2rem;
 }
 
 .x-close {
@@ -18,6 +16,7 @@
 
 .edit-task-form-body-container {
   display: flex;
+  justify-content: center;
   height: 100%;
 }
 
@@ -186,4 +185,39 @@
   background-color: transparent;
   border: 1px dotted gray;
   width: 98%;
+}
+
+.edit-form-select-input {
+  background-color: transparent;
+  border: 1px dotted gray;
+  width: 100%;
+}
+
+.edit-form-date-input {
+  background-color: transparent;
+  border: 1px dotted gray;
+  width: 98.5%;
+}
+
+.goal-modal-create-sub-task-container {
+  width: 95%;
+  height: 19rem;
+  display: flex;
+}
+
+.sub-task-list-input-field-container-left {
+  width: 40%;
+}
+
+.sub-task-list-display-right {
+  width: 60%;
+  border: 1px solid lightgray;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+}
+
+.submit-sub-task {
+  width: 100%;
 }

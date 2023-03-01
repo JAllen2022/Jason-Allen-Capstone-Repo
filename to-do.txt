@@ -1,21 +1,39 @@
 Goals for Monday:
 - Finish Goal modal
-   - summary, sub-goal Tabs
+   - summary - fix the display for long descriptions
+   - display completed tasks
+   - display completed sub-goals
+   - show outstanding tasks and sub-goals
+   - sub-goal
+       - fix input field depending on date selected
+   - Sub-tasks
+
 - Add demo-user button
 - Fix log in Modal
-- Hover effect to determine what each button is
 - Finish user-home page
 - draft the reflections page
+- Get tasks to display dates as well - scrollable
+- Change sub-tasks so that getting ALL tasks mean that you can get tasks that DON"T have a
+    - due date as well as the tasks for a specific due date
+- find out where the semi-colan is coming from
 - Push to render - EOD
 
 
-Finish css for Group modal
- - Tabs for Summary
- - Tab for Sub-Goals
- - Tab for Reflections
-
+- Pronto
+- Hover effect to determine what each button is
+- Added devoper info in nav-bar
+ - Update Models - Allow a goal to apply to multiple monthS
+ - Goals - need a due date variable stored
+ - Fix summary page to allow for a long description
 
 
 Done:
+- Splash page draft completed
 - Finish css for notebook background
 - Edit goals page to fit into a notebook layout
+- Finish css for Group modal
+   - Tabs for Summary
+   - Tab for Sub-Goals
+   - Tab for Reflections
+- Goal modal functionality
+   - Creating sub-tasks, deleting, and editing them work.

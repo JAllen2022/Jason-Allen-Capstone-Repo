@@ -73,7 +73,7 @@ export default function EditGoal({ setEdit, setTab }) {
     };
 
     const res = dispatch(editGoalThunk(editItem, singleGoal.id));
-
+    setTab("summary");
     setEdit(false);
   };
 
@@ -179,7 +179,7 @@ export default function EditGoal({ setEdit, setTab }) {
               Change Goal Date
             </label>
             <input
-              className="edit-form-input"
+              className="edit-form-date-input"
               name="year"
               type="datetime-local"
               min={restrictedDateInput}
