@@ -117,7 +117,7 @@ export default function EditListField({ itemId }) {
                 Name <span style={{ color: "red" }}>*</span>
               </label>
               <input
-                className=""
+                className="edit-form-input"
                 // className="song-input-field"
                 required
                 name="name"
@@ -133,7 +133,7 @@ export default function EditListField({ itemId }) {
                 Description
               </label>
               <textarea
-                className=""
+                className="edit-form-input"
                 // className="song-input-field"
                 name="description"
                 maxLength="500"
@@ -146,7 +146,7 @@ export default function EditListField({ itemId }) {
                 Priority
               </label>
               <select
-                className=""
+                className="edit-form-input"
                 name="priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
@@ -167,7 +167,7 @@ export default function EditListField({ itemId }) {
                 </span>
               </label>
               <select
-                className=""
+                className="edit-form-input"
                 name="add-goal"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
@@ -184,7 +184,7 @@ export default function EditListField({ itemId }) {
                 Task Duration
               </label>
               <select
-                className=""
+                className="edit-form-input"
                 name="duration"
                 value={taskDuration}
                 onChange={(e) => setTaskDuration(e.target.value)}
@@ -200,7 +200,7 @@ export default function EditListField({ itemId }) {
                 Recurring Frequency
               </label>
               <select
-                className=""
+                className="edit-form-input"
                 name="recurring-frequency"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
@@ -217,7 +217,7 @@ export default function EditListField({ itemId }) {
                 Recurring Date Start
               </label>
               <input
-                className=""
+                className="edit-form-input"
                 name="recurring"
                 type="datetime-local"
                 min={restrictedDateInput}
@@ -231,7 +231,7 @@ export default function EditListField({ itemId }) {
                 Assign Date to Complete
               </label>
               <input
-                className=""
+                className="edit-form-input"
                 min={restrictedDateInput}
                 name="start-date"
                 type="datetime-local"
@@ -244,7 +244,7 @@ export default function EditListField({ itemId }) {
                 Due Date
               </label>
               <input
-                className=""
+                className="edit-form-input"
                 name="due-date"
                 type="date"
                 min={restrictedDay}
@@ -286,7 +286,7 @@ export default function EditListField({ itemId }) {
             <h4 className="create-subtask-header">Create a SubTask</h4>
             <CreateSubTask parentId={singleTask.id} />
           </div>
-          <div className="edit-task-create-note-container"> Create Note</div>
+          
         </div>
       </div>
     </div>

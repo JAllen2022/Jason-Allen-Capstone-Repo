@@ -8,8 +8,6 @@ Goals for Monday:
        - fix input field depending on date selected
    - Sub-tasks
 
-- Add demo-user button
-- Fix log in Modal
 - Finish user-home page
 - draft the reflections page
 - Get tasks to display dates as well - scrollable
@@ -17,6 +15,7 @@ Goals for Monday:
     - due date as well as the tasks for a specific due date
 - find out where the semi-colan is coming from
 - Push to render - EOD
+- sign up - email valdiation
 
 
 - Pronto
@@ -28,6 +27,8 @@ Goals for Monday:
 
 
 Done:
+- Add demo-user button
+- Fix log in Modal
 - Splash page draft completed
 - Finish css for notebook background
 - Edit goals page to fit into a notebook layout
