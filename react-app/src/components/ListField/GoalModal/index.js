@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGoalThunk, editGoalThunk } from "../../../store/goals";
+import {
+  getGoalThunk,
+  editGoalThunk,
+  deleteGoalThunk,
+} from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
 import CreateSubGoal from "./CreateSubGoal";
 import GoalSummary from "./GoalSummary";
@@ -32,6 +36,10 @@ export default function GoalModal({ itemId }) {
   if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
   // else if(tab=="sub-goal") display= <SubGoals />
   // else display= <Reflections />
+  const deleteClick = () => {
+    dispatch(deleteGoalThunk(itemId));
+    closeModal();
+  };
 
   return (
     <div className="edit-goal-form-container">
@@ -101,13 +109,23 @@ export default function GoalModal({ itemId }) {
         </div>
 
         <div
-          className={edit ? "goal-tab-heading-active" : "edit-goal-button"}
-          onClick={() => {
-            setEdit(true);
-            setTab("edit");
-          }}
+          className={
+            edit ? "goal-tab-heading-square" : "edit-goal-button-square"
+          }
         >
-          <i class="fa-regular fa-pen-to-square"></i>
+          <i
+            onClick={() => {
+              setEdit(true);
+              setTab("edit");
+            }}
+            className="fa-regular fa-pen-to-square goal-edit"
+          ></i>
+          <span>
+            <i
+              className="fa-solid fa-trash goal-delete"
+              onClick={deleteClick}
+            ></i>
+          </span>
         </div>
       </div>
       <div className="edit-task-form-body-container"> {display}</div>

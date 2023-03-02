@@ -51,6 +51,15 @@
   padding: 0 0.7rem;
   cursor: pointer;
 }
+.goal-edit {
+  cursor: pointer;
+  margin-right: 0.75rem;
+}
+
+.goal-delete {
+  margin-left: 0.25rem;
+  cursor: pointer;
+}
 
 .edit-goal-form-custom-nav-link {
   padding: 0.5rem 2rem;

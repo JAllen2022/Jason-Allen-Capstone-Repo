@@ -297,6 +297,16 @@ export default function reducer(state = initialState, action) {
       }
 
       if (newState.singleGoal.id === goalId) newState.singleGoal = {};
+      else if (
+        newState.singleGoal.id &&
+        newState.singleGoal?.sub_goals[goalId]
+      ) {
+        newState.singleGoal = {
+          ...state.singleGoal,
+          sub_goals: { ...state.singleGoal.sub_goals },
+        };
+        delete newState.singleGoal.sub_goals[goalId];
+      }
 
       return newState;
     }

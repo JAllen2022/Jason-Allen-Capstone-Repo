@@ -13,25 +13,22 @@ export default function CreateSubGoal({ parentId }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
 
   const dispatch = useDispatch();
+  // Adding restritive due date function
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const addZero = (num) => (num < 10 ? "0" + num : num);
+  const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
 
-  const newDate = new Date(date);
-
-  console.log("checking date", date);
-  // console.log("checking month", new Date().toISOString());
-  // console.log(
-  //   "checking this",
-  //   new Date("2023-07-01").toLocaleString("default", {
-  //     month: "long",
-  //   })
-  // );
-  // console.log("checking this", new Date().toISOString().slice(0, 7));
+  const newDate = new Date(date, 1, 1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Change the week,month,year input based on whatever time_frame is chosen as well as what
     // due date is input.
-    const newDate = new Date(date);
+    const newDate = new Date();
 
     const newListItem = {
       name: name,
@@ -39,16 +36,35 @@ export default function CreateSubGoal({ parentId }) {
       parent_id: parentId,
       priority,
       completed: false,
-      due_date: newDate,
     };
-    if (timeFrame === "year") newListItem.year = newDate.getFullYear();
-    else if (timeFrame === "month") {
-      newListItem.month = `${newDate.toLocaleString("default", {
+    if (timeFrame === "year") {
+      // If current year, set to end of the current year
+      if (date == "") {
+        newListItem.due_date = newDate;
+        newListItem.year = year;
+      }
+      // Otherwise we set it to the end of whatever year is chosen
+      else {
+        newListItem.due_date = new Date(date, 11, 31);
+        newListItem.year = date;
+      }
+    } else if (timeFrame === "month") {
+      const monthDate = new Date(
+        date.slice(0, 4),
+        parseInt(date.slice(5, 7)) - 1,
+        1
+      );
+      newListItem.month = `${monthDate.toLocaleString("default", {
         month: "long",
       })}, ${newDate.getFullYear()}`;
     } else if (timeFrame === "week") {
-      newListItem.week = getCurrentWeek(newDate);
+      // Convert week input value to date range representing the week
+      const [year, weekNumber] = date.split("-W");
+      const startDate = getWeekStartDate(year, weekNumber);
+
+      newListItem.week = getCurrentWeek(startDate);
     }
+    console.log("checking newListItem", newListItem);
 
     // Validation to check that a task isn't a character of just spaces
     const emptyStringCheck = name.split(" ").join("");
@@ -56,8 +72,25 @@ export default function CreateSubGoal({ parentId }) {
       const res = dispatch(addGoalThunk(newListItem));
       if (res) console.log("checking response", res);
     }
+
     setName("");
+    setDate("");
+    setTimeFrame("");
   };
+
+  // const [yearS, weekNumber] = date.split("-W");
+
+  const getWeekStartDate = (year, weekNumber) => {
+    const simple = new Date(year, 0, 2 + (weekNumber - 1) * 7);
+
+    return simple;
+  };
+  // const startDate = getWeekStartDate(yearS, weekNumber);
+  // console.log("checking the week here", startDate);
+  // console.log(
+  //   "now we checking if string week correct",
+  //   getCurrentWeek(startDate)
+  // );
 
   const defaultListHeight = 10;
   let displayList = [];
@@ -70,14 +103,6 @@ export default function CreateSubGoal({ parentId }) {
       displayList.push(<ListItem empty={true} />);
     }
   }
-
-  // Adding restritive due date function
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const addZero = (num) => (num < 10 ? "0" + num : num);
-  const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
 
   // Validation to ensure name is not all spaces
   function handleNameChange(event) {
@@ -168,12 +193,12 @@ export default function CreateSubGoal({ parentId }) {
               name="date"
               type="number"
               required={true}
-              default={year}
+              defaultValue={yearArray[0]}
               value={date}
               onChange={(e) => setDate(e.target.value)}
             >
               {yearArray.map((month, index) => (
-                <option key={index} value={index}>
+                <option key={index} value={month}>
                   {month}
                 </option>
               ))}

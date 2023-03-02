@@ -4,10 +4,10 @@ Goals:
    - display completed tasks
    - display completed sub-goals
    - show outstanding tasks and sub-goals
+
    - sub-goal
       - fix input field depending on date selected
-   - Sub-tasks
-- filter goals by userid
+
 - show parent task in Goal modal as well as task
 
 - add a modal to ensure something is deleted
@@ -24,13 +24,19 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 - Pronto
 - Hover effect to determine what each button is
-- Added devoper info in nav-bar
+
  - Update Models - Allow a goal to apply to multiple monthS
  - Goals - need a due date variable stored
  - Fix summary page to allow for a long description
 
 
 Done:
+- Goal Modal:
+    - Sub-tasks
+- filter goals by userid
+
+- Added devoper info in nav-bar
+- added delete button to goal modal
 - saving task modal shouldn't close the page
 - add a delete button on the task modal page
 
