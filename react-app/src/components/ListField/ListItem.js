@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTaskThunk, editTaskThunk } from "../../store/tasks";
+import { deleteTaskThunk, editTaskThunk, getTask } from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
 import EditTask from "./TaskModal";
 import EditGoal from "./GoalModal";
@@ -13,11 +13,18 @@ import {
   deleteGoalSubTask,
 } from "../../store/goals";
 
-export default function ListItem({ item, empty, taskBool, subTask }) {
+export default function ListItem({
+  item,
+  empty,
+  taskBool,
+  subTask,
+  indivSubTask,
+}) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
   const currTask = useSelector((state) => state.tasks.singleTask);
   const [completed, setCompleted] = useState(item?.completed || false);
+  const { modalRef, closeModal } = useModal();
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked
   // Many re-renders occuring here if we console.log here
@@ -34,10 +41,12 @@ export default function ListItem({ item, empty, taskBool, subTask }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setCompleted((prev) => !prev);
+    console.log("we're here", completed);
     const updatedItem = {
       ...item,
       completed: !completed,
     };
+    console.log("checking updated item", updatedItem);
 
     if (taskBool) {
       dispatch(editTaskThunk(updatedItem, item.id));
@@ -51,9 +60,14 @@ export default function ListItem({ item, empty, taskBool, subTask }) {
   };
 
   // Modal functionality
-  const onClick = () => {
-    if (taskBool) setModalContent(<EditTask itemId={item.id} />);
-    else setModalContent(<EditGoal itemId={item.id} />);
+  const onClickName = () => {
+    console.log("are we in here and are changing stuff", taskBool);
+    if (taskBool) {
+      if (indivSubTask) {
+        dispatch(getTask(item));
+      }
+      setModalContent(<EditTask itemId={item.id} />);
+    } else setModalContent(<EditGoal itemId={item.id} />);
   };
 
   const deleteClick = () => {
@@ -68,7 +82,7 @@ export default function ListItem({ item, empty, taskBool, subTask }) {
   if (!empty)
     innerDiv = (
       <div className="inner-list-item-text-container tag-color">
-        <div className="inner-list-item-text" onClick={onClick}>
+        <div className="inner-list-item-text" onClick={onClickName}>
           {item.name}{" "}
         </div>
         <div className="inner-list-edit-buttons-container">

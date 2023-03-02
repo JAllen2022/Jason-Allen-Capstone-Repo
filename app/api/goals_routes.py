@@ -16,9 +16,9 @@ def goals():
     month = request.args.get("month")
     week = request.args.get("week")
 
-    yearly_goals = Goal.query.filter(Goal.year == year).all()
-    monthly_goals = Goal.query.filter(Goal.month == month).all()
-    weekly_goals = Goal.query.filter(Goal.week == week).all()
+    yearly_goals = Goal.query.filter(Goal.year == year, Goal.user_id==current_user.id).all()
+    monthly_goals = Goal.query.filter(Goal.month == month, Goal.user_id==current_user.id).all()
+    weekly_goals = Goal.query.filter(Goal.week == week, Goal.user_id==current_user.id).all()
 
     return {'year': {goal.id:goal.to_dict() for goal in yearly_goals},
             'month': {goal.id:goal.to_dict() for goal in monthly_goals},

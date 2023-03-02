@@ -14,6 +14,7 @@ export default function ListField({
   date,
   increase,
   decrease,
+  dueDate,
   week,
   monthString,
   truncate,
@@ -85,6 +86,7 @@ export default function ListField({
 
     const newListItem = {
       name: title,
+      due_date: dueDate,
     };
 
     // Validation to check that a task isn't a character of just spaces
@@ -92,7 +94,7 @@ export default function ListField({
     if (title.length && emptyStringCheck) {
       if (taskBool) {
         //Dispatch create task thunk
-        const res = dispatch(addTaskThunk(newListItem));
+        const res = dispatch(addTaskThunk(newListItem, dueDate));
         if (res) {
           console.log("checking response", res);
         }

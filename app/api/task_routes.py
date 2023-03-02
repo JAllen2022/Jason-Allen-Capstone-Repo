@@ -6,13 +6,15 @@ from app.forms import TaskForm
 task_routes = Blueprint('tasks', __name__)
 
 
-@task_routes.route('/')
+@task_routes.route('')
 @login_required
 def tasks():
     """
     Query for all tasks and returns them in a dictionary of task dictionaries key value pairs
     """
-    tasks = Task.query.all()
+    due_date = request.args.get("due_date")
+
+    tasks = Task.query.filter(Task.due_date==due_date, Task.user_id==current_user.id).all()
     # tasks = Task.query.order_by(Task.completed.desc()).all()
 
     # print("checking tasks", [task.id for task in tasks])

@@ -11,14 +11,14 @@ const getTasks = (tasks) => ({
   payload: tasks,
 });
 
-const getTask = (task) => ({
+export const getTask = (task) => ({
   type: GET_TASK,
   payload: task,
 });
 
-const addTask = (task) => ({
+const addTask = (task, currDate) => ({
   type: ADD_TASK,
-  payload: task,
+  payload: { task, currDate },
 });
 
 const editTask = (task) => ({
@@ -33,8 +33,10 @@ const deleteTask = (taskId) => ({
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-export const getTasksThunk = () => async (dispatch) => {
-  const res = await fetch("/api/tasks/", {
+export const getTasksThunk = (data) => async (dispatch) => {
+  const searchParameters = new URLSearchParams(data).toString();
+  const res = await fetch(`/api/tasks?${searchParameters}`, {
+    method: "get",
     headers: {
       "Content-Type": "application/json",
     },
@@ -65,7 +67,7 @@ export const getTaskThunk = (taskId) => async (dispatch) => {
   }
 };
 
-export const addTaskThunk = (task) => async (dispatch) => {
+export const addTaskThunk = (task, currDate) => async (dispatch) => {
   const res = await fetch(`/api/tasks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -74,7 +76,7 @@ export const addTaskThunk = (task) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(addTask(data));
+    dispatch(addTask(data, currDate));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -125,19 +127,24 @@ export default function reducer(state = initialState, action) {
       return { ...state, singleTask: action.payload };
     case ADD_TASK: {
       // Refactored
-      const { id } = action.payload;
+      const { task, currDate } = action.payload;
+      const { id } = task;
       const newState = {
         ...state,
-        allTasks: {
-          ...state.allTasks,
-          [id]: action.payload,
-        },
       };
+      // Only add if date if the current date is the same
+      if (task.due_date == currDate) {
+        newState.allTasks = {
+          ...state.allTasks,
+          [id]: task,
+        };
+      }
+      console.log("checking this", task.due_date, currDate);
 
       if (state.singleTask.id) {
         newState.singleTask = {
           ...state.singleTask,
-          sub_tasks: { ...state.singleTask.sub_tasks, [id]: action.payload },
+          sub_tasks: { ...state.singleTask.sub_tasks, [id]: task },
         };
       }
       return newState;
@@ -166,12 +173,20 @@ export default function reducer(state = initialState, action) {
             ...editedTask,
           },
         },
-        singleTask: {
-          ...state.singleTask,
-          ...editedTask,
-          sub_tasks: editedTask.sub_tasks || state.singleTask.sub_tasks,
-        },
       };
+      newState.singleTask = { ...state.singleTask };
+
+      if (id === state.singleTask.id) {
+        newState.singleTask = { ...editedTask };
+      } else if (newState.singleTask.sub_tasks[id]) {
+        newState.singleTask.sub_tasks = {
+          ...state.singleTask.sub_tasks,
+          [id]: {
+            ...state.singleTask.sub_tasks[id],
+            ...editedTask,
+          },
+        };
+      }
 
       return newState;
       //   const editedTask = action.payload;

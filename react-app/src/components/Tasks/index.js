@@ -30,13 +30,18 @@ export default function Tasks() {
   }, [day]);
 
   useEffect(() => {
-    setDateString(date.toLocaleDateString("en-US", dateOptions))
+    setDateString(date.toLocaleDateString("en-US", dateOptions));
+    const dueDate = {
+      due_date: date.toLocaleDateString("en-US", dateOptions),
+    };
+    dispatch(getTasksThunk(dueDate));
   }, [date]);
-  console.log("checking date string", year, month, day);
-  console.log("checking date string date datestring", date, dateString);
 
   useEffect(() => {
-    dispatch(getTasksThunk());
+    const dueDate = {
+      due_date: today.toLocaleDateString("en-US", dateOptions),
+    };
+    dispatch(getTasksThunk(dueDate));
   }, [dispatch]);
 
   const previousDayClick = () => {
@@ -53,7 +58,11 @@ export default function Tasks() {
           <div class="title">
             <h1>To-Do</h1>
           </div>
-          <ListField taskBool={true} incommingList={Object.values(allTasks)} />
+          <ListField
+            taskBool={true}
+            dueDate={dateString}
+            incommingList={Object.values(allTasks)}
+          />
         </div>
         <div class="right-page">
           <div className="ribbon-container">

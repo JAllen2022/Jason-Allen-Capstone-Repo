@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTaskThunk, editTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 import CreateSubTask from "./CreateSubTask";
+import { deleteTaskThunk } from "../../../store/tasks";
 import "./EditListField.css";
 
 export default function EditListField({ itemId }) {
@@ -71,8 +72,6 @@ export default function EditListField({ itemId }) {
     };
 
     const res = dispatch(editTaskThunk(editItem, singleTask.id));
-
-    closeModal();
   };
 
   const cancelClick = () => {
@@ -99,6 +98,10 @@ export default function EditListField({ itemId }) {
       );
     }
   }
+  const deleteClick = () => {
+    dispatch(deleteTaskThunk(singleTask.id));
+    closeModal();
+  };
 
   return (
     <div className="edit-task-form-container">
@@ -106,9 +109,14 @@ export default function EditListField({ itemId }) {
         {" "}
         <i onClick={closeModal} class="fa-solid fa-x x-close"></i>
       </div>
-      <h1 className="edit-task-form-container-title">
-        Edit Task: {singleTask.name}
-      </h1>
+      <div className="edit-task-title-container">
+        <h1 className="edit-task-form-container-title">
+          Edit Task: {singleTask.name}
+        </h1>
+        <div className="delete-single-task">
+          <i class="fa-solid fa-trash" onClick={deleteClick}></i>
+        </div>
+      </div>
       <div className="edit-task-form-body-container">
         <div className="edit-task-form-left-container">
           <form className="" onSubmit={handleSubmit} type="submit">
@@ -282,11 +290,10 @@ export default function EditListField({ itemId }) {
           </form>
         </div>
         <div className="edit-task-form-right-container">
-          <div className="edit-task-create-subtasks-container">
+          <div className="edit-sub-task-create-subtasks-container">
             <h4 className="create-subtask-header">Create a SubTask</h4>
             <CreateSubTask parentId={singleTask.id} />
           </div>
-          
         </div>
       </div>
     </div>

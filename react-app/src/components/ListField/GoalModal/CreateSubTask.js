@@ -7,6 +7,27 @@ export default function CreateSubTask({ parentId }) {
   const [name, setName] = useState("");
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [date, setDate] = useState("");
+  const dateOptions = {
+    weekday: "short",
+    year: "2-digit",
+    month: "long",
+    day: "numeric",
+  };
+  console.log(
+    "checking date",
+    date,
+    date.slice(0, 4),
+    parseInt(date.slice(5, 7)) - 1,
+    date.slice(8)
+  );
+  console.log(
+    "checking date",
+    new Date(
+      date.slice(0, 4),
+      parseInt(date.slice(5, 7)) - 1,
+      date.slice(8)
+    ).toLocaleDateString("en-US", dateOptions)
+  );
 
   const dispatch = useDispatch();
 
@@ -16,7 +37,11 @@ export default function CreateSubTask({ parentId }) {
     const newListItem = {
       name,
       goal_id: parentId,
-      due_date: date,
+      due_date: new Date(
+        date.slice(0, 4),
+        parseInt(date.slice(5, 7)) - 1,
+        date.slice(8)
+      ).toLocaleDateString("en-US", dateOptions),
     };
 
     // Validation to check that a task isn't a character of just spaces
