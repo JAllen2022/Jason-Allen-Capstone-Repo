@@ -44,5 +44,6 @@ class Goal(db.Model):
             "status":self.status,
             "completed": self.completed,
             "priority":self.priority,
-            "parent_id":self.parent_id
+            "parent_id":self.parent_id,
+            "due_date":self.due_date
         }

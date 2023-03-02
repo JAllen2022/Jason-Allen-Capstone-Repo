@@ -20,6 +20,12 @@ export default function CreateSubGoal({ parentId }) {
   const day = now.getDate();
   const addZero = (num) => (num < 10 ? "0" + num : num);
   const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
   const newDate = new Date(date, 1, 1);
 
@@ -40,12 +46,19 @@ export default function CreateSubGoal({ parentId }) {
     if (timeFrame === "year") {
       // If current year, set to end of the current year
       if (date == "") {
-        newListItem.due_date = newDate;
-        newListItem.year = year;
+        newListItem.due_date = new Date(
+          newDate.getFullYear(),
+          11,
+          31
+        ).toLocaleDateString("en-US", dateOptions);
+        newListItem.year = newDate.getFullYear();
       }
       // Otherwise we set it to the end of whatever year is chosen
       else {
-        newListItem.due_date = new Date(date, 11, 31);
+        newListItem.due_date = new Date(date, 11, 31).toLocaleDateString(
+          "en-US",
+          dateOptions
+        );
         newListItem.year = date;
       }
     } else if (timeFrame === "month") {
@@ -125,11 +138,7 @@ export default function CreateSubGoal({ parentId }) {
     <div className="goal-modal-sub-goal-container">
       <div className="create-sub-goal-container">
         <h4>Create a Sub-Goal:</h4>
-        <form
-          className="sub-goal-list-form-container"
-          onSubmit={handleSubmit}
-          type="submit"
-        >
+        <form className="sub-goal-list-form-container" onSubmit={handleSubmit}>
           <label htmlFor="name" className="edit-task-form-labels">
             Name: <span style={{ color: "maroon" }}>*</span>
           </label>
@@ -150,11 +159,14 @@ export default function CreateSubGoal({ parentId }) {
           <select
             className="edit-form-select-input"
             name="time-frame"
+            defaultValue={null}
             required={true}
             value={timeFrame}
             onChange={(e) => setTimeFrame(e.target.value)}
           >
-            <option value={null}>None</option>
+            <option value={""} disabled={true}>
+              Select time frame
+            </option>
             <option value="year">Yearly</option>
             <option value="month">Monthly</option>
             <option value="week">Weekly</option>
@@ -165,10 +177,13 @@ export default function CreateSubGoal({ parentId }) {
           <select
             className="edit-form-select-input"
             name="priority"
+            defaultValue={null}
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
           >
-            <option value={null}>None</option>
+            <option value={""} disabled={true}>
+              Select priority
+            </option>
             <option value="a">A</option>
             <option value="b">B</option>
             <option value="c">C</option>
@@ -178,25 +193,16 @@ export default function CreateSubGoal({ parentId }) {
           <label htmlFor="date" className="edit-task-form-labels">
             Set a Due Date <span style={{ color: "maroon" }}>*</span>
           </label>
-          {/* <input
-            className="edit-form-date-input"
-            name="year"
-            type="date"
-            min={restrictedDay}
-            required={true}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          ></input> */}
           {timeFrame === "year" && (
             <select
               className="edit-form-date-input"
               name="date"
               type="number"
               required={true}
-              defaultValue={yearArray[0]}
               value={date}
               onChange={(e) => setDate(e.target.value)}
             >
+              <option value={null}></option>
               {yearArray.map((month, index) => (
                 <option key={index} value={month}>
                   {month}
@@ -231,9 +237,7 @@ export default function CreateSubGoal({ parentId }) {
             />
           )}
 
-          <button type="submit" className="submit-sub-task">
-            Create
-          </button>
+          <button className="submit-sub-task">Create</button>
         </form>
       </div>
       <div className="sub-goal-list-display">{displayList}</div>

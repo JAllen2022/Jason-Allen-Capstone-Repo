@@ -5,8 +5,12 @@ Goals:
    - display completed sub-goals
    - show outstanding tasks and sub-goals
 
-   - sub-goal
-      - fix input field depending on date selected
+
+
+
+
+- Change Priority to options that make sense
+- Allow priority to change color next to the task
 
 - show parent task in Goal modal as well as task
 
@@ -33,6 +37,8 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 Done:
 - Goal Modal:
     - Sub-tasks
+   - sub-goal
+   - fix input field depending on date selected
 - filter goals by userid
 
 - Added devoper info in nav-bar

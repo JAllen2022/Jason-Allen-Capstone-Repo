@@ -69,6 +69,7 @@ export default function Goals() {
           incommingList={Object.values(year_goals)}
           timeFrame={"year"}
           year={year}
+          dueDate={year}
           setYear={setYear}
           month={month}
           day={day}

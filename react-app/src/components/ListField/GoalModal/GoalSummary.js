@@ -10,9 +10,13 @@ export default function GoalSummary() {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const { closeModal } = useModal();
 
+  console.log("checking due date", singleGoal.due_date);
+  console.log("checking due date", singleGoal);
+
   return (
     <div className="summary-page-container">
       <div className="summary-body-container">
+        {/* {singleGoal.parent_id && <div>{singleGoal.parent?.name}</div>} */}
         <div className="summary-goal-item-title">Description:</div>
         <div>
           {singleGoal.description
@@ -28,15 +32,14 @@ export default function GoalSummary() {
             : "n/a"}
         </div>
         <div className="summary-goal-item-title">Due Date:</div>
-        <div className="">
-          {singleGoal.description ? singleGoal.description : "None set"}
-        </div>
+        <div className="">{singleGoal.due_date}</div>
         <div className="summary-goal-item-title"> Status:</div>
         <div>{singleGoal.status ? singleGoal.status : "Not started"}</div>
         <div>Sub-Goals</div>
         <div>List sub-goals here</div>
         <div>Sub-Tasks:</div>
         <div>List-sub-tasks here</div>
+
         {/* <div>Completed Sub-Goals:</div>
       <div>Conditionally show completed subtasks here</div> */}
 

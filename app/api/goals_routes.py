@@ -36,6 +36,10 @@ def goal(id):
     goal_dict= goal.to_dict()
     goal_dict["sub_goals"] = {goal.id:goal.to_dict() for goal in goal.children}
     goal_dict["sub_tasks"] = {task.id:task.to_dict() for task in goal.tasks}
+    # if goal_dict.parent_id is not None:
+    #     parent = Goal.query.get(goal_dict.parent_id)
+    #     goal_dict["parent"]=parent.to_dict()
+
     return goal_dict
 
 

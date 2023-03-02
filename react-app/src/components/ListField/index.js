@@ -22,6 +22,13 @@ export default function ListField({
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
 
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
   // Code to determine the header to display on each column
   let displayHeader = "";
   if (timeFrame === "year") {
@@ -83,7 +90,7 @@ export default function ListField({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log("checxking due date", dueDate);
     const newListItem = {
       name: title,
       due_date: dueDate,
@@ -103,11 +110,18 @@ export default function ListField({
         newListItem.time_frame = timeFrame;
 
         // Assign values to associate timeFrame to a specific date. I.e. Goals for 2023, Goals for February, 2023, etc.
-        if (timeFrame === "year") newListItem.year = date.getFullYear();
-        else if (timeFrame === "month") {
+        if (timeFrame === "year") {
+          newListItem.due_date = new Date(year, 11, 31).toLocaleDateString(
+            "en-US",
+            dateOptions
+          );
+          newListItem.year = year;
+        } else if (timeFrame === "month") {
           newListItem.month = `${monthString}, ${date.getFullYear()}`;
+          newListItem.due_date = `${monthString}, ${date.getFullYear()}`;
         } else if (timeFrame === "week") {
           newListItem.week = week;
+          newListItem.due_date = week.slice(14);
         }
         const res = dispatch(addGoalThunk(newListItem));
         if (res) {
