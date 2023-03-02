@@ -28,7 +28,7 @@ class Goal(db.Model):
     tags = db.relationship("Tag", secondary=tag_goals, back_populates="goals")
 
     user = db.relationship("User", back_populates="goals")
-    notes= db.relationship("Note", back_populates="goal", cascade="all, delete")
+    notes= db.relationship("Note", back_populates="goal")
 
 
     def to_dict(self):

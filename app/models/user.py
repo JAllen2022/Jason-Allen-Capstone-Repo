@@ -14,8 +14,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
 
-    goals = db.relationship("Goal", back_populates="user", cascade="all, delete")
-    tasks = db.relationship("Task", back_populates="user", cascade="all, delete")
+    goals = db.relationship("Goal", back_populates="user")
+    tasks = db.relationship("Task", back_populates="user")
 
     @property
     def password(self):
