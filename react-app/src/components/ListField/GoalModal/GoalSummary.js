@@ -4,53 +4,96 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
 import CreateSubGoal from "./CreateSubGoal";
-import "./EditGoal.css";
+import "./GoalModal.css";
 
 export default function GoalSummary() {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const { closeModal } = useModal();
+  const dispatch = useDispatch();
 
-  console.log("checking due date", singleGoal.due_date);
-  console.log("checking due date", singleGoal);
+  // Calculating number of completed
+  const completedSubGoals =
+    singleGoal.sub_goals &&
+    Object.values(singleGoal.sub_goals).filter((ele) => {
+      console.log("checking ele", ele);
+      console.log("checking ele", ele.completed);
+
+      return ele.completed;
+    }).length;
+  const completedSubTasks =
+    singleGoal.sub_tasks &&
+    Object.values(singleGoal.sub_tasks).filter((ele) => ele.completed).length;
+
+  const changeToParent = () => {
+    dispatch(getGoalThunk(singleGoal.parent_id));
+  };
 
   return (
     <div className="summary-page-container">
-      <div className="summary-body-container">
-        {/* {singleGoal.parent_id && <div>{singleGoal.parent?.name}</div>} */}
-        <div className="summary-goal-item-title">Description:</div>
-        <div>
-          {singleGoal.description
-            ? singleGoal.description
-            : "No description provided."}
+      <div className="summary-body-container-left">
+        <div className="description-container">
+          {singleGoal.description ? (
+            singleGoal.description
+          ) : (
+            <span>
+              <i class="fa-solid fa-bars-staggered summary-icon"></i>Description
+            </span>
+          )}
         </div>
-        <div className="summary-goal-item-title">Time frame: </div>
-        <div>
-          {" "}
-          {singleGoal.time_frame
-            ? singleGoal.time_frame[0].toUpperCase() +
-              singleGoal.time_frame.slice(1)
-            : "n/a"}
+        {singleGoal.parent_id && (
+          <div className="parent-goal">
+            <span className="parent-goal-title">Parent Goal: </span>
+            <span className="parent-goal-description" onClick={changeToParent}>
+              {singleGoal.parent?.name}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="summary-body-container-right">
+        <div className="summary-item-container">
+          <div className="summary-item-title">Due Date</div>
+          <div className="summary-item-description">
+            <i class="fa-regular fa-calendar summary-icon"></i>
+            {singleGoal.due_date}
+          </div>
         </div>
-        <div className="summary-goal-item-title">Due Date:</div>
-        <div className="">{singleGoal.due_date}</div>
-        <div className="summary-goal-item-title"> Status:</div>
-        <div>{singleGoal.status ? singleGoal.status : "Not started"}</div>
-        <div>Sub-Goals</div>
-        <div>List sub-goals here</div>
-        <div>Sub-Tasks:</div>
-        <div>List-sub-tasks here</div>
-
-        {/* <div>Completed Sub-Goals:</div>
-      <div>Conditionally show completed subtasks here</div> */}
-
-        {/* <div className="summary-page-button-container">
-        <div className="summary-page-buttons" onClick={() => closeModal()}>
-          Cancel
+        <div className="summary-item-container">
+          <div className="summary-item-title">Status</div>
+          <div className="summary-item-description">
+            <i class="fa-solid fa-bars-progress summary-icon"></i>
+            {singleGoal.status ? singleGoal.status : "Not started"}
+          </div>
         </div>
-        <div className="summary-page-buttons" onClick={() => setEdit(true)}>
-          Edit
+        <div className="summary-item-container">
+          <div className="summary-item-title">Sub-Goals</div>
+          <div className="summary-item-task">
+            <div className="summary-item-task-completed">
+              <i class="fa-solid fa-bullseye summary-icon"></i>
+              {singleGoal.sub_goals
+                ? Object.values(singleGoal.sub_goals).length
+                : "0"}
+            </div>
+            <div className="summary-item-task-completed">
+              <i class="fa-regular fa-square-check summary-icon"></i>
+              {completedSubGoals}
+            </div>
+          </div>
         </div>
-      </div> */}
+        <div className="summary-item-container-sub-task">
+          <div className="summary-item-title">Sub-Tasks</div>
+          <div className="summary-item-task">
+            <div className="summary-item-task-completed">
+              <i class="fa-solid fa-list-check summary-icon"></i>
+              {singleGoal.sub_tasks
+                ? Object.values(singleGoal.sub_tasks).length
+                : "0"}
+            </div>
+            <div className="summary-item-task-completed">
+              <i class="fa-regular fa-square-check summary-icon"></i>
+              {completedSubTasks}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

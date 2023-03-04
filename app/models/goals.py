@@ -17,12 +17,17 @@ class Goal(db.Model):
     month=db.Column(db.String(30))
     week=db.Column(db.String(30))
     due_date=db.Column(db.String(30))
+    input_date=db.Column(db.String(50))
     status=db.Column(db.String(30))
     completed=db.Column(db.Boolean)
     priority = db.Column(db.String(30))
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
 
-    children=db.relationship("Goal", backref=db.backref('parent', remote_side=[id]))
+
+    parent = db.relationship("Goal", backref=db.backref("parent_goal", remote_side=[id]))
+    children = db.relationship("Goal", backref=db.backref("child_goals", remote_side=[id]), lazy="joined")
+    # parent=db.relationship("Goal", backref=db.backref("parent", "parent_id"))
+    # children=db.relationship("Goal", backref=db.backref('parent', remote_side=[id]))
 
     tasks = db.relationship("Task", secondary=goal_tasks, back_populates="goals")
     tags = db.relationship("Tag", secondary=tag_goals, back_populates="goals")
@@ -45,5 +50,26 @@ class Goal(db.Model):
             "completed": self.completed,
             "priority":self.priority,
             "parent_id":self.parent_id,
-            "due_date":self.due_date
+            "due_date":self.due_date,
+            "input_date":self.input_date
+        }
+
+    def to_dict_single_goal(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "name": self.name,
+            "description": self.description,
+            "time_frame": self.time_frame,
+            "year": self.year,
+            "month": self.month,
+            "week": self.week,
+            "status": self.status,
+            "completed": self.completed,
+            "priority": self.priority,
+            "parent_id": self.parent_id,
+            "due_date": self.due_date,
+            "sub_goals": {goal.id:goal.to_dict() for goal in self.children},
+            "sub_tasks": {task.id:task.to_dict() for task in self.tasks},
+            "input_date":self.input_date
         }

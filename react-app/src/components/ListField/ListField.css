@@ -115,15 +115,20 @@
   padding-left: 0.5rem;
   position: relative;
   width: 92%;
-  /* border: 1px solid red; */
 }
 
-.tag-color {
-  border-left: 2px solid orange;
+/* .red {
+  border-left: 2px solid ;
 }
+.orange {
+  border-left: 2px solid ;
+}
+
+.blue {
+  border-left: 2px solid ;
+} */
 
 .inner-list-item-text {
-  /* border: 1px solid red; */
   width: 100%;
 }
 

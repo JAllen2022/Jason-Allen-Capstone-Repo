@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
 import CreateSubGoal from "./CreateSubGoal";
-import "./EditGoal.css";
-import "./EditGoal.css";
+import "./GoalModal.css";
 
 export default function EditGoal({ setEdit, setTab }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
@@ -77,6 +76,11 @@ export default function EditGoal({ setEdit, setTab }) {
     setEdit(false);
   };
 
+  let yearArray = [];
+  for (let i = year; i < 2100; i++) {
+    yearArray.push(i);
+  }
+
   return (
     <>
       <div className="edit-goal-form-left-container">
@@ -112,7 +116,7 @@ export default function EditGoal({ setEdit, setTab }) {
           </div>
           <div className="edit-task-form-div-field">
             <label htmlFor="time-frame" className="edit-task-form-labels">
-              Time Frame
+              Change Goal Time Frame
             </label>
             <select
               className="edit-form-input"
@@ -136,14 +140,16 @@ export default function EditGoal({ setEdit, setTab }) {
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
             >
-              <option value={null}>None</option>
-              <option value="a">A</option>
-              <option value="b">B</option>
-              <option value="c">C</option>
-              <option value="d">D</option>
+              <option value={null} disabled={true}>
+                None
+              </option>
+              <option value="1">Priority 1</option>
+              <option value="2">Priority 2</option>
+              <option value="3">Priority 3</option>
+              <option value="4">Priority 4</option>
             </select>
           </div>
-          <div className="edit-task-form-div-field">
+          {/* <div className="edit-task-form-div-field">
             <label htmlFor="parent-goal" className="edit-task-form-labels">
               Set a parent goal - NOT FUNCTIONAL YET
             </label>
@@ -159,7 +165,7 @@ export default function EditGoal({ setEdit, setTab }) {
               <option value="c">Goal 3</option>
               <option value="d">Goal 4</option>
             </select>
-          </div>
+          </div> */}
           <div className="edit-task-form-div-field">
             <label htmlFor="status" className="edit-task-form-labels">
               Status
@@ -178,14 +184,49 @@ export default function EditGoal({ setEdit, setTab }) {
             <label htmlFor="year" className="edit-task-form-labels">
               Change Goal Date
             </label>
-            <input
-              className="edit-form-date-input"
-              name="year"
-              type="datetime-local"
-              min={restrictedDateInput}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            ></input>
+            {singleGoal.time_frame === "year" && (
+              <select
+                className="edit-form-date-input"
+                name="date"
+                type="number"
+                required={true}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              >
+                <option value={null}></option>
+                {yearArray.map((month, index) => (
+                  <option key={index} value={month}>
+                    {month}
+                  </option>
+                ))}
+              </select>
+            )}
+            {singleGoal.time_frame === "month" && (
+              <input
+                className="edit-form-date-input"
+                name="date"
+                type="month"
+                min={new Date().toISOString().slice(0, 7)}
+                required={true}
+                value={date}
+                onChange={(e) => {
+                  const yearMonth = e.target.value.split("-");
+                  const formattedDate = `${yearMonth[0]}-${yearMonth[1]}`;
+                  setDate(formattedDate);
+                }}
+              />
+            )}
+            {singleGoal.time_frame === "week" && (
+              <input
+                className="edit-form-date-input"
+                name="date"
+                type="week"
+                min={new Date().toISOString().slice(0, 7)}
+                required={true}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            )}
           </div>
           <div className="edit-task-check-box-container">
             <label htmlFor="completed" className="edit-task-form-labels">

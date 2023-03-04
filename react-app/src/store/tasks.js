@@ -176,16 +176,19 @@ export default function reducer(state = initialState, action) {
       };
       newState.singleTask = { ...state.singleTask };
 
-      if (id === state.singleTask.id) {
-        newState.singleTask = { ...editedTask };
-      } else if (newState.singleTask.sub_tasks[id]) {
-        newState.singleTask.sub_tasks = {
-          ...state.singleTask.sub_tasks,
-          [id]: {
-            ...state.singleTask.sub_tasks[id],
-            ...editedTask,
-          },
-        };
+      if (newState.singleTask.id) {
+        if (id === state.singleTask.id) {
+          newState.singleTask = { ...editedTask };
+        } else if (newState.singleTask.sub_tasks[id]) {
+          newState.singleTask.sub_tasks = {
+            ...state.singleTask.sub_tasks,
+            [id]: {
+              ...state.singleTask.sub_tasks[id],
+              ...editedTask,
+            },
+          };
+        }
+
       }
 
       return newState;

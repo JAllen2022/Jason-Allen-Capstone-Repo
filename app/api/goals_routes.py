@@ -33,12 +33,14 @@ def goal(id):
     Query for a goal by id and returns that goal in a dictionary
     """
     goal = Goal.query.get(id)
-    goal_dict= goal.to_dict()
-    goal_dict["sub_goals"] = {goal.id:goal.to_dict() for goal in goal.children}
-    goal_dict["sub_tasks"] = {task.id:task.to_dict() for task in goal.tasks}
-    # if goal_dict.parent_id is not None:
-    #     parent = Goal.query.get(goal_dict.parent_id)
-    #     goal_dict["parent"]=parent.to_dict()
+
+    goal_dict= goal.to_dict_single_goal()
+
+    parentId=goal_dict["parent_id"]
+
+    if parentId is not None:
+        parent = Goal.query.get(parentId)
+        goal_dict["parent"]=parent.to_dict()
 
     return goal_dict
 
@@ -63,7 +65,9 @@ def add_goal():
             year=form.data["year"],
             month=form.data["month"],
             week=form.data["week"],
-            due_date=form.data["due_date"]
+            due_date=form.data["due_date"],
+            priority=form.data["priority"],
+            input_date=form.date["input_date"]
         )
 
         db.session.add(goal)
@@ -110,6 +114,8 @@ def edit_goal(id):
             goal.parent_id=form.data["parent_id"]
         if form.data["due_date"] is not None:
             goal.due_date=form.data["due_date"]
+        goal.input_date=form.date["input_date"]
+
 
         # Need to be able to add relationships once we have the other features added
         # task.goals.apppend=form.data["goals"]

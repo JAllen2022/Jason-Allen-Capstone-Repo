@@ -1,20 +1,9 @@
 Goals:
-- Finish Goal modal
-   - summary - fix the display for long descriptions
-   - display completed tasks
-   - display completed sub-goals
-   - show outstanding tasks and sub-goals
-
-
-
-
-
-- Change Priority to options that make sense
-- Allow priority to change color next to the task
-
-- show parent task in Goal modal as well as task
-
+- Finish setting up the Goals Modal
+     - set parent goal
+     - make sure all other aspects of goals from goal table are represented
 - add a modal to ensure something is deleted
+- Tackle the Task Modal
 
 - Finish user-home page
 - draft the reflections page
@@ -32,9 +21,11 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
  - Update Models - Allow a goal to apply to multiple monthS
  - Goals - need a due date variable stored
  - Fix summary page to allow for a long description
-
+- creating a sub-task of a task thats a child of a goal
 
 Done:
+- Priorities - get colors to match up and change options
+
 - Goal Modal:
     - Sub-tasks
    - sub-goal

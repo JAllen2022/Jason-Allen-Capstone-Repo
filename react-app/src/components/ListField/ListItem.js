@@ -2,22 +2,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTaskThunk, editTaskThunk, getTask } from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
 import EditTask from "./TaskModal";
-import EditGoal from "./GoalModal";
+import GoalModal from "./GoalModal";
 import { useState, useEffect } from "react";
 import { useModal } from "../../context/Modal";
-import "./ListField.css";
 import {
   deleteGoalThunk,
   editGoalThunk,
   editSubTask,
   deleteGoalSubTask,
+  getGoalThunk,
 } from "../../store/goals";
+import "./ListField.css";
 
 export default function ListItem({
   item,
   empty,
   taskBool,
   subTask,
+  setTab,
+  subGoal,
   indivSubTask,
 }) {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ export default function ListItem({
   const currTask = useSelector((state) => state.tasks.singleTask);
   const [completed, setCompleted] = useState(item?.completed || false);
   const { modalRef, closeModal } = useModal();
+  let tagColor = "lightgray";
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked
   // Many re-renders occuring here if we console.log here
@@ -36,17 +40,23 @@ export default function ListItem({
       }
     }
   }, [currTask]);
+  if (item?.priority == "1") {
+    tagColor = "#d1453a";
+  } else if (item?.priority == "2") {
+    tagColor = "#eb8907";
+  } else if (item?.priority == "3") {
+    tagColor = "#246ee0";
+  }
+  console.log("checking tag color:", tagColor);
 
   // Handle check box click on the right side of the container to mark something complete
   const handleSubmit = (e) => {
     e.preventDefault();
     setCompleted((prev) => !prev);
-    console.log("we're here", completed);
     const updatedItem = {
       ...item,
       completed: !completed,
     };
-    console.log("checking updated item", updatedItem);
 
     if (taskBool) {
       dispatch(editTaskThunk(updatedItem, item.id));
@@ -61,13 +71,18 @@ export default function ListItem({
 
   // Modal functionality
   const onClickName = () => {
-    console.log("are we in here and are changing stuff", taskBool);
     if (taskBool) {
       if (indivSubTask) {
         dispatch(getTask(item));
       }
       setModalContent(<EditTask itemId={item.id} />);
-    } else setModalContent(<EditGoal itemId={item.id} />);
+    } else {
+      if (subGoal) {
+        dispatch(getGoalThunk(item.id));
+        setTab("summary");
+      }
+      setModalContent(<GoalModal itemId={item.id} />);
+    }
   };
 
   const deleteClick = () => {
@@ -79,9 +94,13 @@ export default function ListItem({
   };
 
   let innerDiv;
+
   if (!empty)
     innerDiv = (
-      <div className="inner-list-item-text-container tag-color">
+      <div
+        style={{ borderLeft: `2px solid ${tagColor}` }}
+        className={`inner-list-item-text-container`}
+      >
         <div className="inner-list-item-text" onClick={onClickName}>
           {item.name}{" "}
         </div>

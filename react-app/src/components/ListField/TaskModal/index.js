@@ -159,14 +159,16 @@ export default function EditListField({ itemId }) {
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
               >
-                <option value={null}>None</option>
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
+                <option value={null} disabled={true}>
+                  None
+                </option>
+                <option value="1">Priority 1</option>
+                <option value="2">Priority 2</option>
+                <option value="3">Priority 3</option>
+                <option value="4">Priority 4</option>
               </select>
             </div>
-            <div className="edit-task-form-div-field">
+            {/* <div className="edit-task-form-div-field">
               <label htmlFor="add-goal" className="edit-task-form-labels">
                 Add to a goal{" "}
                 <span style={{ color: "red", border: "1px solid red" }}>
@@ -186,7 +188,7 @@ export default function EditListField({ itemId }) {
                 <option value="c">C</option>
                 <option value="d">D</option>
               </select>
-            </div>
+            </div> */}
             <div className="edit-task-form-div-field">
               <label htmlFor="duration" className="edit-task-form-labels">
                 Task Duration

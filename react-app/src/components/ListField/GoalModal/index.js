@@ -11,7 +11,7 @@ import CreateSubGoal from "./CreateSubGoal";
 import GoalSummary from "./GoalSummary";
 import EditGoal from "./EditGoal";
 import CreateSubTask from "./CreateSubTask";
-import "./EditGoal.css";
+import "./GoalModal.css";
 
 export default function GoalModal({ itemId }) {
   const dispatch = useDispatch();
@@ -32,7 +32,8 @@ export default function GoalModal({ itemId }) {
 
   if (tab === "summary") display = <GoalSummary />;
   if (edit === true) display = <EditGoal setEdit={setEdit} setTab={setTab} />;
-  if (tab === "sub-goal") display = <CreateSubGoal parentId={itemId} />;
+  if (tab === "sub-goal")
+    display = <CreateSubGoal parentId={itemId} setTab={setTab} />;
   if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
   // else if(tab=="sub-goal") display= <SubGoals />
   // else display= <Reflections />

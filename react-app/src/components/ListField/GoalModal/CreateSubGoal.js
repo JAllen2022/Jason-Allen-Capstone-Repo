@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGoalThunk } from "../../../store/goals";
 import { getCurrentWeek } from "../../Goals";
-import "./CreateSubGoal.css";
+import "./GoalModal.css";
 
-export default function CreateSubGoal({ parentId }) {
+export default function CreateSubGoal({ parentId, setTab }) {
   const [name, setName] = useState("");
   const [timeFrame, setTimeFrame] = useState("");
   const [date, setDate] = useState("");
@@ -42,6 +42,7 @@ export default function CreateSubGoal({ parentId }) {
       parent_id: parentId,
       priority,
       completed: false,
+      input_date: date,
     };
     if (timeFrame === "year") {
       // If current year, set to end of the current year
@@ -98,18 +99,14 @@ export default function CreateSubGoal({ parentId }) {
 
     return simple;
   };
-  // const startDate = getWeekStartDate(yearS, weekNumber);
-  // console.log("checking the week here", startDate);
-  // console.log(
-  //   "now we checking if string week correct",
-  //   getCurrentWeek(startDate)
-  // );
 
   const defaultListHeight = 10;
   let displayList = [];
   if (singleGoal.sub_goals) {
     const array = Object.values(singleGoal.sub_goals);
-    displayList = array.map((item) => <ListItem key={item.id} item={item} />);
+    displayList = array.map((item) => (
+      <ListItem subGoal={true} setTab={setTab} key={item.id} item={item} />
+    ));
   }
   if (displayList.length < defaultListHeight) {
     for (let i = displayList.length; i < defaultListHeight; i++) {
@@ -184,10 +181,10 @@ export default function CreateSubGoal({ parentId }) {
             <option value={""} disabled={true}>
               Select priority
             </option>
-            <option value="a">A</option>
-            <option value="b">B</option>
-            <option value="c">C</option>
-            <option value="d">D</option>
+            <option value="1">Priority 1</option>
+            <option value="2">Priority 2</option>
+            <option value="3">Priority 3</option>
+            <option value="4">Priority 4</option>
           </select>
 
           <label htmlFor="date" className="edit-task-form-labels">
