@@ -90,18 +90,6 @@ export default function ListItem({
     setModalContent(
       <DeleteConfirmation item={item} taskBool={taskBool} subTask={subTask} />
     );
-    // if (taskBool) {
-    //   dispatch(deleteTaskThunk(item.id));
-    // }
-    // // This is to handle sub tasks that are a subtask of a task
-    // else {
-    //   dispatch(deleteGoalThunk(item.id));
-    // }
-    // // Deleteing tasks that are a subtask of a goal
-
-    // if (subTask) {
-    //   dispatch(deleteGoalSubTask(item));
-    // }
   };
 
   let innerDiv;

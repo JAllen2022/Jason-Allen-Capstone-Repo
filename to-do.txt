@@ -24,6 +24,7 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- Tested editing a goal
 - add a modal to ensure something is deleted
 
 Goals:

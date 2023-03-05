@@ -5,6 +5,7 @@ const ADD_GOAL = "goals/ADD_GOAL";
 const ADD_SUB_TASK = "goals/ADD_SUB_TASK";
 const EDIT_SUB_TASK = "goals/EDIT_SUB_TASK";
 const DELETE_SUB_TASK = "goals/DELETE_SUB_TASK";
+const ADD_DISPLAY_TIME = "goals/ADD_DISPLAY_TIME";
 
 const EDIT_GOAL = "goals/EDIT_GOAL";
 const DELETE_GOAL = "goals/DELETE_GOAL";
@@ -28,6 +29,11 @@ const addGoal = (goal) => ({
 const addSubTask = (task) => ({
   type: ADD_SUB_TASK,
   payload: task,
+});
+
+export const addDisplayTime = (year, month, week) => ({
+  type: ADD_DISPLAY_TIME,
+  payload: { year, month, week },
 });
 
 export const editSubTask = (task) => ({
@@ -157,6 +163,7 @@ export const deleteGoalThunk = (goalId) => async (dispatch) => {
 };
 
 const initialState = {
+  displaytime: {},
   year: {},
   month: {},
   week: {},
@@ -170,7 +177,13 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_GOALS:
       const { year, month, week } = action.payload;
-      return { year, month, week, singleGoal: {} };
+      return {
+        year,
+        month,
+        week,
+        singleGoal: {},
+        displaytime: { ...state.displaytime },
+      };
     case GET_GOAL:
       return { ...state, singleGoal: action.payload };
     case ADD_GOAL:
@@ -216,39 +229,74 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case EDIT_GOAL: {
+      const editedGoal = action.payload;
       const { id, time_frame } = action.payload;
+      newState.year = { ...state.year };
+      newState.month = { ...state.month };
+      newState.week = { ...state.week };
+
+      // Here, we are checking to see if the CURRENT Goal, i.e. the single goal state, is changing it's current date
+      if (
+        state.singleGoal.time_frame !== editedGoal.time_frame ||
+        state.singleGoal.due_date !== editedGoal.due_date
+      ) {
+        //find the time frame it's in and delete it
+        if (state.year[id]) {
+          delete newState.year[id];
+        } else if (state.month[id]) {
+          delete newState.month[id];
+        } else if (state.week[id]) {
+          delete newState.week[id];
+        }
+
+        if (
+          time_frame === "year" &&
+          state.displaytime.year === editedGoal.year
+        ) {
+          newState.year[id] = action.payload;
+        } else if (
+          time_frame === "month" &&
+          state.displaytime.month === editedGoal.month
+        ) {
+          newState.month[id] = action.payload;
+        } else if (
+          time_frame === "week" &&
+          state.displaytime.week === editedGoal.week
+        ) {
+          newState.week[id] = action.payload;
+        }
+
+        newState.singleGoal = { ...state.singleGoal, ...editedGoal };
+
+        return newState;
+      }
+
+      // Then we can continue with our previous state updates
+      // Here we are updating all state
       if (time_frame === "year") {
         newState.year = { ...state.year };
-        newState.year[id] = action.payload;
+        newState.year[id] = editedGoal;
       } else if (time_frame === "month") {
         newState.month = { ...state.month };
-        newState.month[id] = action.payload;
+        newState.month[id] = editedGoal;
       } else if (time_frame === "week") {
         newState.week = { ...state.week };
-        newState.week[id] = action.payload;
+        newState.week[id] = editedGoal;
       }
-      // This indicates that it is a sub-goal being edited
-      if (newState.singleGoal.id === action.payload.parent_id) {
+      // This indicates that it is a sub-goal being edited for when we mark something complete in a parent goal
+      if (newState.singleGoal.id === editedGoal.parent_id) {
         newState.singleGoal = {
           ...state.singleGoal,
           sub_goals: {
             ...state.singleGoal.sub_goals,
-            [id]: { ...state.singleGoal.sub_goals[id], ...action.payload },
+            [id]: { ...state.singleGoal.sub_goals[id], ...editedGoal },
           },
         };
         // This indicates a current goal is being edited
       } else if (newState.singleGoal.id === id) {
         newState.singleGoal = { ...state.singleGoal };
-        newState.singleGoal = action.payload;
+        newState.singleGoal = editedGoal;
       }
-
-      // Need to update single task later
-      //   singleTask: {
-      //     ...state.singleTask,
-      //     ...editedTask,
-      //     sub_tasks: editedTask.sub_tasks || state.singleTask.sub_tasks,
-      //   },
-      // };
 
       return newState;
     }
@@ -310,6 +358,10 @@ export default function reducer(state = initialState, action) {
 
       return newState;
     }
+    case ADD_DISPLAY_TIME:
+      newState.displaytime = { ...action.payload };
+      return newState;
+
     default:
       return state;
   }

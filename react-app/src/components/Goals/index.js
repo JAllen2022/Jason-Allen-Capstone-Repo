@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGoalsThunk } from "../../store/goals";
+import { addDisplayTime, getGoalsThunk } from "../../store/goals";
 import ListField from "../ListField";
 import "./Goals.css";
 
@@ -52,13 +52,16 @@ export default function Goals() {
   }, [month, day, year]);
 
   useEffect(() => {
+    const dispYear = date.getFullYear();
+    const monthDisp = `${monthstring}, ${date.getFullYear()}`;
     dispatch(
       getGoalsThunk({
-        year: date.getFullYear(),
-        month: `${monthstring}, ${date.getFullYear()}`,
+        year: dispYear,
+        month: monthDisp,
         week,
       })
     );
+    dispatch(addDisplayTime(dispYear, monthDisp, week));
   }, [date]);
 
   <div className="goals-outer-container">

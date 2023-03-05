@@ -71,12 +71,14 @@ export default function CreateSubGoal({ parentId, setTab }) {
       newListItem.month = `${monthDate.toLocaleString("default", {
         month: "long",
       })}, ${newDate.getFullYear()}`;
+      newListItem.due_date = newListItem.month;
     } else if (timeFrame === "week") {
       // Convert week input value to date range representing the week
       const [year, weekNumber] = date.split("-W");
       const startDate = getWeekStartDate(year, weekNumber);
 
       newListItem.week = getCurrentWeek(startDate);
+      newListItem.due_date = newListItem.week.slice(14);
     }
     console.log("checking newListItem", newListItem);
 

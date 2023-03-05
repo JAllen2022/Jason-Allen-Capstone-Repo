@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTaskThunk, editTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 import CreateSubTask from "./CreateSubTask";
+import TaskSummary from "./TaskSummary";
+import EditTask from "./EditTask";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteConfirmation from "../../DeleteConfirmation";
 
@@ -11,34 +13,15 @@ import { deleteTaskThunk } from "../../../store/tasks";
 import "./EditListField.css";
 
 export default function EditListField({ itemId }) {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const [tab, setTab] = useState("summary");
+  const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const singleTask = useSelector((state) => state.tasks.singleTask);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [taskDuration, setTaskDuration] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [recurringFrequency, setRecurringFrequency] = useState("");
-  const [recurringDate, setRecurringDate] = useState("");
-  const [assignDate, setAssignDate] = useState("");
-  const [completed, setCompleted] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-  const ulRef = useRef();
 
-  useEffect(() => {
-    if (singleTask.id) {
-      setName(singleTask.name);
-      setDescription(singleTask.description);
-      setPriority(singleTask.priority);
-      setTaskDuration(singleTask.task_duration);
-      setDueDate(singleTask.due_date);
-      setRecurringFrequency(singleTask.recurring_frequency);
-      setRecurringDate(singleTask.recurring_date);
-      setAssignDate(singleTask.assign_date);
-      setCompleted(singleTask.completed);
-    }
-  }, [singleTask]);
+  const ulRef = useRef();
 
   // Formatting time constraints for google doc form
   const now = new Date();
@@ -60,49 +43,15 @@ export default function EditListField({ itemId }) {
     ":" +
     addZero(minute);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let editItem = {
-      ...singleTask,
-      name,
-      description,
-      priority,
-      task_duration: taskDuration,
-      assign_date: assignDate,
-      due_date: dueDate,
-      recurring_frequency: recurringFrequency,
-      recurring_date: recurringDate,
-      completed: completed ? true : false,
-    };
-
-    const res = dispatch(editTaskThunk(editItem, singleTask.id));
-  };
-
-  const cancelClick = () => {
-    closeModal();
-  };
-
   useEffect(() => {
     dispatch(getTaskThunk(itemId));
   }, [dispatch]);
 
-  const durationOptions = [
-    <option value={null}>None</option>,
-    <option value="15">15 minutes</option>,
-    <option value="30">30 minutes</option>,
-    <option value="45">45 minutes</option>,
-  ];
-  for (let i = 1; i < 5; i++) {
-    for (let j = 0; j <= 45; j += 15) {
-      const value = i * 60 + j;
-      durationOptions.push(
-        <option value={`${value}`}>
-          {i} hours, {j} minutes
-        </option>
-      );
-    }
-  }
+  let display = "";
+
+  if (tab === "summary") display = <TaskSummary />;
+  if (edit === true) display = <EditTask setEdit={setEdit} setTab={setTab} />;
+  if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
 
   useEffect(() => {
     if (!showMenu) return;
@@ -123,212 +72,127 @@ export default function EditListField({ itemId }) {
   };
 
   return (
-    <div className="edit-task-form-container">
+    <div className="edit-goal-form-container">
       <div className="x-marks-the-spot">
         {" "}
         <i onClick={closeModal} class="fa-solid fa-x x-close"></i>
       </div>
-      <div className="edit-task-title-container">
-        <h1 className="edit-task-form-container-title">
-          Edit Task: {singleTask.name}
-        </h1>
-        <div className="delete-single-task">
-          <OpenModalButton
-            buttonText={
-              <i
-                className="fa-solid fa-trash"
-                // onClick={deleteClick}
-              ></i>
+      <h1 className="edit-goal-form-container-title">
+        Task: {singleTask.name}
+      </h1>
+      <div className="edit-goal-form-nav-container">
+        <div className="edit-goal-left-nav">
+          <div
+            className={
+              tab === "summary" ? "goal-tab-heading-active" : "goal-tab-heading"
             }
-            onItemClick={closeMenu}
-            className="goal-delete"
-            modalComponent={
-              <DeleteConfirmation item={singleTask} taskBool={true} />
+            onClick={() => {
+              setTab("summary");
+              setEdit(false);
+            }}
+          >
+            {" "}
+            Summary{" "}
+          </div>
+
+          <div
+            className={
+              tab === "sub-tasks"
+                ? "goal-tab-heading-active"
+                : "goal-tab-heading"
             }
-          />
-        </div>
-      </div>
-      <div className="edit-task-form-body-container">
-        <div className="edit-task-form-left-container">
-          <form className="" onSubmit={handleSubmit} type="submit">
-            <div className="edit-task-form-div-field">
-              <label htmlFor="name" className="edit-task-form-labels">
-                Name <span style={{ color: "red" }}>*</span>
-              </label>
-              <input
-                className="edit-form-input"
-                // className="song-input-field"
-                required
-                name="name"
-                minLength="1"
-                maxLength="20"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            <div className="edit-task-form-div-field">
-              <label htmlFor="description" className="edit-task-form-labels">
-                Description
-              </label>
-              <textarea
-                className="edit-form-input"
-                // className="song-input-field"
-                name="description"
-                maxLength="500"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className="edit-task-form-div-field">
-              <label htmlFor="priority" className="edit-task-form-labels">
-                Priority
-              </label>
-              <select
-                className="edit-form-input"
-                name="priority"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value={null} disabled={true}>
-                  None
-                </option>
-                <option value="1">Priority 1</option>
-                <option value="2">Priority 2</option>
-                <option value="3">Priority 3</option>
-                <option value="4">Priority 4</option>
-              </select>
-            </div>
-            {/* <div className="edit-task-form-div-field">
-              <label htmlFor="add-goal" className="edit-task-form-labels">
-                Add to a goal{" "}
-                <span style={{ color: "red", border: "1px solid red" }}>
-                  {" "}
-                  NOT SET UP YET
-                </span>
-              </label>
-              <select
-                className="edit-form-input"
-                name="add-goal"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value={null}>None</option>
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
-              </select>
-            </div> */}
-            <div className="edit-task-form-div-field">
-              <label htmlFor="duration" className="edit-task-form-labels">
-                Task Duration
-              </label>
-              <select
-                className="edit-form-input"
-                name="duration"
-                value={taskDuration}
-                onChange={(e) => setTaskDuration(e.target.value)}
-              >
-                {durationOptions}
-              </select>
-            </div>
-            <div className="edit-task-form-div-field">
-              <label
-                htmlFor="recurring-frequency"
-                className="edit-task-form-labels"
-              >
-                Recurring Frequency
-              </label>
-              <select
-                className="edit-form-input"
-                name="recurring-frequency"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value={null}>None</option>
-                <option value="1">Daily</option>
-                <option value="7">Weekly</option>
-                <option value="30">Monthly</option>
-                <option value="365">Yearly</option>
-              </select>
-            </div>
-            <div className="edit-task-form-div-field">
-              <label htmlFor="recurring-date" className="edit-task-form-labels">
-                Recurring Date Start
-              </label>
-              <input
-                className="edit-form-input"
-                name="recurring"
-                type="datetime-local"
-                min={restrictedDateInput}
-                value={recurringDate}
-                onChange={(e) => setRecurringDate(e.target.value)}
-              ></input>
-            </div>
-
-            <div className="edit-task-form-div-field">
-              <label htmlFor="start-date" className="edit-task-form-labels">
-                Assign Date to Complete
-              </label>
-              <input
-                className="edit-form-input"
-                min={restrictedDateInput}
-                name="start-date"
-                type="datetime-local"
-                value={assignDate}
-                onChange={(e) => setAssignDate(e.target.value)}
-              ></input>
-            </div>
-            <div className="edit-task-form-div-field">
-              <label htmlFor="due-date" className="edit-task-form-labels">
-                Due Date
-              </label>
-              <input
-                className="edit-form-input"
-                name="due-date"
-                type="date"
-                min={restrictedDay}
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-              ></input>
-            </div>
-
-            <div className="edit-task-check-box-container">
-              <label htmlFor="completed" className="edit-task-form-labels">
-                Completed?
-              </label>
-              <input
-                className=""
-                // className="song-input-field"
-                name="completed"
-                checked={completed}
-                type="checkbox"
-                onChange={() => setCompleted((prev) => !prev)}
-              />
-            </div>
-
-            <div className="edit-task-buttons">
-              <div className="cancel-button" onClick={cancelClick}>
-                Cancel
-              </div>
-              <div
-                className="cancel-button"
-                type="submit"
-                onClick={handleSubmit}
-              >
-                Save
-              </div>
-            </div>
-          </form>
-        </div>
-        <div className="edit-task-form-right-container">
-          <div className="edit-sub-task-create-subtasks-container">
-            <h4 className="create-subtask-header">Create a SubTask</h4>
-            <CreateSubTask parentId={singleTask.id} />
+            onClick={() => {
+              setTab("sub-tasks");
+              setEdit(false);
+            }}
+          >
+            {" "}
+            Sub-Tasks{" "}
+          </div>
+          <div
+            className={
+              tab === "reflections"
+                ? "goal-tab-heading-active"
+                : "goal-tab-heading"
+            }
+            onClick={() => {
+              setTab("reflections");
+              setEdit(false);
+            }}
+          >
+            {" "}
+            Notes{" "}
           </div>
         </div>
+
+        <div
+          className={
+            edit ? "goal-tab-heading-square" : "edit-goal-button-square"
+          }
+        >
+          <i
+            onClick={() => {
+              setEdit(true);
+              setTab("edit");
+            }}
+            className="fa-regular fa-pen-to-square goal-edit"
+          ></i>
+          <span>
+            <OpenModalButton
+              buttonText={
+                <i
+                  className="fa-solid fa-trash"
+                  // onClick={deleteClick}
+                ></i>
+              }
+              onItemClick={closeMenu}
+              className="goal-delete"
+              modalComponent={
+                <DeleteConfirmation item={singleTask} taskBool={true} />
+              }
+            />
+          </span>
+        </div>
       </div>
+      <div className="edit-task-form-body-container"> {display}</div>
     </div>
   );
+  //   <div className="edit-task-form-container">
+  //     <div className="x-marks-the-spot">
+  //       {" "}
+  //       <i onClick={closeModal} class="fa-solid fa-x x-close"></i>
+  //     </div>
+  //     <div className="edit-task-title-container">
+  //       <h1 className="edit-task-form-container-title">
+  //         Edit Task: {singleTask.name}
+  //       </h1>
+  //       <div className="delete-single-task">
+  //         <OpenModalButton
+  //           buttonText={
+  //             <i
+  //               className="fa-solid fa-trash"
+  //               // onClick={deleteClick}
+  //             ></i>
+  //           }
+  //           onItemClick={closeMenu}
+  //           className="goal-delete"
+  //           modalComponent={
+  //             <DeleteConfirmation item={singleTask} taskBool={true} />
+  //           }
+  //         />
+  //       </div>
+  //     </div>
+  //     <div className="edit-task-form-body-container">
+  //       <div className="edit-task-form-left-container">
+
+  //       </div>
+  //       <div className="edit-task-form-right-container">
+  //         <div className="edit-sub-task-create-subtasks-container">
+  //           <h4 className="create-subtask-header">Create a SubTask</h4>
+  //           <CreateSubTask parentId={singleTask.id} />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 }

@@ -73,7 +73,15 @@ def add_goal():
         db.session.add(goal)
         db.session.commit()
 
-        return goal.to_dict()
+        goal_dict= goal.to_dict_single_goal()
+
+        parentId=goal_dict["parent_id"]
+
+        if parentId is not None:
+            parent = Goal.query.get(parentId)
+            goal_dict["parent"]=parent.to_dict()
+
+        return goal_dict
 
     if form.errors:
         return form.errors
@@ -116,15 +124,19 @@ def edit_goal(id):
             goal.due_date=form.data["due_date"]
 
 
-        # Need to be able to add relationships once we have the other features added
-        # task.goals.apppend=form.data["goals"]
-        # task.notes.apppend=form.data["notes"]
-        # task.tags.apppend=form.data["tags"]
-
         db.session.add(goal)
         db.session.commit()
 
-        return goal.to_dict()
+        goal_dict= goal.to_dict_single_goal()
+
+        parentId=goal_dict["parent_id"]
+
+        if parentId is not None:
+            parent = Goal.query.get(parentId)
+            goal_dict["parent"]=parent.to_dict()
+
+
+        return goal_dict
 
     if form.errors:
         return form.errors

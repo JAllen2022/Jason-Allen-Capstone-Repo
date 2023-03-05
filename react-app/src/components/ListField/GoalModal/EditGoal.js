@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getGoalThunk, editGoalThunk } from "../../../store/goals";
+import {
+  getGoalThunk,
+  editGoalThunk,
+  getGoalsThunk,
+} from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
 import { getCurrentWeek } from "../../Goals";
 
@@ -37,6 +41,9 @@ export default function EditGoal({ setEdit, setTab }) {
       setYear(singleGoal.year);
       // Setting Week
 
+      if (singleGoal.year) {
+        setDate(year);
+      }
       // Define the original date string
       if (singleGoal.month) {
         const originalDate = singleGoal.month;
@@ -52,7 +59,7 @@ export default function EditGoal({ setEdit, setTab }) {
         // Create the new date string in the format "YYYY-MM"
         const newDate = dateArray[1] + "-" + monthAbbreviation;
 
-        setMonth(newDate);
+        setDate(newDate);
       }
       console.log("checking single week", singleGoal.week);
       if (singleGoal.week) {
@@ -73,7 +80,7 @@ export default function EditGoal({ setEdit, setTab }) {
         // Create the new date string in the format "YYYY-W##"
         const newDate = `${year}-W${weekNumber.toString().padStart(2, "0")}`;
 
-        setWeek(newDate);
+        setDate(newDate);
       }
 
       setStatus(singleGoal.status);
@@ -146,12 +153,15 @@ export default function EditGoal({ setEdit, setTab }) {
       editItem.month = `${monthDate.toLocaleString("default", {
         month: "long",
       })}, ${newDate.getFullYear()}`;
+      editItem.due_date = editItem.month;
     } else if (timeFrame === "week") {
       // Convert week input value to date range representing the week
       const [year, weekNumber] = date.split("-W");
       const startDate = getWeekStartDate(year, weekNumber);
+      console.log("checking updated date", date);
 
       editItem.week = getCurrentWeek(startDate);
+      editItem.due_date = editItem.week.slice(14);
     }
 
     const res = dispatch(editGoalThunk(editItem, singleGoal.id));
@@ -160,7 +170,7 @@ export default function EditGoal({ setEdit, setTab }) {
   };
 
   let yearArray = [];
-  for (let i = year; i < 2100; i++) {
+  for (let i = new Date().getFullYear(); i < 2100; i++) {
     yearArray.push(i);
   }
 
@@ -284,8 +294,8 @@ export default function EditGoal({ setEdit, setTab }) {
                 name="date"
                 type="number"
                 required={true}
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               >
                 <option value={null}></option>
                 {yearArray.map((month, index) => (
@@ -302,11 +312,10 @@ export default function EditGoal({ setEdit, setTab }) {
                 type="month"
                 min={new Date().toISOString().slice(0, 7)}
                 required={true}
-                value={month}
+                value={date}
                 onChange={(e) => {
-                  console.log("checking the date", e.target.value);
                   const yearMonth = e.target.value.split("-");
-                  const formattedDate = `${yearMonth[0]}, ${yearMonth[1]}`;
+                  const formattedDate = `${yearMonth[0]}-${yearMonth[1]}`;
                   setDate(formattedDate);
                 }}
               />
@@ -318,8 +327,11 @@ export default function EditGoal({ setEdit, setTab }) {
                 type="week"
                 min={new Date().toISOString().slice(0, 7)}
                 required={true}
-                value={week}
-                onChange={(e) => setWeek(e.target.value)}
+                value={date}
+                onChange={(e) => {
+                  console.log("checking week ", e.target.value);
+                  setDate(e.target.value);
+                }}
               />
             )}
           </div>
