@@ -58,7 +58,10 @@
 }
 
 .goal-delete {
-  margin-left: 0.25rem;
+  /* margin-left: 0.25rem; */
+  font-size: 0.89rem;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
 }
 

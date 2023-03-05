@@ -1,15 +1,18 @@
-Goals:
-- Finish setting up the Goals Modal
-     - set parent goal
-     - make sure all other aspects of goals from goal table are represented
-- add a modal to ensure something is deleted
-- Tackle the Task Modal
+To-Do
+- make sure editing a goal or task works
+- Change task modal to look like goal modal
+- make sure task edit works
+- Task to show parent goal or parent task
+- make sure all comments are read
+- Fix task page to fit the entirety of the buttons
+- Finish all the documentation required
 
+Next features:
 - Finish user-home page
+   - tasks to the right
+   - weekly goals to the left
 - draft the reflections page
-- Change sub-tasks so that getting ALL tasks mean that you can get tasks that DON"T have a
-    - due date as well as the tasks for a specific due date
-- Push to render - EOD
+
 
 -- Add this link to use the favicon icon
 - <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
@@ -18,16 +21,19 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 - Pronto
 - Hover effect to determine what each button is
 
- - Update Models - Allow a goal to apply to multiple monthS
- - Goals - need a due date variable stored
- - Fix summary page to allow for a long description
-- creating a sub-task of a task thats a child of a goal
+
 
 Done:
+- add a modal to ensure something is deleted
+
+Goals:
+- Finish setting up the Goals Modal
+     - make sure all other aspects of goals from goal table are represented
 - Priorities - get colors to match up and change options
 
 - Goal Modal:
     - Sub-tasks
+    - set parent goal
    - sub-goal
    - fix input field depending on date selected
 - filter goals by userid

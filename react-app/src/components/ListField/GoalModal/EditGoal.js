@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
+import { getCurrentWeek } from "../../Goals";
+
 import CreateSubGoal from "./CreateSubGoal";
 import "./GoalModal.css";
 
@@ -17,9 +19,15 @@ export default function EditGoal({ setEdit, setTab }) {
   const [week, setWeek] = useState("");
   const [date, setDate] = useState("");
   const [status, setStatus] = useState("");
-  const [completed, setCompleted] = useState(false);
   const [priority, setPriority] = useState("");
   const { closeModal } = useModal();
+
+  const dateOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
   useEffect(() => {
     if (singleGoal.id) {
@@ -27,10 +35,48 @@ export default function EditGoal({ setEdit, setTab }) {
       setDescription(singleGoal.description);
       setTimeFrame(singleGoal.time_frame);
       setYear(singleGoal.year);
-      setMonth(singleGoal.month);
-      setWeek(singleGoal.week);
+      // Setting Week
+
+      // Define the original date string
+      if (singleGoal.month) {
+        const originalDate = singleGoal.month;
+
+        // Split the original date string into an array of month and year
+        const dateArray = originalDate.split(", ");
+
+        // Get the month abbreviation from the month name
+        const monthAbbreviation = new Date(
+          Date.parse(dateArray[0] + " 1, 2022")
+        ).toLocaleString("default", { month: "2-digit" });
+
+        // Create the new date string in the format "YYYY-MM"
+        const newDate = dateArray[1] + "-" + monthAbbreviation;
+
+        setMonth(newDate);
+      }
+      console.log("checking single week", singleGoal.week);
+      if (singleGoal.week) {
+        // Define the original date string
+        const originalDate = singleGoal.week;
+
+        // Extract the week number and year from the original date string
+        const matches = originalDate.match(/(\w+) (\d+) - (\w+) (\d+)/);
+        const startDate = new Date(`${matches[1]} ${matches[2]}, 2023`);
+        const year = startDate.getFullYear();
+        const weekNumber = Math.ceil(
+          ((startDate - new Date(`December 28, ${year - 1} 23:59:59`)) /
+            86400000 +
+            1) /
+            7
+        );
+
+        // Create the new date string in the format "YYYY-W##"
+        const newDate = `${year}-W${weekNumber.toString().padStart(2, "0")}`;
+
+        setWeek(newDate);
+      }
+
       setStatus(singleGoal.status);
-      setCompleted(singleGoal.completed);
       setPriority(singleGoal.priority);
     }
   }, [singleGoal]);
@@ -58,6 +104,8 @@ export default function EditGoal({ setEdit, setTab }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newDate = new Date();
+
     let editItem = {
       ...singleGoal,
       name,
@@ -67,9 +115,44 @@ export default function EditGoal({ setEdit, setTab }) {
       month,
       week,
       time_frame: timeFrame,
-      completed: completed ? true : false,
+      completed: status == "Completed" ? true : false,
       priority,
     };
+
+    if (timeFrame === "year") {
+      // If current year, set to end of the current year
+      if (date == "") {
+        editItem.due_date = new Date(
+          newDate.getFullYear(),
+          11,
+          31
+        ).toLocaleDateString("en-US", dateOptions);
+        editItem.year = newDate.getFullYear();
+      }
+      // Otherwise we set it to the end of whatever year is chosen
+      else {
+        editItem.due_date = new Date(date, 11, 31).toLocaleDateString(
+          "en-US",
+          dateOptions
+        );
+        editItem.year = date;
+      }
+    } else if (timeFrame === "month") {
+      const monthDate = new Date(
+        date.slice(0, 4),
+        parseInt(date.slice(5, 7)) - 1,
+        1
+      );
+      editItem.month = `${monthDate.toLocaleString("default", {
+        month: "long",
+      })}, ${newDate.getFullYear()}`;
+    } else if (timeFrame === "week") {
+      // Convert week input value to date range representing the week
+      const [year, weekNumber] = date.split("-W");
+      const startDate = getWeekStartDate(year, weekNumber);
+
+      editItem.week = getCurrentWeek(startDate);
+    }
 
     const res = dispatch(editGoalThunk(editItem, singleGoal.id));
     setTab("summary");
@@ -81,13 +164,19 @@ export default function EditGoal({ setEdit, setTab }) {
     yearArray.push(i);
   }
 
+  const getWeekStartDate = (year, weekNumber) => {
+    const simple = new Date(year, 0, 2 + (weekNumber - 1) * 7);
+
+    return simple;
+  };
+
   return (
     <>
       <div className="edit-goal-form-left-container">
         <form className="" onSubmit={handleSubmit} type="submit">
           <div className="edit-task-form-div-field">
             <label htmlFor="name" className="edit-task-form-labels">
-              Name <span style={{ color: "red" }}>*</span>
+              Name <span style={{ color: "maroon" }}>*</span>
             </label>
             <input
               className="edit-form-input"
@@ -114,22 +203,7 @@ export default function EditGoal({ setEdit, setTab }) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
-          <div className="edit-task-form-div-field">
-            <label htmlFor="time-frame" className="edit-task-form-labels">
-              Change Goal Time Frame
-            </label>
-            <select
-              className="edit-form-input"
-              name="time-frame"
-              value={timeFrame}
-              onChange={(e) => setTimeFrame(e.target.value)}
-            >
-              <option value={null}>None</option>
-              <option value="year">Yearly</option>
-              <option value="month">Monthly</option>
-              <option value="week">Weekly</option>
-            </select>
-          </div>
+
           <div className="edit-task-form-div-field">
             <label htmlFor="priority" className="edit-task-form-labels">
               Priority
@@ -178,20 +252,40 @@ export default function EditGoal({ setEdit, setTab }) {
             >
               <option value="Not Started">Not Started</option>
               <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div className="edit-task-form-div-field">
+            <label htmlFor="time-frame" className="edit-task-form-labels">
+              Goal Time Frame <span style={{ color: "maroon" }}>*</span>
+            </label>
+            <select
+              className="edit-form-input"
+              name="time-frame"
+              value={timeFrame}
+              onChange={(e) => setTimeFrame(e.target.value)}
+            >
+              <option value={null} disabled={true}>
+                None
+              </option>
+              <option value="year">Yearly</option>
+              <option value="month">Monthly</option>
+              <option value="week">Weekly</option>
             </select>
           </div>
           <div className="edit-task-form-div-field">
             <label htmlFor="year" className="edit-task-form-labels">
-              Change Goal Date
+              Goal Date <span style={{ color: "maroon" }}>*</span>
             </label>
-            {singleGoal.time_frame === "year" && (
+
+            {timeFrame === "year" && (
               <select
                 className="edit-form-date-input"
                 name="date"
                 type="number"
                 required={true}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
               >
                 <option value={null}></option>
                 {yearArray.map((month, index) => (
@@ -201,45 +295,33 @@ export default function EditGoal({ setEdit, setTab }) {
                 ))}
               </select>
             )}
-            {singleGoal.time_frame === "month" && (
+            {timeFrame === "month" && (
               <input
                 className="edit-form-date-input"
                 name="date"
                 type="month"
                 min={new Date().toISOString().slice(0, 7)}
                 required={true}
-                value={date}
+                value={month}
                 onChange={(e) => {
+                  console.log("checking the date", e.target.value);
                   const yearMonth = e.target.value.split("-");
-                  const formattedDate = `${yearMonth[0]}-${yearMonth[1]}`;
+                  const formattedDate = `${yearMonth[0]}, ${yearMonth[1]}`;
                   setDate(formattedDate);
                 }}
               />
             )}
-            {singleGoal.time_frame === "week" && (
+            {timeFrame === "week" && (
               <input
                 className="edit-form-date-input"
                 name="date"
                 type="week"
                 min={new Date().toISOString().slice(0, 7)}
                 required={true}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={week}
+                onChange={(e) => setWeek(e.target.value)}
               />
             )}
-          </div>
-          <div className="edit-task-check-box-container">
-            <label htmlFor="completed" className="edit-task-form-labels">
-              Completed?
-            </label>
-            <input
-              className=""
-              // className="song-input-field"
-              name="completed"
-              checked={completed}
-              type="checkbox"
-              onChange={() => setCompleted((prev) => !prev)}
-            />
           </div>
 
           <div className="edit-task-buttons">

@@ -1,0 +1,33 @@
+.delete-modal-container {
+  /* border: 1px solid red; */
+  width: 25rem;
+}
+
+.delete-modal-inner-text-title {
+  text-align: center;
+  color: #cead87;
+}
+
+.delete-modal-button-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.delete-modal-button {
+  background-color: rgba(206, 206, 206, 0.5);
+  border: 1px solid lightgray;
+  font-size: 1.07rem;
+  color: black;
+  width: 6rem;
+  height: 3rem;
+  border-radius: 30%;
+  opacity: 0.7;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-modal-button:hover {
+  background-color: rgba(206, 206, 206, 0.9);
+}

@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTaskThunk, editTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 import CreateSubTask from "./CreateSubTask";
+import OpenModalButton from "../../OpenModalButton";
+import DeleteConfirmation from "../../DeleteConfirmation";
+
 import { deleteTaskThunk } from "../../../store/tasks";
 import "./EditListField.css";
 
@@ -20,6 +23,8 @@ export default function EditListField({ itemId }) {
   const [recurringDate, setRecurringDate] = useState("");
   const [assignDate, setAssignDate] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
 
   useEffect(() => {
     if (singleTask.id) {
@@ -98,9 +103,23 @@ export default function EditListField({ itemId }) {
       );
     }
   }
-  const deleteClick = () => {
-    dispatch(deleteTaskThunk(singleTask.id));
-    closeModal();
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  const closeMenu = () => {
+    setShowMenu(false);
   };
 
   return (
@@ -114,7 +133,19 @@ export default function EditListField({ itemId }) {
           Edit Task: {singleTask.name}
         </h1>
         <div className="delete-single-task">
-          <i class="fa-solid fa-trash" onClick={deleteClick}></i>
+          <OpenModalButton
+            buttonText={
+              <i
+                className="fa-solid fa-trash"
+                // onClick={deleteClick}
+              ></i>
+            }
+            onItemClick={closeMenu}
+            className="goal-delete"
+            modalComponent={
+              <DeleteConfirmation item={singleTask} taskBool={true} />
+            }
+          />
         </div>
       </div>
       <div className="edit-task-form-body-container">

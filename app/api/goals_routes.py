@@ -56,7 +56,7 @@ def add_goal():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        print("checking this input", current_user.id)
+        print("checking this input", form.data)
         goal=Goal(
             user_id=current_user.id,
             name=form.data["name"],
@@ -67,7 +67,7 @@ def add_goal():
             week=form.data["week"],
             due_date=form.data["due_date"],
             priority=form.data["priority"],
-            input_date=form.date["input_date"]
+            status=form.data["status"]
         )
 
         db.session.add(goal)
@@ -114,7 +114,6 @@ def edit_goal(id):
             goal.parent_id=form.data["parent_id"]
         if form.data["due_date"] is not None:
             goal.due_date=form.data["due_date"]
-        goal.input_date=form.date["input_date"]
 
 
         # Need to be able to add relationships once we have the other features added

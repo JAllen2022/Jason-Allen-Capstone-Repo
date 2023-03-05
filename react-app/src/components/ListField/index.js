@@ -90,7 +90,6 @@ export default function ListField({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("checxking due date", dueDate);
     const newListItem = {
       name: title,
       due_date: dueDate,
@@ -108,6 +107,7 @@ export default function ListField({
       } else {
         //Dispatch create goal thunk
         newListItem.time_frame = timeFrame;
+        newListItem.status = "Not started";
 
         // Assign values to associate timeFrame to a specific date. I.e. Goals for 2023, Goals for February, 2023, etc.
         if (timeFrame === "year") {

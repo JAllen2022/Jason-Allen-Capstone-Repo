@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import OpenModalButton from "../../OpenModalButton";
+import DeleteConfirmation from "../../DeleteConfirmation";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   getGoalThunk,
   editGoalThunk,
@@ -14,8 +17,10 @@ import CreateSubTask from "./CreateSubTask";
 import "./GoalModal.css";
 
 export default function GoalModal({ itemId }) {
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
   const dispatch = useDispatch();
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
@@ -40,6 +45,24 @@ export default function GoalModal({ itemId }) {
   const deleteClick = () => {
     dispatch(deleteGoalThunk(itemId));
     closeModal();
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  const closeMenu = () => {
+    setShowMenu(false);
   };
 
   return (
@@ -122,10 +145,17 @@ export default function GoalModal({ itemId }) {
             className="fa-regular fa-pen-to-square goal-edit"
           ></i>
           <span>
-            <i
-              className="fa-solid fa-trash goal-delete"
-              onClick={deleteClick}
-            ></i>
+            <OpenModalButton
+              buttonText={
+                <i
+                  className="fa-solid fa-trash"
+                  // onClick={deleteClick}
+                ></i>
+              }
+              onItemClick={closeMenu}
+              className="goal-delete"
+              modalComponent={<DeleteConfirmation item={singleGoal} />}
+            />
           </span>
         </div>
       </div>

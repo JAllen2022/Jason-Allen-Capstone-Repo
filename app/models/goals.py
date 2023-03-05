@@ -17,7 +17,6 @@ class Goal(db.Model):
     month=db.Column(db.String(30))
     week=db.Column(db.String(30))
     due_date=db.Column(db.String(30))
-    input_date=db.Column(db.String(50))
     status=db.Column(db.String(30))
     completed=db.Column(db.Boolean)
     priority = db.Column(db.String(30))
@@ -51,7 +50,6 @@ class Goal(db.Model):
             "priority":self.priority,
             "parent_id":self.parent_id,
             "due_date":self.due_date,
-            "input_date":self.input_date
         }
 
     def to_dict_single_goal(self):
@@ -71,5 +69,5 @@ class Goal(db.Model):
             "due_date": self.due_date,
             "sub_goals": {goal.id:goal.to_dict() for goal in self.children},
             "sub_tasks": {task.id:task.to_dict() for task in self.tasks},
-            "input_date":self.input_date
+
         }

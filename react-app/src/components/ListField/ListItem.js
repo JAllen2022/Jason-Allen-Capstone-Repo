@@ -13,6 +13,7 @@ import {
   getGoalThunk,
 } from "../../store/goals";
 import "./ListField.css";
+import DeleteConfirmation from "../DeleteConfirmation";
 
 export default function ListItem({
   item,
@@ -86,11 +87,21 @@ export default function ListItem({
   };
 
   const deleteClick = () => {
-    if (taskBool) dispatch(deleteTaskThunk(item.id));
-    // This is to handle sub tasks that are a subtask of a task
-    else dispatch(deleteGoalThunk(item.id));
-    // Deleteing tasks that are a subtask of a goal
-    if (subTask) dispatch(deleteGoalSubTask(item));
+    setModalContent(
+      <DeleteConfirmation item={item} taskBool={taskBool} subTask={subTask} />
+    );
+    // if (taskBool) {
+    //   dispatch(deleteTaskThunk(item.id));
+    // }
+    // // This is to handle sub tasks that are a subtask of a task
+    // else {
+    //   dispatch(deleteGoalThunk(item.id));
+    // }
+    // // Deleteing tasks that are a subtask of a goal
+
+    // if (subTask) {
+    //   dispatch(deleteGoalSubTask(item));
+    // }
   };
 
   let innerDiv;

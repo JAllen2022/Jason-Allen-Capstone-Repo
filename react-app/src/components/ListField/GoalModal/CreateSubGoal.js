@@ -40,9 +40,9 @@ export default function CreateSubGoal({ parentId, setTab }) {
       name: name,
       time_frame: timeFrame,
       parent_id: parentId,
+      status: "Not Startes",
       priority,
       completed: false,
-      input_date: date,
     };
     if (timeFrame === "year") {
       // If current year, set to end of the current year
@@ -230,7 +230,10 @@ export default function CreateSubGoal({ parentId, setTab }) {
               min={new Date().toISOString().slice(0, 7)}
               required={true}
               value={date}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => {
+                console.log("checking week ", e.target.value);
+                setDate(e.target.value);
+              }}
             />
           )}
 

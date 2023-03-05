@@ -153,6 +153,7 @@ export default function SplashPage() {
               className="log-in-button"
               modalComponent={<LoginFormModal />}
             />
+            
 
             <OpenModalButton
               buttonText="Sign Up"

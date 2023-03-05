@@ -61,7 +61,7 @@ export default function GoalSummary() {
           <div className="summary-item-title">Status</div>
           <div className="summary-item-description">
             <i class="fa-solid fa-bars-progress summary-icon"></i>
-            {singleGoal.status ? singleGoal.status : "Not started"}
+            {singleGoal.completed ? "Completed" : singleGoal.status}
           </div>
         </div>
         <div className="summary-item-container">
