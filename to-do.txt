@@ -1,6 +1,4 @@
 To-Do
-- make sure editing a goal or task works
-- Change task modal to look like goal modal
 - make sure task edit works
 - Task to show parent goal or parent task
 - make sure all comments are read
@@ -24,9 +22,9 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- Change task modal to look like goal modal
 - Tested editing a goal
 - add a modal to ensure something is deleted
-
 Goals:
 - Finish setting up the Goals Modal
      - make sure all other aspects of goals from goal table are represented

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTaskThunk } from "../../../store/tasks";
 
-export default function CreateSubTask({ parentId }) {
+export default function CreateSubTask({ parentId, setTab }) {
   const [name, setName] = useState("");
   const singleTask = useSelector((state) => state.tasks.singleTask);
   const [date, setDate] = useState("");
@@ -45,7 +45,13 @@ export default function CreateSubTask({ parentId }) {
   if (singleTask.sub_tasks) {
     const array = Object.values(singleTask.sub_tasks);
     displayList = array.map((item) => (
-      <ListItem taskBool={true} indivSubTask={true} key={item.id} item={item} />
+      <ListItem
+        taskBool={true}
+        indivSubTask={true}
+        key={item.id}
+        item={item}
+        setTab={setTab}
+      />
     ));
   }
   if (displayList.length < defaultListHeight) {

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getGoalThunk, editGoalThunk } from "../../../store/goals";
-import { useModal } from "../../../context/Modal";
+
 import CreateSubGoal from "./CreateSubGoal";
 import "./GoalModal.css";
 
 export default function GoalSummary() {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
-  const { closeModal } = useModal();
+
   const dispatch = useDispatch();
 
   // Calculating number of completed

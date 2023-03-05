@@ -51,7 +51,8 @@ export default function EditListField({ itemId }) {
 
   if (tab === "summary") display = <TaskSummary />;
   if (edit === true) display = <EditTask setEdit={setEdit} setTab={setTab} />;
-  if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
+  if (tab === "sub-tasks")
+    display = <CreateSubTask parentId={itemId} setTab={setTab} />;
 
   useEffect(() => {
     if (!showMenu) return;

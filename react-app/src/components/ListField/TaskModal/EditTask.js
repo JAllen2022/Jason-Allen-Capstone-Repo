@@ -45,6 +45,8 @@ export default function EditGoal({ setEdit, setTab }) {
     };
 
     const res = dispatch(editTaskThunk(editItem, singleTask.id));
+    setTab("summary");
+    setEdit(false);
   };
 
   useEffect(() => {
@@ -117,6 +119,7 @@ export default function EditGoal({ setEdit, setTab }) {
 
   const cancelClick = () => {
     setTab("summary");
+    setEdit(false);
   };
 
   return (

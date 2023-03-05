@@ -43,5 +43,6 @@ class Task(db.Model):
             "recurring_frequency":self.recurring_frequency,
             "recurring_date":self.recurring_date,
             "completed":self.completed,
-            "parent_id":self.parent_id
+            "parent_id":self.parent_id,
+            "goals": {goal.id:goal.to_dict() for goal in self.goals}
         }

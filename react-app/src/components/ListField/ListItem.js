@@ -75,14 +75,13 @@ export default function ListItem({
     if (taskBool) {
       if (indivSubTask) {
         dispatch(getTask(item));
-      }
-      setModalContent(<EditTask itemId={item.id} />);
+        setTab("summary");
+      } else setModalContent(<EditTask itemId={item.id} />);
     } else {
       if (subGoal) {
         dispatch(getGoalThunk(item.id));
         setTab("summary");
-      }
-      setModalContent(<GoalModal itemId={item.id} />);
+      } else setModalContent(<GoalModal itemId={item.id} />);
     }
   };
 

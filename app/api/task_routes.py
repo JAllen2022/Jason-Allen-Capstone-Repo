@@ -34,6 +34,11 @@ def task(id):
     task = Task.query.get(id)
     task_dict= task.to_dict()
     task_dict["sub_tasks"] = {task.id:task.to_dict() for task in task.children}
+    parentId = task.parent_id
+    if parentId is not None:
+        parent = Task.query.get(parentId)
+        task_dict["parent"]=parent.to_dict()
+
     return task_dict
 
 
@@ -66,7 +71,14 @@ def add_task():
         db.session.add(task)
         db.session.commit()
 
-        return task.to_dict()
+        task_dict=task.to_dict()
+
+        parentId = task.parent_id
+        if parentId is not None:
+            parent = Task.query.get(parentId)
+            task_dict["parent"]=parent.to_dict()
+
+        return task_dict
 
     if form.errors:
         return form.errors
@@ -100,15 +112,18 @@ def edit_task(id):
         task.recurring_date=form.data["recurring_date"]
         task.completed=form.data["completed"]
 
-        # Need to be able to add relationships once we have the other features added
-        # task.goals.apppend=form.data["goals"]
-        # task.notes.apppend=form.data["notes"]
-        # task.tags.apppend=form.data["tags"]
-
         db.session.add(task)
         db.session.commit()
 
-        return task.to_dict()
+        task_dict=task.to_dict()
+
+        parentId = task.parent_id
+        if parentId is not None:
+            parent = Task.query.get(parentId)
+            task_dict["parent"]=parent.to_dict()
+
+
+        return task_dict
 
     if form.errors:
         return form.errors
