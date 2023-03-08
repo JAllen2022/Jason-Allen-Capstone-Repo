@@ -93,6 +93,7 @@ export default function ListField({
     const newListItem = {
       name: title,
       due_date: dueDate,
+      priority: "4",
     };
 
     // Validation to check that a task isn't a character of just spaces

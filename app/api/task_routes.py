@@ -62,7 +62,8 @@ def add_task():
             user_id=current_user.id,
             name=form.data["name"],
             parent_id= form.data["parent_id"] if form.data["parent_id"] else None,
-            due_date = form.data["due_date"]
+            due_date = form.data["due_date"],
+            priority = form.data["priority"]
         )
 
         if form.data["goal_id"]:

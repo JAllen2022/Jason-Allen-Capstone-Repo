@@ -22,7 +22,6 @@ class Goal(db.Model):
     priority = db.Column(db.String(30))
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
 
-
     parent = db.relationship("Goal", backref=db.backref("parent_goal", remote_side=[id]))
     children = db.relationship("Goal", backref=db.backref("child_goals", remote_side=[id]), lazy="joined")
     # parent=db.relationship("Goal", backref=db.backref("parent", "parent_id"))

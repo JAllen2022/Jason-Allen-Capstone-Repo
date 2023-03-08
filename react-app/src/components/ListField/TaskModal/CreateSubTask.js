@@ -28,6 +28,7 @@ export default function CreateSubTask({ parentId, setTab }) {
       name,
       parent_id: parentId,
       due_date: inputDate,
+      priority: "4",
     };
 
     // Validation to check that a task isn't a character of just spaces

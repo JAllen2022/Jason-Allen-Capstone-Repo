@@ -25,10 +25,9 @@ export default function ListItem({
   indivSubTask,
 }) {
   const dispatch = useDispatch();
-  const { setModalContent } = useModal();
   const currTask = useSelector((state) => state.tasks.singleTask);
   const [completed, setCompleted] = useState(item?.completed || false);
-  const { modalRef, closeModal } = useModal();
+  const { modalRef, closeModal, setModalContent } = useModal();
   let tagColor = "lightgray";
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked

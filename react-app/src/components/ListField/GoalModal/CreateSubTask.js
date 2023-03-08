@@ -42,6 +42,7 @@ export default function CreateSubTask({ parentId }) {
         parseInt(date.slice(5, 7)) - 1,
         date.slice(8)
       ).toLocaleDateString("en-US", dateOptions),
+      priority: "4",
     };
 
     // Validation to check that a task isn't a character of just spaces

@@ -1,5 +1,4 @@
 To-Do
-- make sure task edit works
 - Task to show parent goal or parent task
 - make sure all comments are read
 - Fix task page to fit the entirety of the buttons
@@ -11,7 +10,8 @@ Next features:
    - weekly goals to the left
 - draft the reflections page
 
-
+-- Total task time estimated
+-- Options to show Tags, as well as estimated time in line with task
 -- Add this link to use the favicon icon
 - <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons/term/arrow-left/" target="_blank" title="Arrow Left Icons">Noun Project</a>
@@ -22,6 +22,8 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- make sure task edit works
+
 - Change task modal to look like goal modal
 - Tested editing a goal
 - add a modal to ensure something is deleted
