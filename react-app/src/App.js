@@ -8,8 +8,9 @@ import Navigation from "./components/Navigation";
 import Reflections from "./components/Reflections";
 import Tasks from "./components/Tasks";
 import Goals from "./components/Goals";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/Notebook";
 import SplashPage from "./components/SplashPage";
+import TestHomePage from "./components/TestHomePage";
 
 function App() {
   const dispatch = useDispatch();

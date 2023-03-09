@@ -4,6 +4,7 @@ import { getTasksThunk } from "../../store/tasks";
 import ListField from "../ListField";
 import RibbonBanner from "../../Assets/RibbonBanner";
 import Arrow from "../../Assets/Arrow";
+import Notebook from "../Notebook";
 import "./Tasks.css";
 
 export default function Tasks() {
@@ -51,26 +52,29 @@ export default function Tasks() {
     setDay((prev) => prev + 1);
   };
 
+  const leftPage = (
+    <>
+      <div class="title">
+        <h1>To-Do</h1>
+      </div>
+      <ListField
+        taskBool={true}
+        dueDate={dateString}
+        incommingList={Object.values(allTasks)}
+      />
+    </>
+  );
+
+  const rightPage = (
+    <div className="ribbon-container">
+      <RibbonBanner />
+      <div className="ribbon-date">{dateString}</div>
+    </div>
+  );
+
   return (
     <div className="task-page-container">
-      <div class="magazine">
-        <div class="left-page">
-          <div class="title">
-            <h1>To-Do</h1>
-          </div>
-          <ListField
-            taskBool={true}
-            dueDate={dateString}
-            incommingList={Object.values(allTasks)}
-          />
-        </div>
-        <div class="right-page">
-          <div className="ribbon-container">
-            <RibbonBanner />
-            <div className="ribbon-date">{dateString}</div>
-          </div>
-        </div>
-      </div>
+      <Notebook leftPageContent={leftPage} rightPageContent={rightPage} />
       <div className="arrow-container">
         {" "}
         <div className="arrow-left-right">

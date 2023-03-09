@@ -135,7 +135,7 @@ export default function ListField({
 
   // Minimum number of list items on the page set to a constant
   let displayList;
-  let defaultListHeight = 20;
+  let defaultListHeight = 17;
   if (truncate) defaultListHeight = 7;
   if (listToDisplay) {
     displayList = listToDisplay.map((item) => (
