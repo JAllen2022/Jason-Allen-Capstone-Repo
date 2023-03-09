@@ -208,14 +208,18 @@
   box-sizing: border-box;
   /* border: 1px solid red; */
   width: 96%;
+  height: 100%;
   margin-left: 2px;
   padding: 5px;
+  z-index: 7;
   /* margin: 0 auto; */
 }
 .right-main-content {
   box-sizing: border-box;
   /* border: 1px solid red; */
   width: 97%;
+  z-index: 8;
+  height: 100%;
   margin: 0 auto;
 }
 

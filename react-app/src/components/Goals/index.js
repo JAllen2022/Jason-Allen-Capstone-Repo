@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDisplayTime, getGoalsThunk } from "../../store/goals";
 import ListField from "../ListField";
+import Notebook from "../Notebook";
 import "./Goals.css";
 
 // Helper function to get the week for a date object passed in
@@ -86,12 +87,30 @@ export default function Goals() {
       </div>
     </div>
   </div>;
-  return (
-    <div class="magazine">
-      <div class="left-page">
+
+  const leftPage = (
+    <ListField
+      incommingList={Object.values(year_goals)}
+      timeFrame={"year"}
+      year={year}
+      setYear={setYear}
+      month={month}
+      day={day}
+      setDay={setDay}
+      date={date}
+      setDate={setDate}
+      increase={increaseYear}
+      decrease={decreaseYear}
+      monthString={monthstring}
+    />
+  );
+
+  const rightPage = (
+    <>
+      <div className="goals-container-right">
         <ListField
-          incommingList={Object.values(year_goals)}
-          timeFrame={"year"}
+          incommingList={Object.values(monthly_goals)}
+          timeFrame={"month"}
           year={year}
           setYear={setYear}
           month={month}
@@ -99,48 +118,31 @@ export default function Goals() {
           setDay={setDay}
           date={date}
           setDate={setDate}
-          increase={increaseYear}
-          decrease={decreaseYear}
+          decrease={decreaseMonth}
+          increase={increaseMonth}
           monthString={monthstring}
+          truncate={true}
         />
       </div>
-      <div class="right-page">
-        <div className="goals-container-right">
-          <ListField
-            incommingList={Object.values(monthly_goals)}
-            timeFrame={"month"}
-            year={year}
-            setYear={setYear}
-            month={month}
-            day={day}
-            setDay={setDay}
-            date={date}
-            setDate={setDate}
-            decrease={decreaseMonth}
-            increase={increaseMonth}
-            monthString={monthstring}
-            truncate={true}
-          />
-        </div>
-        <div className="goals-container-right">
-          <ListField
-            incommingList={Object.values(weekly_goals)}
-            timeFrame={"week"}
-            year={year}
-            setYear={setYear}
-            month={month}
-            day={day}
-            setDay={setDay}
-            date={date}
-            setDate={setDate}
-            increase={increaseWeek}
-            decrease={decreaseWeek}
-            week={week}
-            monthString={monthstring}
-            truncate={true}
-          />
-        </div>
+      <div className="goals-container-right">
+        <ListField
+          incommingList={Object.values(weekly_goals)}
+          timeFrame={"week"}
+          year={year}
+          setYear={setYear}
+          month={month}
+          day={day}
+          setDay={setDay}
+          date={date}
+          setDate={setDate}
+          increase={increaseWeek}
+          decrease={decreaseWeek}
+          week={week}
+          monthString={monthstring}
+          truncate={true}
+        />
       </div>
-    </div>
+    </>
   );
+  return <Notebook leftPageContent={leftPage} rightPageContent={rightPage} />;
 }

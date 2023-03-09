@@ -53,16 +53,18 @@ export default function Tasks() {
   };
 
   const leftPage = (
-    <>
+    <div className="task-left-page">
       <div class="title">
         <h1>To-Do</h1>
       </div>
-      <ListField
-        taskBool={true}
-        dueDate={dateString}
-        incommingList={Object.values(allTasks)}
-      />
-    </>
+      <div className="task-left-page-list-field">
+        <ListField
+          taskBool={true}
+          dueDate={dateString}
+          incommingList={Object.values(allTasks)}
+        />
+      </div>
+    </div>
   );
 
   const rightPage = (
