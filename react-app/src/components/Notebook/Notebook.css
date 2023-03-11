@@ -157,10 +157,9 @@
 .left-main-content-container {
   position: absolute;
   display: flex;
-  /* border: 1px solid green; */
   width: 48%;
   top: -7px;
-  height: 96.2%;
+  height: 95.6%;
   margin: 20px 10px 10px;
   background-image: linear-gradient(
     to left,
@@ -182,10 +181,9 @@
 .right-main-content-container {
   position: absolute;
   display: flex;
-  /* border: 1px solid green; */
   width: 48%;
   top: -7px;
-  height: 96.2%;
+  height: 95.6%;
   right: -1px;
   margin: 20px 10px 10px;
   background-image: linear-gradient(
@@ -202,6 +200,80 @@
 
   box-shadow: inset 0 0 26px 2px rgba(226, 224, 211),
     1px 1px 13px 0 rgba(34, 27, 20, 0.81);
+}
+
+.notebook-left .left-main-content-container:before {
+  border-radius: 25%;
+  height: 2em;
+  background-image: linear-gradient(
+    to left,
+    rgba(226, 224, 211, 1),
+    rgb(226, 224, 211)
+  );
+  border-radius: 25%;
+  content: "";
+  height: 2em;
+  position: absolute;
+  z-index: -3;
+  top: -8px;
+  width: 100%;
+  transform: rotate(-0.3deg);
+}
+
+.notebook-left .left-main-content-container:after {
+  border-radius: 25%;
+  height: 2em;
+  background-image: linear-gradient(
+    to left,
+    rgba(226, 224, 211, 1),
+    rgb(226, 224, 211)
+  );
+  border-radius: 26%;
+  content: "";
+  height: 2em;
+  position: absolute;
+  z-index: -3;
+  bottom: -9px;
+  width: 100%;
+  /* border: 1px solid red; */
+  transform: rotate(0.5deg);
+}
+.notebook-right .right-main-content-container:before {
+  border-radius: 25%;
+  height: 2em;
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 224, 211, 1),
+    rgb(228, 227, 216)
+  );
+  border-radius: 26%;
+  content: "";
+  height: 2em;
+  position: absolute;
+  z-index: -3;
+  top: -9px;
+  width: 100%;
+  /* border: 1px solid red; */
+  transform: rotate(0.3deg);
+}
+
+.notebook-right .right-main-content-container:after {
+  border-radius: 25%;
+  height: 2em;
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 224, 211, 1),
+    rgb(228, 227, 216)
+  );
+  border-radius: 26%;
+  content: "";
+  height: 2em;
+  position: absolute;
+  z-index: -3;
+  bottom: -9px;
+  width: 100%;
+  /* border: 1px solid red; */
+  transform: rotate(-0.5deg);
 }
 
 .left-main-content {

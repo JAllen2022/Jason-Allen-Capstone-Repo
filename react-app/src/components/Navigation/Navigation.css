@@ -1,8 +1,8 @@
 .nav-bar-outer-container {
   /* border: 1px solid red; */
   background-color: #333;
-  min-height: 100vh;
-  height: 100%;
+  height: auto;
+  min-height: 100% !important;
   width: 4rem;
   display: flex;
   flex-direction: column;

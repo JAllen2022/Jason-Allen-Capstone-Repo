@@ -1,7 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getTaskThunk, editTaskThunk } from "../../../store/tasks";
+import {
+  getTaskThunk,
+  editTaskThunk,
+  getAllTasksThunk,
+} from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 import CreateSubTask from "./CreateSubTask";
 import TaskSummary from "./TaskSummary";
@@ -14,6 +18,7 @@ import "./EditListField.css";
 
 export default function EditGoal({ setEdit, setTab }) {
   const singleTask = useSelector((state) => state.tasks.singleTask);
+  const allTasks = useSelector((state) => state.tasks.allTasks);
 
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -21,6 +26,8 @@ export default function EditGoal({ setEdit, setTab }) {
   const [priority, setPriority] = useState("");
   const [taskDuration, setTaskDuration] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [parentOptions, setParentOptions] = useState("");
+  const [parentId, setParentId] = useState("");
   //   const [recurringFrequency, setRecurringFrequency] = useState("");
   //   const [recurringDate, setRecurringDate] = useState("");
   //   const [assignDate, setAssignDate] = useState("");
@@ -75,6 +82,7 @@ export default function EditGoal({ setEdit, setTab }) {
       setDescription(singleTask.description);
       setPriority(singleTask.priority);
       setTaskDuration(singleTask.task_duration);
+      setParentId(singleTask.parent_id);
       //   setRecurringFrequency(singleTask.recurring_frequency);
       //   setRecurringDate(singleTask.recurring_date);
       //   setAssignDate(singleTask.assign_date);
@@ -90,6 +98,38 @@ export default function EditGoal({ setEdit, setTab }) {
       setDueDate(newTimeStr);
     }
   }, [singleTask]);
+
+  useEffect(() => {
+    const tempAllTasks = { ...allTasks };
+    // Delete the current goal from the list of possible select options
+    if (Object.values(tempAllTasks).length) {
+      delete tempAllTasks[singleTask.id];
+    }
+    const allTaskArray = Object.values(tempAllTasks);
+    if (allTaskArray.length) {
+      //First find the options for goals that we are able to set as children
+      const parentArray = allTaskArray.sort((x, y) => {
+        if (x.name < y.name) {
+          return -1;
+        }
+        if (x.name > y.name) {
+          return 1;
+        }
+        return 0;
+      });
+      const diplayParentOptions = parentArray.map((ele) => (
+        <option key={ele.name} value={ele.id}>
+          {ele.name} | Due date: {ele.due_date}
+        </option>
+      ));
+      setParentOptions(diplayParentOptions);
+      //Find all goals that we are able to set as parents
+    }
+  }, [singleTask]);
+
+  useEffect(() => {
+    dispatch(getAllTasksThunk());
+  }, [dispatch]);
 
   const dateOptions = {
     weekday: "long",
@@ -283,6 +323,22 @@ export default function EditGoal({ setEdit, setTab }) {
                 setDueDate(e.target.value);
               }}
             ></input>
+          </div>
+
+          <div className="edit-task-form-div-field">
+            <label for="sub-tasks" className="edit-task-form-labels">
+              Assign a parent task:
+            </label>
+
+            <select
+              name="sub-tasks"
+              value={parentId}
+              className="edit-form-input"
+              onChange={(e) => setParentId(e.target.value)}
+            >
+              <option value={null}>None</option>
+              {parentOptions}
+            </select>
           </div>
 
           <div className="edit-task-check-box-container">

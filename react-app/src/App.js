@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      {!currentUser && <SplashPage />}
+      {!currentUser && <TestHomePage />}
       {currentUser && currentUser.id && (
         <>
           <Navigation isLoaded={isLoaded} />

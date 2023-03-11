@@ -9,7 +9,7 @@ import "./Tasks.css";
 
 export default function Tasks() {
   const dispatch = useDispatch();
-  const allTasks = useSelector((state) => state.tasks.allTasks);
+  const allTasks = useSelector((state) => state.tasks.currentTasks);
   const today = new Date();
   const dateOptions = {
     weekday: "short",

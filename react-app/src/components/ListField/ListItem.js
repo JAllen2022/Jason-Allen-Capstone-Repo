@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTaskThunk, editTaskThunk, getTask } from "../../store/tasks";
+import {
+  deleteTaskThunk,
+  editTaskThunk,
+  getTaskThunk,
+} from "../../store/tasks";
 import OpenModalButton from "../OpenModalButton";
 import EditTask from "./TaskModal";
 import GoalModal from "./GoalModal";
@@ -73,7 +77,7 @@ export default function ListItem({
   const onClickName = () => {
     if (taskBool) {
       if (indivSubTask) {
-        dispatch(getTask(item));
+        dispatch(getTaskThunk(item.id));
         setTab("summary");
       } else setModalContent(<EditTask itemId={item.id} />);
     } else {

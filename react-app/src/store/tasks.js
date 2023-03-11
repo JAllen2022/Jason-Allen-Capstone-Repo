@@ -1,6 +1,7 @@
 // constants
 const GET_TASKS = "tasks/GET_TASKS";
 const GET_TASK = "tasks/GET_TASK";
+const GET_ALL_TASKS = "task/GET_ALL_TASKS";
 const ADD_TASK = "tasks/ADD_TASK";
 const EDIT_TASK = "tasks/EDIT_TASK";
 const DELETE_TASK = "tasks/DELETE_TASK";
@@ -14,6 +15,11 @@ const getTasks = (tasks) => ({
 export const getTask = (task) => ({
   type: GET_TASK,
   payload: task,
+});
+
+const getAllTasks = (tasks) => ({
+  type: GET_ALL_TASKS,
+  payload: tasks,
 });
 
 const addTask = (task, currDate) => ({
@@ -61,6 +67,22 @@ export const getTaskThunk = (taskId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(getTask(data));
+  } else {
+    const data = await res.json();
+    if (data.errors) return res;
+  }
+};
+
+export const getAllTasksThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/tasks/all`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(getAllTasks(data.all_tasks));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -115,16 +137,19 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 };
 
 const initialState = {
-  allTasks: {},
+  currentTasks: {},
   singleTask: {},
+  allTasks: {},
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_TASKS:
-      return { ...state, allTasks: action.payload };
+      return { ...state, currentTasks: action.payload };
     case GET_TASK:
       return { ...state, singleTask: action.payload };
+    case GET_ALL_TASKS:
+      return { ...state, allTasks: action.payload };
     case ADD_TASK: {
       // Refactored
       const { task, currDate } = action.payload;
@@ -132,20 +157,24 @@ export default function reducer(state = initialState, action) {
       const newState = {
         ...state,
       };
-      // Only add if date if the current date is the same
+      // Only add to current task list if date if the current date is the same
       if (task.due_date == currDate) {
-        newState.allTasks = {
-          ...state.allTasks,
+        newState.currentTasks = {
+          ...state.currentTasks,
           [id]: task,
         };
       }
-      console.log("checking this", task.due_date, currDate);
 
       if (state.singleTask.id) {
         newState.singleTask = {
           ...state.singleTask,
           sub_tasks: { ...state.singleTask.sub_tasks, [id]: task },
         };
+        if (task.parent) {
+          newState.singleTask.parent = {
+            parent: { ...state.singleTask.parent, ...task.parent },
+          };
+        }
       }
       return newState;
       // Old Code
@@ -166,10 +195,10 @@ export default function reducer(state = initialState, action) {
       const { id } = editedTask;
       const newState = {
         ...state,
-        allTasks: {
-          ...state.allTasks,
+        currentTasks: {
+          ...state.currentTasks,
           [id]: {
-            ...state.allTasks[id],
+            ...state.currentTasks[id],
             ...editedTask,
           },
         },
@@ -188,7 +217,6 @@ export default function reducer(state = initialState, action) {
             },
           };
         }
-
       }
 
       return newState;
@@ -206,13 +234,13 @@ export default function reducer(state = initialState, action) {
     }
     case DELETE_TASK: {
       const taskId = action.payload;
-      const { allTasks, singleTask } = state;
+      const { currentTasks, singleTask } = state;
       const newState = {
-        allTasks: { ...allTasks },
+        currentTasks: { ...currentTasks },
         singleTask: { ...singleTask },
       };
 
-      delete newState.allTasks[taskId];
+      delete newState.currentTasks[taskId];
 
       if (singleTask.id === taskId) {
         newState.singleTask = {};

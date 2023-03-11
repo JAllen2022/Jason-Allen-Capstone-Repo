@@ -25,6 +25,8 @@ export default function GoalModal({ itemId }) {
   const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
 
+  console.log("checking single goal", singleGoal);
+
   const cancelClick = () => {
     closeModal();
   };

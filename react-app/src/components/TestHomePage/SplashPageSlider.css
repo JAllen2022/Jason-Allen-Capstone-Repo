@@ -1,0 +1,90 @@
+.splash-page-login-button {
+  background: transparent;
+  color: #fff;
+  border-color: #ccc;
+  height: 30px;
+  line-height: 24px;
+  margin: 0 0 0 6px;
+  padding: 2px 15px;
+  display: inline-block;
+  position: relative;
+  border-radius: 3px;
+}
+
+.home-page-slider-outer-container {
+  width: 100%;
+  /* border: 1px solid orange; */
+  height: 25rem;
+  position: relative;
+}
+
+.home-page-slide-container {
+  /* border: 1px solid green; */
+  width: 90%;
+  position: relative;
+  height: 25rem;
+  margin: 0 auto;
+}
+
+.home-page-slide {
+  box-sizing: border-box;
+  /* border: 1px solid purple; */
+  display: flex;
+  justify-content: space-between;
+  height: 25rem;
+  width: 100%;
+  align-items: center;
+  position: absolute;
+}
+
+.home-page-slide-text-container {
+  width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* border: 1px solid red; */
+}
+
+.home-page-header-slide1 {
+  font-size: 4rem;
+  padding: 0;
+  margin: 0;
+}
+
+.home-lage-header-slide2 {
+  padding: 0;
+  margin: 0.5rem;
+}
+.home-page-slide-one-svg-image {
+  height: 15rem;
+}
+
+.dot-container {
+  /* border: 1px solid red; */
+  position: absolute;
+  display: flex;
+  left: 50%;
+  width: 3rem;
+  justify-content: space-between;
+  bottom: 1rem;
+}
+
+.passive-dot {
+  font-size: 42px;
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+}
+
+.active-dot {
+  font-size: 42px;
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  background-color: darkgray;
+}

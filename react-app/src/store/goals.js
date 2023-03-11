@@ -1,6 +1,7 @@
 // constants
 const GET_GOALS = "goals/GET_GOALS";
 const GET_GOAL = "goals/GET_GOAL";
+const GET_ALL_GOALS = "goals/GET_ALL_GOALS";
 const ADD_GOAL = "goals/ADD_GOAL";
 const ADD_SUB_TASK = "goals/ADD_SUB_TASK";
 const EDIT_SUB_TASK = "goals/EDIT_SUB_TASK";
@@ -19,6 +20,11 @@ const getGoals = (goals) => ({
 const getGoal = (goal) => ({
   type: GET_GOAL,
   payload: goal,
+});
+
+const getAllGoals = (goals) => ({
+  type: GET_ALL_GOALS,
+  payload: goals,
 });
 
 const addGoal = (goal) => ({
@@ -86,6 +92,22 @@ export const getGoalThunk = (goalId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(getGoal(data));
+  } else {
+    const data = await res.json();
+    if (data.errors) return res;
+  }
+};
+
+export const getAllGoalsThunk = () => async (dispatch) => {
+  const res = await fetch(`/api/goals/all`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(getAllGoals(data.all_goals));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -168,6 +190,7 @@ const initialState = {
   month: {},
   week: {},
   singleGoal: {},
+  allGoals: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -175,6 +198,9 @@ export default function reducer(state = initialState, action) {
     ...state,
   };
   switch (action.type) {
+    case GET_ALL_GOALS:
+      newState.allGoals = action.payload;
+      return newState;
     case GET_GOALS:
       const { year, month, week } = action.payload;
       return {
@@ -183,6 +209,7 @@ export default function reducer(state = initialState, action) {
         week,
         singleGoal: {},
         displaytime: { ...state.displaytime },
+        allGoals: { ...state.allGoals },
       };
     case GET_GOAL:
       return { ...state, singleGoal: action.payload };
