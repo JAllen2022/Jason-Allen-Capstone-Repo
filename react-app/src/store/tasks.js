@@ -197,7 +197,6 @@ export default function reducer(state = initialState, action) {
       // return newState;
     }
     case EDIT_TASK: {
-      // Refactored
       const editedTask = action.payload;
       const { id } = editedTask;
       const newState = {
@@ -205,7 +204,7 @@ export default function reducer(state = initialState, action) {
         currentTasks: { ...state.currentTasks },
       };
 
-      if (state.displayDay.due_date !== editTask.due_date) {
+      if (state.displayDay.due_date !== editedTask.due_date) {
         delete newState.currentTasks[id];
       } else {
         newState.currentTasks[id] = {

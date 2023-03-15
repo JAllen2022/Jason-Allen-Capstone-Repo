@@ -1,14 +1,7 @@
 To-Do
 Tuesday 3/14
-- clicking on a sub-goal to mark it complete changes modal to sub-goal. can't have that happen
-- Recurring tasks
 
-- Cog options are user preferences
-- cog options - addition sort Options-
-   - drag and drop organization?
-   - sort by task or goal name
-   - sort by priority
-   - sort by drag and drop
+- Recurring tasks
 
 Show priority somewhere on the summary page
 
@@ -64,6 +57,15 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- clicking on a sub-goal to mark it complete changes modal to sub-goal. can't have that happen
+- creating a sub-goal and then another sub-goal creates weird behaviour
+   - correct parent not passed down
+- Cog options are user preferences
+- cog options - addition sort Options-
+   - drag and drop organization?
+   - sort by task or goal name
+   - sort by priority
+   - sort by drag and drop
 - Tasks - can assign MULTIPLE parent goals as well as
           - a SINGLE parent task in edit mode - DONE
 - How do make sub-tasks that have a goal, if more sub tasks created

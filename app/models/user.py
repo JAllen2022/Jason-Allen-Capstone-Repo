@@ -39,5 +39,9 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             "goals": {goal.id:goal.to_dict() for goal in self.goals},
-            "tasks": {task.id:task.to_dict() for task in self.tasks}
+            "tasks": {task.id:task.to_dict() for task in self.tasks},
+            "task_filter": self.task_filter,
+            "goal_year_filter":self.goal_year_filter,
+            "goal_month_filter":self.goal_month_filter,
+            "goal_week_filter":self.goal_week_filter
         }

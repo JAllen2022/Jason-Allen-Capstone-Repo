@@ -39,9 +39,9 @@ export default function CreateSubGoal({ parentId, setTab }) {
     const newListItem = {
       name: name,
       time_frame: timeFrame,
-      parent_id: parentId,
-      status: "Not Startes",
-      priority,
+      parent_id: singleGoal.id,
+      status: "Not Started",
+      priority: priority || "4",
       completed: false,
     };
     if (timeFrame === "year") {

@@ -4,6 +4,7 @@ import "./ListField.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
 import { addGoalThunk } from "../../store/goals";
+import { editUserThunk } from "../../store/session";
 
 export default function ListField({
   taskBool,
@@ -20,6 +21,7 @@ export default function ListField({
   truncate,
   defaultFilter,
 }) {
+  const user = useSelector((state) => state.session.user);
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
   const [filter, setFilter] = useState(defaultFilter || "priority");
@@ -238,8 +240,20 @@ export default function ListField({
               <div
                 className="list-tab-filter-ele"
                 onClick={() => {
-                  console.log("doing things");
-                  setFilter("alphabetical");
+                  if (filter != "alphabetical") {
+                    setFilter("alphabetical");
+                    const newUser = { ...user };
+                    if (taskBool) {
+                      newUser.task_filter = "alphabetical";
+                    } else if (timeFrame === "year") {
+                      newUser.goal_year_filter = "alphabetical";
+                    } else if (timeFrame === "month") {
+                      newUser.goal_month_filter = "alphabetical";
+                    } else if (timeFrame === "week") {
+                      newUser.goal_week_filter = "alphabetical";
+                    }
+                    dispatch(editUserThunk(newUser));
+                  }
                 }}
               >
                 <span className="list-tab-filter-check">
@@ -255,7 +269,20 @@ export default function ListField({
                 className="list-tab-filter-ele"
                 onClick={() => {
                   console.log("doing things");
-                  setFilter("priority");
+                  if (filter != "priorty") {
+                    setFilter("priority");
+                    const newUser = { ...user };
+                    if (taskBool) {
+                      newUser.task_filter = "priority";
+                    } else if (timeFrame === "year") {
+                      newUser.goal_year_filter = "priority";
+                    } else if (timeFrame === "month") {
+                      newUser.goal_month_filter = "priority";
+                    } else if (timeFrame === "week") {
+                      newUser.goal_week_filter = "priority";
+                    }
+                    dispatch(editUserThunk(newUser));
+                  }
                 }}
               >
                 <span className="list-tab-filter-check">

@@ -9,6 +9,7 @@ import "./Tasks.css";
 
 export default function Tasks() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.user);
   const allTasks = useSelector((state) => state.tasks.currentTasks);
   const today = new Date();
   const dateOptions = {
@@ -63,6 +64,7 @@ export default function Tasks() {
           taskBool={true}
           dueDate={dateString}
           incomingList={Object.values(allTasks)}
+          defaultFilter={user.task_filter}
         />
       </div>
     </div>

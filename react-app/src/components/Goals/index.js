@@ -24,6 +24,7 @@ export function getCurrentWeek(currentDate) {
 }
 
 export default function Goals() {
+  const user = useSelector((state) => state.session.user);
   const year_goals = useSelector((state) => state.goals.year);
   const monthly_goals = useSelector((state) => state.goals.month);
   const weekly_goals = useSelector((state) => state.goals.week);
@@ -65,28 +66,29 @@ export default function Goals() {
     dispatch(addDisplayTime(dispYear, monthDisp, week));
   }, [date]);
 
-  <div className="goals-outer-container">
-    <h1>All Goals</h1>
-    <div className="goals-inner-container">
-      <div className="goals-container">
-        <ListField
-          incomingList={Object.values(year_goals)}
-          timeFrame={"year"}
-          year={year}
-          dueDate={year}
-          setYear={setYear}
-          month={month}
-          day={day}
-          setDay={setDay}
-          date={date}
-          setDate={setDate}
-          increase={increaseYear}
-          decrease={decreaseYear}
-          monthString={monthstring}
-        />
-      </div>
-    </div>
-  </div>;
+  // <div className="goals-outer-container">
+  //   <h1>All Goals</h1>
+  //   <div className="goals-inner-container">
+  //     <div className="goals-container">
+  //       <ListField
+  //         incomingList={Object.values(year_goals)}
+  //         timeFrame={"year"}
+  //         year={year}
+  //         dueDate={year}
+  //         setYear={setYear}
+  //         month={month}
+  //         day={day}
+  //         setDay={setDay}
+  //         date={date}
+  //         setDate={setDate}
+  //         increase={increaseYear}
+  //         decrease={decreaseYear}
+  //         monthString={monthstring}
+  //         defaultFilter={user.goal_year_filter}
+  //       />
+  //     </div>
+  //   </div>
+  // </div>;
 
   const leftPage = (
     <ListField
@@ -102,6 +104,7 @@ export default function Goals() {
       increase={increaseYear}
       decrease={decreaseYear}
       monthString={monthstring}
+      defaultFilter={user.goal_year_filter}
     />
   );
 
@@ -122,6 +125,7 @@ export default function Goals() {
           increase={increaseMonth}
           monthString={monthstring}
           truncate={true}
+          defaultFilter={user.goal_month_filter}
         />
       </div>
       <div className="goals-container-right">
@@ -140,6 +144,7 @@ export default function Goals() {
           week={week}
           monthString={monthstring}
           truncate={true}
+          defaultFilter={user.goal_week_filter}
         />
       </div>
     </>
