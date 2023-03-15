@@ -31,6 +31,12 @@ export default function CreateSubTask({ parentId, setTab }) {
       priority: "4",
     };
 
+    // Creating the string for any associated goals to be passed down to children
+    if (Object.values(singleTask.goals).length) {
+      const tempArray = [];
+      Object.values(singleTask.goals).forEach((ele) => tempArray.push(ele.id));
+      newListItem["goals"] = tempArray;
+    }
     // Validation to check that a task isn't a character of just spaces
     const emptyStringCheck = name.split(" ").join("");
     if (name.length && emptyStringCheck) {

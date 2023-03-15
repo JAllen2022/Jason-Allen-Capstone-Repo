@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTasksThunk } from "../../store/tasks";
+import { getTasksThunk, setDisplayTime } from "../../store/tasks";
 import ListField from "../ListField";
 import RibbonBanner from "../../Assets/RibbonBanner";
 import Arrow from "../../Assets/Arrow";
@@ -36,14 +36,15 @@ export default function Tasks() {
       due_date: date.toLocaleDateString("en-US", dateOptions),
     };
     dispatch(getTasksThunk(dueDate));
+    dispatch(setDisplayTime(dueDate));
   }, [date]);
 
-  useEffect(() => {
-    const dueDate = {
-      due_date: today.toLocaleDateString("en-US", dateOptions),
-    };
-    dispatch(getTasksThunk(dueDate));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const dueDate = {
+  //     due_date: today.toLocaleDateString("en-US", dateOptions),
+  //   };
+  //   dispatch(getTasksThunk(dueDate));
+  // }, [dispatch]);
 
   const previousDayClick = () => {
     setDay((prev) => prev - 1);

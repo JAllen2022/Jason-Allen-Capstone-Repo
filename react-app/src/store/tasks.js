@@ -5,6 +5,7 @@ const GET_ALL_TASKS = "task/GET_ALL_TASKS";
 const ADD_TASK = "tasks/ADD_TASK";
 const EDIT_TASK = "tasks/EDIT_TASK";
 const DELETE_TASK = "tasks/DELETE_TASK";
+const SET_DISPLAY_TIME = "tasks/SET_DISPLAY_TIME";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const getTasks = (tasks) => ({
@@ -35,6 +36,11 @@ const editTask = (task) => ({
 const deleteTask = (taskId) => ({
   type: DELETE_TASK,
   payload: taskId,
+});
+
+export const setDisplayTime = (time) => ({
+  type: SET_DISPLAY_TIME,
+  payload: time,
 });
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -137,6 +143,7 @@ export const deleteTaskThunk = (taskId) => async (dispatch) => {
 };
 
 const initialState = {
+  displayDay: {},
   currentTasks: {},
   singleTask: {},
   allTasks: {},
@@ -195,14 +202,17 @@ export default function reducer(state = initialState, action) {
       const { id } = editedTask;
       const newState = {
         ...state,
-        currentTasks: {
-          ...state.currentTasks,
-          [id]: {
-            ...state.currentTasks[id],
-            ...editedTask,
-          },
-        },
+        currentTasks: { ...state.currentTasks },
       };
+
+      if (state.displayDay.due_date !== editTask.due_date) {
+        delete newState.currentTasks[id];
+      } else {
+        newState.currentTasks[id] = {
+          ...state.currentTasks[id],
+          ...editedTask,
+        };
+      }
       newState.singleTask = { ...state.singleTask };
 
       if (newState.singleTask.id) {
@@ -251,6 +261,8 @@ export default function reducer(state = initialState, action) {
 
       return newState;
     }
+    case SET_DISPLAY_TIME:
+      return { ...state, displayDay: action.payload };
     default:
       return state;
   }

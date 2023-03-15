@@ -15,10 +15,12 @@ import DeleteConfirmation from "../../DeleteConfirmation";
 
 import { deleteTaskThunk } from "../../../store/tasks";
 import "./EditListField.css";
+import { getAllGoalsThunk } from "../../../store/goals";
 
 export default function EditGoal({ setEdit, setTab }) {
   const singleTask = useSelector((state) => state.tasks.singleTask);
   const allTasks = useSelector((state) => state.tasks.allTasks);
+  const allGoals = useSelector((state) => state.goals.allGoals);
 
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -28,6 +30,12 @@ export default function EditGoal({ setEdit, setTab }) {
   const [dueDate, setDueDate] = useState("");
   const [parentOptions, setParentOptions] = useState("");
   const [parentId, setParentId] = useState("");
+  const [relatedGoal, setRelatedGoal] = useState([]);
+  const [goalOptions, setGoalOptions] = useState("");
+  const [existingGoals, setExistingGoals] = useState([]);
+
+  const [showGoals, setShowGoals] = useState(false);
+
   //   const [recurringFrequency, setRecurringFrequency] = useState("");
   //   const [recurringDate, setRecurringDate] = useState("");
   //   const [assignDate, setAssignDate] = useState("");
@@ -58,6 +66,10 @@ export default function EditGoal({ setEdit, setTab }) {
     console.log("checking newDate", newDate);
     console.log("checking newDate", dueDate);
 
+    // Combining both arrays for the edit
+
+    const goal_ids = [...existingGoals.map((ele) => ele.id), ...relatedGoal];
+
     let editItem = {
       ...singleTask,
       name,
@@ -66,15 +78,52 @@ export default function EditGoal({ setEdit, setTab }) {
       task_duration: taskDuration,
       //   assign_date: assignDate,
       due_date: newTimeStr,
+      goals: goal_ids,
       //   recurring_frequency: recurringFrequency,
       //   recurring_date: recurringDate,
       completed: completed ? true : false,
     };
 
+    console.log("checking payload", editItem);
     const res = dispatch(editTaskThunk(editItem, singleTask.id));
     setTab("summary");
     setEdit(false);
   };
+
+  const handleRemoveExistingGoal = (ele) => {
+    // console.log("checking the goal id", ele.id);
+    // const newExistingGoals = [...existingGoals];
+    // const index = newExistingGoalsIds.indexOf(ele.id); // find the index of the item to remove
+    // console.log("we got this index", index);
+    // console.log("checking existing goals ids", existingGoalsIds);
+    // newExistingGoalsIds.splice(index, 1);
+    // console.log("checking new existing goals", newExistingGoalsIds);
+    // setExistingGoals(newExistingGoals); // remove the item from the array
+  };
+
+  let displayGoals = "";
+  if (existingGoals.length) {
+    displayGoals = existingGoals.map((ele) => (
+      <div
+        key={`${ele.name}${ele.id}`}
+        value={ele.id}
+        className="existing-goal-divs"
+      >
+        <span
+          className="delete-existing-goal"
+          onClick={() => {
+            const newExistingGoals = existingGoals.filter(
+              (goal) => goal.id !== ele.id
+            );
+            setExistingGoals(newExistingGoals); // remove the item from the array
+          }}
+        >
+          X
+        </span>{" "}
+        {ele.name}
+      </div>
+    ));
+  }
 
   useEffect(() => {
     if (singleTask.id) {
@@ -97,17 +146,19 @@ export default function EditGoal({ setEdit, setTab }) {
 
       setDueDate(newTimeStr);
     }
-  }, [singleTask]);
 
-  useEffect(() => {
-    const tempAllTasks = { ...allTasks };
-    // Delete the current goal from the list of possible select options
-    if (Object.values(tempAllTasks).length) {
-      delete tempAllTasks[singleTask.id];
-    }
-    const allTaskArray = Object.values(tempAllTasks);
+    // Filter out the current task, as well as any children tasks. These should not be options
+    // to assign as a parent task
+    const allTaskArray = Object.values(allTasks).filter((ele) => {
+      if (ele.id === singleTask.id || ele.parent_id === singleTask.id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
     if (allTaskArray.length) {
-      //First find the options for goals that we are able to set as children
+      //First find the options for tasks that we are able to set as parent tasks
       const parentArray = allTaskArray.sort((x, y) => {
         if (x.name < y.name) {
           return -1;
@@ -118,17 +169,38 @@ export default function EditGoal({ setEdit, setTab }) {
         return 0;
       });
       const diplayParentOptions = parentArray.map((ele) => (
-        <option key={ele.name} value={ele.id}>
+        <option key={`${ele.name}${ele.id}`} value={ele.id}>
           {ele.name} | Due date: {ele.due_date}
         </option>
       ));
       setParentOptions(diplayParentOptions);
       //Find all goals that we are able to set as parents
     }
-  }, [singleTask]);
+    const relatedGoals = Object.values(singleTask.goals);
+    const relatedGoalIds = Object.values(singleTask.goals).map((ele) => ele.id);
+    setExistingGoals(relatedGoals);
+
+    const allGoalArray = Object.values(allGoals).filter((ele) => {
+      if (relatedGoalIds.includes(ele.id)) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+    if (allGoalArray.length) {
+      const displayGoalOptions = allGoalArray.map((ele) => (
+        <option key={`${ele.name}${ele.id}`} value={ele.id}>
+          {ele.name} | Due date: {ele.due_date}
+        </option>
+      ));
+
+      setGoalOptions(displayGoalOptions);
+    }
+  }, [singleTask, allTasks, allGoals]);
 
   useEffect(() => {
     dispatch(getAllTasksThunk());
+    dispatch(getAllGoalsThunk());
   }, [dispatch]);
 
   const dateOptions = {
@@ -196,7 +268,7 @@ export default function EditGoal({ setEdit, setTab }) {
         <form className="" onSubmit={handleSubmit} type="submit">
           <div className="edit-task-form-div-field">
             <label htmlFor="name" className="edit-task-form-labels">
-              Name <span style={{ color: "red" }}>*</span>
+              Name <span style={{ color: "maroon" }}>*</span>
             </label>
             <input
               className="edit-form-input"
@@ -242,27 +314,7 @@ export default function EditGoal({ setEdit, setTab }) {
               <option value="4">Priority 4</option>
             </select>
           </div>
-          {/* <div className="edit-task-form-div-field">
-              <label htmlFor="add-goal" className="edit-task-form-labels">
-                Add to a goal{" "}
-                <span style={{ color: "red", border: "1px solid red" }}>
-                  {" "}
-                  NOT SET UP YET
-                </span>
-              </label>
-              <select
-                className="edit-form-input"
-                name="add-goal"
-                value={priority}
-                onChange={(e) => setPriority(e.target.value)}
-              >
-                <option value={null}>None</option>
-                <option value="a">A</option>
-                <option value="b">B</option>
-                <option value="c">C</option>
-                <option value="d">D</option>
-              </select>
-            </div> */}
+
           <div className="edit-task-form-div-field">
             <label htmlFor="duration" className="edit-task-form-labels">
               Task Duration
@@ -311,7 +363,7 @@ export default function EditGoal({ setEdit, setTab }) {
           </div> */}
           <div className="edit-task-form-div-field">
             <label htmlFor="due-date" className="edit-task-form-labels">
-              Due Date
+              Due Date <span style={{ color: "maroon" }}>*</span>
             </label>
             <input
               className="edit-form-input"
@@ -340,7 +392,55 @@ export default function EditGoal({ setEdit, setTab }) {
               {parentOptions}
             </select>
           </div>
-
+          {displayGoals.length ? (
+            <div className="edit-task-form-div-field">
+              <label className="edit-task-form-labels">
+                Current goals associated with this task:
+              </label>
+              {displayGoals}
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="edit-task-form-div-field">
+            <label htmlFor="add-goal" className="edit-task-form-labels">
+              Add goals related to this task?
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  value={showGoals}
+                  onChange={(e) =>
+                    setShowGoals((prev) => {
+                      if (prev) {
+                        console.log("we in here");
+                        setRelatedGoal("");
+                      }
+                      return !prev;
+                    })
+                  }
+                />
+                <span class="slider round"></span>
+              </label>
+            </label>
+            {showGoals && (
+              <select
+                className="edit-form-input"
+                name="add-goal"
+                multiple
+                value={relatedGoal}
+                onChange={(e) =>
+                  setRelatedGoal(
+                    Array.from(e.target.selectedOptions).map(
+                      (option) => option.value
+                    )
+                  )
+                }
+              >
+                <option value={null}>None</option>
+                {goalOptions}
+              </select>
+            )}
+          </div>
           <div className="edit-task-check-box-container">
             <label htmlFor="completed" className="edit-task-form-labels">
               Completed?

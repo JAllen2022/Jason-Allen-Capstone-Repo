@@ -38,7 +38,7 @@ export default function TaskSummary() {
         <div className="parent-goal">
           {relatedGoals && (
             <div>
-              <span className="parent-goal-title">Related Goals: </span>
+              <span className="parent-goal-title">Achieving these goals: </span>
               {relatedGoals}
             </div>
           )}
@@ -102,7 +102,7 @@ function GoalSpan({ goal }) {
 
   return (
     <span className="parent-goal-description" onClick={changeToGoal}>
-      {goal.name}
+      {goal.name}{" "}
     </span>
   );
 }

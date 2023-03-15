@@ -10,7 +10,8 @@ goal_routes = Blueprint('goals', __name__)
 @login_required
 def goals():
     """
-    Query for all goals and returns them in a dictionary of goal dictionaries key value pairs
+    Query for all goals for a given time period, given parameters, and returns them
+    in a dictionary of goal dictionaries key value pairs
     """
     year = request.args.get("year")
     month = request.args.get("month")
@@ -25,6 +26,16 @@ def goals():
             'week': {goal.id:goal.to_dict() for goal in weekly_goals}
             }
 
+@goal_routes.route('/all')
+@login_required
+def all_goals():
+    """
+    Query for all goals for all goals, returns them in a object with key value pairs
+    """
+
+    all_goals = Goal.query.filter(Goal.user_id==current_user.id).all()
+
+    return {'all_goals': {goal.id:goal.to_dict() for goal in all_goals }}
 
 @goal_routes.route('/<int:id>')
 @login_required

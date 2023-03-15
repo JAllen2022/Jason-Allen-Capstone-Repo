@@ -1,8 +1,48 @@
 To-Do
-- Task to show parent goal or parent task
-- make sure all comments are read
-- Fix task page to fit the entirety of the buttons
+Tuesday 3/14
+- clicking on a sub-goal to mark it complete changes modal to sub-goal. can't have that happen
+- Tasks - can assign MULTIPLE parent goals as well as
+          - a SINGLE parent task in edit mode - DONE
+- Recurring tasks
+- cog options - addition sort Options-
+   - drag and drop organization?
+   - sort by task or goal name
+   - sort by priority
+   - sort by drag and drop
+
+- Start on third feature
+   - Notes
+
+
+- have a overall state for time. Show time in nav-bar?
+- Finish splash page
+- log-in and sign up modals
+- CSS animation for modals
+- search feature for goals/tasks
+
 - Finish all the documentation required
+- how do we get the calendar to show for each day?
+- extra page for credits,
+
+
+Planner page - can plan by week/month/year
+- Yearly -
+- Monthly - decide what habits to track for the month
+- Weekly - habit tracker for the week
+
+
+Weekly/Monthly/Yearly Summary
+- Summarize what goals or tasks were accomplished
+
+
+This week: notes and tags
+
+
+Next week:
+- 2 features: reflections, habits
+
+
+- make sure all comments are read
 
 Next features:
 - Finish user-home page
@@ -22,8 +62,13 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- How do make sub-tasks that have a goal, if more sub tasks created
+ - how do associate with that goal? - DONE
+    - make it so when creating a task, the parent_id is passed down - DONE
+   - Goals - can only assign a parent goal in edit mode - DONE
+- changing a date while editing a goal/task MUST be required
 - make sure task edit works
-
+- fix css on task page
 - Change task modal to look like goal modal
 - Tested editing a goal
 - add a modal to ensure something is deleted
@@ -31,25 +76,21 @@ Goals:
 - Finish setting up the Goals Modal
      - make sure all other aspects of goals from goal table are represented
 - Priorities - get colors to match up and change options
-
 - Goal Modal:
     - Sub-tasks
     - set parent goal
    - sub-goal
    - fix input field depending on date selected
 - filter goals by userid
-
 - Added devoper info in nav-bar
 - added delete button to goal modal
 - saving task modal shouldn't close the page
 - add a delete button on the task modal page
-
 - add a date input for sub-tasks in task modal
 - fix clicking on a sub-task in task modal - needs to go to task modal
 - Get tasks to display dates as well - scrollable
 - sign up - email valdiation
 - find out where the semi-colan is coming from
-
 - Add demo-user button
 - Fix log in Modal
 - Splash page draft completed

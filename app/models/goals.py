@@ -33,6 +33,18 @@ class Goal(db.Model):
     user = db.relationship("User", back_populates="goals")
     notes= db.relationship("Note", back_populates="goal")
 
+    def to_simple_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "time_frame": self.time_frame,
+            "year":self.year,
+            "month":self.month,
+            "week":self.week,
+            "completed": self.completed,
+            "parent_id":self.parent_id,
+        }
+
 
     def to_dict(self):
         return {
