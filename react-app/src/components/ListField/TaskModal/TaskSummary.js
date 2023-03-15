@@ -30,7 +30,8 @@ export default function TaskSummary() {
             singleTask.description
           ) : (
             <span>
-              <i class="fa-solid fa-bars-staggered summary-icon"></i>Description
+              <i className="fa-solid fa-bars-staggered summary-icon"></i>
+              Description
             </span>
           )}
         </div>
@@ -59,7 +60,7 @@ export default function TaskSummary() {
         <div className="summary-item-container">
           <div className="summary-item-title">Due Date</div>
           <div className="summary-item-description">
-            <i class="fa-regular fa-calendar summary-icon"></i>
+            <i className="fa-regular fa-calendar summary-icon"></i>
             {singleTask.due_date}
           </div>
         </div>
@@ -67,7 +68,7 @@ export default function TaskSummary() {
           <div className="summary-item-title">Estimated Task Duration</div>
           <div className="summary-item-task">
             <div className="summary-item-description">
-              <i class="fa-solid fa-hourglass-half summary-icon"></i>
+              <i className="fa-solid fa-hourglass-half summary-icon"></i>
               {singleTask.task_duration ? singleTask.task_duration : "None set"}
             </div>
           </div>
@@ -76,13 +77,13 @@ export default function TaskSummary() {
           <div className="summary-item-title">Sub-Tasks</div>
           <div className="summary-item-task">
             <div className="summary-item-task-completed">
-              <i class="fa-solid fa-list-check summary-icon"></i>
+              <i className="fa-solid fa-list-check summary-icon"></i>
               {singleTask.sub_tasks
                 ? Object.values(singleTask.sub_tasks).length
                 : "0"}
             </div>
             <div className="summary-item-task-completed">
-              <i class="fa-regular fa-square-check summary-icon"></i>
+              <i className="fa-regular fa-square-check summary-icon"></i>
               {completedSubTasks ? completedSubTasks : "0"}
             </div>
           </div>

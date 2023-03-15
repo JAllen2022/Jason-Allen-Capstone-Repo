@@ -3,6 +3,8 @@
   width: 99.5%;
   height: 100%;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 .list-header {
@@ -60,6 +62,34 @@
 .list-tab-cog {
   padding: 0 1rem;
   cursor: pointer;
+  position: relative;
+}
+
+.list-tab-filter-menu-container {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 9rem;
+  left: -6rem;
+  font-size: 0.85rem;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  z-index: 5;
+  padding: 0.25rem;
+  box-shadow: 3px 3px 10px rgb(201, 201, 201);
+}
+
+.list-tab-filter-ele {
+  width: 90%;
+  display: flex;
+  padding: 0.25rem;
+}
+
+.list-tab-filter-check {
+  width: 1.25rem;
 }
 
 .list-input-field-container {
@@ -84,18 +114,16 @@
 }
 
 .list-view-section {
-  /* border: 2px solid red; */
   overflow-y: scroll;
-  height: 82%;
-  /* height: 100%; */
-  /* max-height: 31.5rem; */
   margin-right: 0.2rem;
+  flex: 1;
 }
 
 .list-view-section-truncated {
   /* border: 1px solid green; */
   overflow-y: scroll;
-  height: 60%;
+  /* height: 60%; */
+  flex: 1;
   /* max-height: 11rem; */
 }
 

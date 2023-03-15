@@ -76,7 +76,7 @@ export default function EditListField({ itemId }) {
     <div className="edit-goal-form-container">
       <div className="x-marks-the-spot">
         {" "}
-        <i onClick={closeModal} class="fa-solid fa-x x-close"></i>
+        <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
       </div>
       <h1 className="edit-goal-form-container-title">
         Task: {singleTask.name}

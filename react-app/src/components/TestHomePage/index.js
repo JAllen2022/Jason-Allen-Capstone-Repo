@@ -102,14 +102,14 @@ export default function TestHomePage() {
         <div className="home-page-footer">
           <div className="footer-dev-links">
             <a href="https://github.com/JAllen2022">
-              <i class="fa-brands fa-github"></i>
+              <i className="fa-brands fa-github"></i>
             </a>{" "}
             <a href="https://www.linkedin.com/in/jasonallen715/">
-              <i class="fa-brands fa-linkedin"></i>
+              <i className="fa-brands fa-linkedin"></i>
             </a>
           </div>
           <div>
-            <i class="fa-regular fa-copyright footer-home-page-copyright"></i>{" "}
+            <i className="fa-regular fa-copyright footer-home-page-copyright"></i>{" "}
             Jason Allen 2023
           </div>
         </div>

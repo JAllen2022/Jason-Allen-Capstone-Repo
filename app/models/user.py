@@ -13,6 +13,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    task_filter=db.Column(db.String(255),default="alphabetical",nullable=False)
+    goal_year_filter=db.Column(db.String(30),default="alphabetical", nullable=False)
+    goal_month_filter=db.Column(db.String(30),default="alphabetical", nullable=False)
+    goal_week_filter=db.Column(db.String(30),default="alphabetical", nullable=False)
+
 
     goals = db.relationship("Goal", back_populates="user")
     tasks = db.relationship("Task", back_populates="user")

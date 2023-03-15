@@ -405,7 +405,7 @@ export default function EditGoal({ setEdit, setTab }) {
           <div className="edit-task-form-div-field">
             <label htmlFor="add-goal" className="edit-task-form-labels">
               Add goals related to this task?
-              <label class="switch">
+              <label className="switch">
                 <input
                   type="checkbox"
                   value={showGoals}
@@ -419,7 +419,7 @@ export default function EditGoal({ setEdit, setTab }) {
                     })
                   }
                 />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
               </label>
             </label>
             {showGoals && (

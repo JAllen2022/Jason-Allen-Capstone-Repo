@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ListItem from "./ListItem";
 import "./ListField.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTaskThunk } from "../../store/tasks";
 import { addGoalThunk } from "../../store/goals";
 
 export default function ListField({
   taskBool,
   subTask,
-  incommingList,
+  incomingList,
   timeFrame,
   year,
   date,
@@ -18,9 +18,18 @@ export default function ListField({
   week,
   monthString,
   truncate,
+  defaultFilter,
 }) {
   const [title, setTitle] = useState("");
   const [tab, setTab] = useState("all");
+  const [filter, setFilter] = useState(defaultFilter || "priority");
+  const [showMenu, setShowMenu] = useState(false);
+  const [allTasks, setAllTasks] = useState("");
+  const [incompleted, setIncompleted] = useState("");
+  const [completed, setCompleted] = useState("");
+  const dispatch = useDispatch();
+  const [displayList, setDisplayList] = useState([]);
+  const menuRef = useRef();
 
   const dateOptions = {
     weekday: "long",
@@ -30,63 +39,120 @@ export default function ListField({
   };
 
   // Code to determine the header to display on each column
-  let displayHeader = "";
-  if (timeFrame === "year") {
-    displayHeader = (
-      <h4 className="list-header">
-        <span className="list-header-date-buttons" onClick={decrease}>
-          <i class="fa-solid fa-circle-chevron-left"></i>
-        </span>
+  const displayHeader = (
+    <h4 className="list-header">
+      <span className="list-header-date-buttons" onClick={decrease}>
+        <i className="fa-solid fa-circle-chevron-left"></i>
+      </span>
+      {timeFrame === "year" && (
         <span className="header-timefame-text">{`${date.getFullYear()} Goals`}</span>
-        <span className="list-header-date-buttons" onClick={increase}>
-          <i class="fa-solid fa-circle-chevron-right"></i>
-        </span>
-      </h4>
-    );
-  }
-  if (timeFrame === "month") {
-    displayHeader = (
-      <h4 className="list-header">
-        <span className="list-header-date-buttons" onClick={decrease}>
-          <i class="fa-solid fa-circle-chevron-left"></i>
-        </span>
+      )}
+      {timeFrame === "month" && (
         <span className="header-timefame-text">{`${monthString} Goals`}</span>
-        <span className="list-header-date-buttons" onClick={increase}>
-          <i class="fa-solid fa-circle-chevron-right"></i>
-        </span>
-      </h4>
-    );
-  }
-  if (timeFrame === "week") {
-    displayHeader = (
-      <h4 className="list-header">
-        <span className="list-header-date-buttons" onClick={decrease}>
-          <i class="fa-solid fa-circle-chevron-left"></i>
-        </span>
+      )}
+      {timeFrame === "week" && (
         <span className="header-timefame-text">{week}</span>
-        <span className="list-header-date-buttons" onClick={increase}>
-          <i class="fa-solid fa-circle-chevron-right"></i>
-        </span>
-      </h4>
-    );
-  }
-
-  const dispatch = useDispatch();
+      )}
+      <span className="list-header-date-buttons" onClick={increase}>
+        <i className="fa-solid fa-circle-chevron-right"></i>
+      </span>
+    </h4>
+  );
 
   // Generate the different lists to display
-  const allTasks = incommingList.sort((x, y) => {
-    if (x.completed) return 1;
-    else return -1;
-  });
-  const incompleted = incommingList.filter((ele) => !ele.completed);
-  const completed = incommingList.filter((ele) => ele.completed);
+  useEffect(() => {
+    let allTasksCompleted = [];
+    let allTasksNotCompleted = [];
+    if (filter === "alphabetical") {
+      allTasksNotCompleted = incomingList
+        .filter((ele) => !ele.completed)
+        .sort((x, y) => {
+          // Sort by name in ascending order (case-insensitive)
+          if (x.name.toLowerCase() > y.name.toLowerCase()) {
+            return 1;
+          } else if (x.name.toLowerCase() < y.name.toLowerCase()) {
+            return -1;
+          }
+        });
 
-  // Determine which list to display
-  let listToDisplay;
-  if (tab === "all") {
-    listToDisplay = allTasks;
-  } else if (tab === "complete") listToDisplay = completed;
-  else if (tab === "incomplete") listToDisplay = incompleted;
+      allTasksCompleted = incomingList
+        .filter((ele) => ele.completed)
+        .sort((x, y) => {
+          // Sort by name in ascending order (case-insensitive)
+          if (x.name.toLowerCase() > y.name.toLowerCase()) {
+            return 1;
+          } else if (x.name.toLowerCase() < y.name.toLowerCase()) {
+            return -1;
+          }
+        });
+    } else if (filter === "priority") {
+      const priorities = [1, 2, 3, 4];
+      const prioritySorted = priorities.map((prio) => {
+        return incomingList
+          .filter((ele) => ele.priority === prio.toString() && !ele.completed)
+          .sort((x, y) =>
+            x.name.localeCompare(y.name, undefined, { sensitivity: "base" })
+          );
+      });
+
+      const prioritySortedCompleted = priorities.map((prio) => {
+        return incomingList
+          .filter((ele) => ele.priority === prio.toString() && ele.completed)
+          .sort((x, y) =>
+            x.name.localeCompare(y.name, undefined, { sensitivity: "base" })
+          );
+      });
+      prioritySorted.forEach((ele) => allTasksNotCompleted.push(...ele));
+      prioritySortedCompleted.forEach((ele) => allTasksCompleted.push(...ele));
+    }
+
+    setAllTasks([...allTasksNotCompleted, ...allTasksCompleted]);
+    setIncompleted(allTasksNotCompleted);
+    setCompleted(allTasksCompleted);
+  }, [filter, incomingList]);
+
+  useEffect(() => {
+    let listToDisplay;
+    if (tab === "all") {
+      listToDisplay = allTasks;
+    } else if (tab === "complete") listToDisplay = completed;
+    else if (tab === "incomplete") listToDisplay = incompleted;
+
+    let newDisplayList;
+    // Minimum number of list items on the page set to a constant
+    let defaultListHeight = 17;
+    if (truncate) defaultListHeight = 7;
+    if (listToDisplay) {
+      newDisplayList = listToDisplay.map((item) => (
+        <ListItem
+          key={`${item.name}${item.id}`}
+          item={item}
+          taskBool={taskBool}
+        />
+      ));
+
+      if (newDisplayList.length < defaultListHeight) {
+        for (let i = newDisplayList.length; i < defaultListHeight; i++) {
+          newDisplayList.push(<ListItem empty={true} />);
+        }
+      }
+    }
+    setDisplayList(newDisplayList);
+  }, [tab, allTasks]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,9 +168,6 @@ export default function ListField({
       if (taskBool) {
         //Dispatch create task thunk
         const res = dispatch(addTaskThunk(newListItem, dueDate));
-        if (res) {
-          console.log("checking response", res);
-        }
       } else {
         //Dispatch create goal thunk
         newListItem.time_frame = timeFrame;
@@ -125,29 +188,10 @@ export default function ListField({
           newListItem.due_date = week.slice(14);
         }
         const res = dispatch(addGoalThunk(newListItem));
-        if (res) {
-          console.log("checking response", res);
-        }
       }
+      setTitle("");
     }
-    setTitle("");
   };
-
-  // Minimum number of list items on the page set to a constant
-  let displayList;
-  let defaultListHeight = 17;
-  if (truncate) defaultListHeight = 7;
-  if (listToDisplay) {
-    displayList = listToDisplay.map((item) => (
-      <ListItem key={item.id} item={item} taskBool={taskBool} />
-    ));
-
-    if (displayList.length < defaultListHeight) {
-      for (let i = displayList.length; i < defaultListHeight; i++) {
-        displayList.push(<ListItem empty={true} />);
-      }
-    }
-  }
 
   return (
     <div className="list-container-div">
@@ -179,8 +223,53 @@ export default function ListField({
         >
           Completed
         </div>
-        <div className="list-tab-cog">
-          <i class="fa-solid fa-gear"></i>
+        <div id="list-tab-cog" className="list-tab-cog">
+          <i
+            onClick={() => setShowMenu((prev) => !prev)}
+            className="fa-solid fa-gear"
+          ></i>
+
+          {showMenu && (
+            <div
+              ref={menuRef}
+              id="filter-menu"
+              className="list-tab-filter-menu-container"
+            >
+              <div
+                className="list-tab-filter-ele"
+                onClick={() => {
+                  console.log("doing things");
+                  setFilter("alphabetical");
+                }}
+              >
+                <span className="list-tab-filter-check">
+                  {filter === "alphabetical" ? (
+                    <i className="fa-solid fa-check"></i>
+                  ) : (
+                    ""
+                  )}
+                </span>
+                Sort by task name
+              </div>
+              <div
+                className="list-tab-filter-ele"
+                onClick={() => {
+                  console.log("doing things");
+                  setFilter("priority");
+                }}
+              >
+                <span className="list-tab-filter-check">
+                  {" "}
+                  {filter === "priority" ? (
+                    <i className="fa-solid fa-check"></i>
+                  ) : (
+                    ""
+                  )}
+                </span>
+                Sort by priority
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="list-input-field-container">

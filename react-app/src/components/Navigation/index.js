@@ -13,8 +13,8 @@ function Navigation({ isLoaded }) {
       {isLoaded && (
         <>
           <div className="top-nav-bar-container">
-            <div class="nav-item">
-              <div class="nav-button">
+            <div className="nav-item">
+              <div className="nav-button">
                 <ProfileButton
                   user={sessionUser}
                   showProfDiv={showProfDiv}
@@ -22,41 +22,41 @@ function Navigation({ isLoaded }) {
                 />
               </div>
               {showProfDiv && (
-                <div class="nav-popup-profile">
+                <div className="nav-popup-profile">
                   <span>Profile</span>
                 </div>
               )}
             </div>
 
-            <div class="nav-item">
+            <div className="nav-item">
               <NavLink className="nav-button" exact to="/">
-                <i class="fa-solid fa-house-chimney"></i>
+                <i className="fa-solid fa-house-chimney"></i>
               </NavLink>
-              <div class="nav-popup">
+              <div className="nav-popup">
                 <span>Planner</span>
               </div>
             </div>
-            <div class="nav-item">
+            <div className="nav-item">
               <NavLink className="nav-button" exact to="/tasks">
-                <i class="fa-solid fa-list-check"></i>
+                <i className="fa-solid fa-list-check"></i>
               </NavLink>
-              <div class="nav-popup">
+              <div className="nav-popup">
                 <span>Daily Tasks</span>
               </div>
             </div>
-            <div class="nav-item">
+            <div className="nav-item">
               <NavLink className="nav-button" exact to="/goals">
-                <i class="fa-solid fa-bullseye"></i>
+                <i className="fa-solid fa-bullseye"></i>
               </NavLink>
-              <div class="nav-popup">
+              <div className="nav-popup">
                 <span>Goals</span>
               </div>
             </div>
-            <div class="nav-item">
+            <div className="nav-item">
               <NavLink className="nav-button" exact to="/reflections">
-                <i class="fa-solid fa-book-open"></i>
+                <i className="fa-solid fa-book-open"></i>
               </NavLink>
-              <div class="nav-popup">
+              <div className="nav-popup">
                 <span>Reflections</span>
               </div>
             </div>
@@ -67,21 +67,21 @@ function Navigation({ isLoaded }) {
                 <a href="https://github.com/JAllen2022">
                   <i
                     style={{ color: "#color: #e0dfdf;" }}
-                    class="fa-brands fa-github"
+                    className="fa-brands fa-github"
                   ></i>
                 </a>
               </div>
-              <div class="nav-popup-dev">
+              <div className="nav-popup-dev">
                 <span>Developer Info</span>
               </div>
             </div>
             <div className="nav-item">
               <div className="nav-button-dev">
                 <a href="https://www.linkedin.com/in/jasonallen715/">
-                  <i class="fa-brands fa-linkedin"></i>
+                  <i className="fa-brands fa-linkedin"></i>
                 </a>
               </div>
-              <div class="nav-popup-dev">
+              <div className="nav-popup-dev">
                 <span>Developer Info</span>
               </div>
             </div>

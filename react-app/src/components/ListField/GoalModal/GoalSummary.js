@@ -36,7 +36,8 @@ export default function GoalSummary() {
             singleGoal.description
           ) : (
             <span>
-              <i class="fa-solid fa-bars-staggered summary-icon"></i>Description
+              <i className="fa-solid fa-bars-staggered summary-icon"></i>
+              Description
             </span>
           )}
         </div>
@@ -53,14 +54,14 @@ export default function GoalSummary() {
         <div className="summary-item-container">
           <div className="summary-item-title">Due Date</div>
           <div className="summary-item-description">
-            <i class="fa-regular fa-calendar summary-icon"></i>
+            <i className="fa-regular fa-calendar summary-icon"></i>
             {singleGoal.due_date}
           </div>
         </div>
         <div className="summary-item-container">
           <div className="summary-item-title">Status</div>
           <div className="summary-item-description">
-            <i class="fa-solid fa-bars-progress summary-icon"></i>
+            <i className="fa-solid fa-bars-progress summary-icon"></i>
             {singleGoal.completed ? "Completed" : singleGoal.status}
           </div>
         </div>
@@ -68,13 +69,13 @@ export default function GoalSummary() {
           <div className="summary-item-title">Sub-Goals</div>
           <div className="summary-item-task">
             <div className="summary-item-task-completed">
-              <i class="fa-solid fa-bullseye summary-icon"></i>
+              <i className="fa-solid fa-bullseye summary-icon"></i>
               {singleGoal.sub_goals
                 ? Object.values(singleGoal.sub_goals).length
                 : "0"}
             </div>
             <div className="summary-item-task-completed">
-              <i class="fa-regular fa-square-check summary-icon"></i>
+              <i className="fa-regular fa-square-check summary-icon"></i>
               {completedSubGoals}
             </div>
           </div>
@@ -83,13 +84,13 @@ export default function GoalSummary() {
           <div className="summary-item-title">Sub-Tasks</div>
           <div className="summary-item-task">
             <div className="summary-item-task-completed">
-              <i class="fa-solid fa-list-check summary-icon"></i>
+              <i className="fa-solid fa-list-check summary-icon"></i>
               {singleGoal.sub_tasks
                 ? Object.values(singleGoal.sub_tasks).length
                 : "0"}
             </div>
             <div className="summary-item-task-completed">
-              <i class="fa-regular fa-square-check summary-icon"></i>
+              <i className="fa-regular fa-square-check summary-icon"></i>
               {completedSubTasks}
             </div>
           </div>

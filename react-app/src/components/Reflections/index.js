@@ -2,12 +2,12 @@ import "./Reflections.css";
 
 export default function Reflections() {
   return (
-    <div class="magazine">
-      <div class="left-page">
-        <div class="content"></div>
+    <div className="magazine">
+      <div className="left-page">
+        <div className="content"></div>
       </div>
-      <div class="right-page">
-        <div class="content"></div>
+      <div className="right-page">
+        <div className="content"></div>
       </div>
     </div>
   );

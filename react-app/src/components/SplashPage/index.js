@@ -82,9 +82,9 @@ export default function SplashPage() {
 
   return (
     <div className="splash-page-container">
-      <div class="splash-page-notebook">
-        <div class="splash-page-left-page">
-          <div class="splash-title">
+      <div className="splash-page-notebook">
+        <div className="splash-page-left-page">
+          <div className="splash-title">
             <h1>To-Do</h1>
           </div>
           <div className="list-container-div">
@@ -120,7 +120,7 @@ export default function SplashPage() {
                 Completed
               </div>
               <div className="list-tab-cog">
-                <i class="fa-solid fa-gear"></i>
+                <i className="fa-solid fa-gear"></i>
               </div>
             </div>
             <div className="list-input-field-container">
@@ -142,8 +142,8 @@ export default function SplashPage() {
             <div className="list-view-section">{displayList}</div>
           </div>
         </div>
-        <div class="splash-page-right-page">
-          <div class="splash-page-left-content">
+        <div className="splash-page-right-page">
+          <div className="splash-page-left-content">
             <h1 className="splash-page-title">Welcome to Goal-e</h1>
             <h2 className="splash-page-title">Your virtual planner</h2>
 
@@ -153,7 +153,6 @@ export default function SplashPage() {
               className="log-in-button"
               modalComponent={<LoginFormModal />}
             />
-            
 
             <OpenModalButton
               buttonText="Sign Up"
@@ -211,7 +210,9 @@ function SplashPageListItem({ item, empty }) {
             </>
           )}
         </form>
-        {!empty && <i class="fa-solid fa-trash edit" onClick={deleteClick}></i>}
+        {!empty && (
+          <i className="fa-solid fa-trash edit" onClick={deleteClick}></i>
+        )}
       </div>
     </div>
   );

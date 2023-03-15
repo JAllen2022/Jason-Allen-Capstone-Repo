@@ -199,8 +199,7 @@ export default function reducer(state = initialState, action) {
   };
   switch (action.type) {
     case GET_ALL_GOALS:
-      newState.allGoals = action.payload;
-      return newState;
+      return { ...state, allGoals: action.payload };
     case GET_GOALS:
       const { year, month, week } = action.payload;
       return {

@@ -43,11 +43,12 @@ export default function EditGoal({ setEdit, setTab }) {
 
   useEffect(() => {
     const tempAllGoals = { ...allGoals };
-    // Delete the current goal from the list of possible select options
-    if (Object.values(tempAllGoals).length) {
-      delete tempAllGoals[singleGoal.id];
-    }
-    const allGoalArray = Object.values(tempAllGoals);
+    // Filter out children and the current goal from possible options to pick a parent goal from
+    const allGoalArray = Object.values(tempAllGoals).filter((ele) => {
+      if (ele.id === singleGoal.id || ele.parent_id === singleGoal.id)
+        return false;
+      else return true;
+    });
     if (allGoalArray.length) {
       //First find the options for goals that we are able to set as children
       const parentArray = allGoalArray.sort((x, y) => {
@@ -406,13 +407,13 @@ export default function EditGoal({ setEdit, setTab }) {
           <div className="edit-task-form-div-field">
             <label for="sub-goals" className="edit-task-form-labels">
               Assign a parent goal:
-              {/* <label class="switch">
+              {/* <label className="switch">
                 <input
                   type="checkbox"
                   value={showChildGoals}
                   onChange={(e) => setShowChildGoals((prev) => !prev)}
                 />
-                <span class="slider round"></span>
+                <span className="slider round"></span>
               </label> */}
             </label>
 

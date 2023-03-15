@@ -55,14 +55,14 @@ export default function Tasks() {
 
   const leftPage = (
     <div className="task-left-page">
-      <div class="title">
+      <div className="title">
         <h1>To-Do</h1>
       </div>
       <div className="task-left-page-list-field">
         <ListField
           taskBool={true}
           dueDate={dateString}
-          incommingList={Object.values(allTasks)}
+          incomingList={Object.values(allTasks)}
         />
       </div>
     </div>

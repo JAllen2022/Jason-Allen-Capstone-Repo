@@ -51,7 +51,6 @@ export default function ListItem({
   } else if (item?.priority == "3") {
     tagColor = "#246ee0";
   }
-  console.log("checking tag color:", tagColor);
 
   // Handle check box click on the right side of the container to mark something complete
   const handleSubmit = (e) => {
@@ -122,7 +121,7 @@ export default function ListItem({
               style={{ position: "absolute", display: "none" }}
             />
           </form>
-          <i class="fa-solid fa-trash edit" onClick={deleteClick}></i>
+          <i className="fa-solid fa-trash edit" onClick={deleteClick}></i>
         </div>
       </div>
     );

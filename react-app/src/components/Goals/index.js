@@ -70,7 +70,7 @@ export default function Goals() {
     <div className="goals-inner-container">
       <div className="goals-container">
         <ListField
-          incommingList={Object.values(year_goals)}
+          incomingList={Object.values(year_goals)}
           timeFrame={"year"}
           year={year}
           dueDate={year}
@@ -90,7 +90,7 @@ export default function Goals() {
 
   const leftPage = (
     <ListField
-      incommingList={Object.values(year_goals)}
+      incomingList={Object.values(year_goals)}
       timeFrame={"year"}
       year={year}
       setYear={setYear}
@@ -109,7 +109,7 @@ export default function Goals() {
     <>
       <div className="goals-container-right">
         <ListField
-          incommingList={Object.values(monthly_goals)}
+          incomingList={Object.values(monthly_goals)}
           timeFrame={"month"}
           year={year}
           setYear={setYear}
@@ -126,7 +126,7 @@ export default function Goals() {
       </div>
       <div className="goals-container-right">
         <ListField
-          incommingList={Object.values(weekly_goals)}
+          incomingList={Object.values(weekly_goals)}
           timeFrame={"week"}
           year={year}
           setYear={setYear}

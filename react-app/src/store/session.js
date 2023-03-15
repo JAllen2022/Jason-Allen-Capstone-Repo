@@ -1,6 +1,10 @@
 // constants
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const SET_TASK_FILTER = "session/SET_TASK_FILTER";
+const SET_YEAR_FILTER = "session/SET_YEAR_FILTER";
+const SET_MONTH_FILTER = "session/SET_MONTH_FILTER";
+const SET_WEEK_FILTER = "session/SET_WEEK_FILTER";
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -11,7 +15,24 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-const initialState = { user: null };
+const setTaksFilter = (filter) => ({
+  type: SET_TASK_FILTER,
+  payload: filter,
+});
+
+const setYearFilter = (filter) => ({
+  type: SET_YEAR_FILTER,
+  payload: filter,
+});
+const setMonthFilter = (filter) => ({
+  type: SET_MONTH_FILTER,
+  payload: filter,
+});
+
+const setWeekFilter = (filter) => ({
+  type: SET_WEEK_FILTER,
+  payload: filter,
+});
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/", {
@@ -94,10 +115,25 @@ export const signUp = (username, email, password) => async (dispatch) => {
   }
 };
 
+const initialState = {
+  user: null,
+  taskFilter: {},
+  yearFilter: {},
+  monthFilter: {},
+  weekFilter: {},
+};
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return { user: action.payload };
+      const user = action.payload;
+      return {
+        user: user,
+        taskFilter: user.task_filter,
+        yearFilter: user.goal_year_filter,
+        monthFilter: user.goal_month_filter,
+        weekFilter: user.goal_week_filter,
+      };
     case REMOVE_USER:
       return { user: null };
     default:
