@@ -1,0 +1,394 @@
+.edit-goal-form-container {
+  width: 60vw;
+  height: 28rem;
+  border-radius: 5px;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+}
+
+.x-marks-the-spot {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.2rem;
+}
+
+.x-close {
+  cursor: pointer;
+}
+
+.edit-task-form-body-container {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-goal-form-container-title {
+  padding: 0 0.5rem;
+  padding-bottom: 1.5rem;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #cead87;
+}
+
+.edit-goal-form-nav-container {
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  justify-content: space-between;
+}
+
+.edit-goal-left-nav {
+  display: flex;
+  font-weight: 400;
+  padding-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.goal-tab-heading-active {
+  font-weight: 600;
+  color: #cead87;
+  padding: 0 0.7rem;
+}
+
+.goal-tab-heading {
+  padding: 0 0.7rem;
+  cursor: pointer;
+}
+.goal-edit {
+  cursor: pointer;
+  margin-right: 0.75rem;
+}
+
+.goal-delete {
+  /* margin-left: 0.25rem; */
+  font-size: 0.89rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.edit-goal-form-custom-nav-link {
+  padding: 0.5rem 2rem;
+}
+
+.edit-goal-form-left-container {
+  margin-top: 1rem;
+  width: 100%;
+  max-height: 70%;
+  overflow-y: scroll;
+}
+
+.edit-goal-form-div-field {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+}
+
+.edit-task-check-box-container {
+  padding: 0.25rem 0;
+}
+
+.edit-goal-form-labels {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.edit-task-form-right-container {
+  width: 50%;
+}
+
+.edit-task-create-subtasks-container {
+  box-sizing: border-box;
+  height: 40%;
+  margin: 0.5rem;
+  border: 1px solid lightgray;
+}
+
+.edit-task-create-note-container {
+  border: 3px solid orange;
+  height: 56%;
+}
+
+.edit-task-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  /* border: 1px solid red; */
+}
+
+.cancel-button {
+  background-color: black;
+  border: none;
+  width: 6rem;
+  height: 2rem;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4rem;
+  cursor: pointer;
+}
+
+.create-subtask-header {
+  padding: 0;
+  margin: 0;
+}
+
+.sub-task-list-input-field-container {
+  box-sizing: border-box;
+  padding: 5px 5px;
+  border-bottom: 1px dotted gray;
+}
+
+.sub-task-list-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sub-task-list-display {
+  overflow-y: scroll;
+  /* border: 1px solid red; */
+  max-height: 70%;
+}
+
+.edit-goal-button {
+  /* position: absolute; */
+  top: 1rem;
+  right: 0;
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 1rem;
+}
+
+.summary-page-button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+}
+
+.summary-page-buttons {
+  background-color: black;
+  border: none;
+  width: 6rem;
+  height: 2rem;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3rem;
+  cursor: pointer;
+}
+
+.edit-form-input {
+  background-color: transparent;
+  border: 1px dotted gray;
+  width: 98%;
+}
+
+.edit-form-select-input {
+  background-color: transparent;
+  border: 1px dotted gray;
+  width: 100%;
+}
+
+.edit-form-date-input {
+  background-color: transparent;
+  border: 1px dotted gray;
+  width: 98.5%;
+}
+
+.goal-modal-create-sub-task-container {
+  width: 95%;
+  height: 19rem;
+  display: flex;
+}
+
+.sub-task-list-input-field-container-left {
+  width: 40%;
+}
+
+.sub-task-list-display-right {
+  width: 60%;
+  border: 1px solid lightgray;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+}
+
+.submit-sub-task {
+  width: 100%;
+}
+
+.goal-modal-sub-goal-container {
+  width: 95%;
+  /* border: 1px solid red; */
+  height: 19rem;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid red; */
+}
+
+.create-sub-goal-container {
+  width: 40%;
+  /* border: 1px solid red; */
+}
+
+.sub-goal-list-display {
+  width: 60%;
+  border: 1px solid lightgray;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-y: scroll;
+}
+
+.submit-sub-task {
+  border: 1px solid lightgray;
+  background-color: transparent;
+  margin-top: 1rem;
+}
+
+/* Goal Sumamry Page */
+.summary-page-container {
+  width: 100%;
+  flex: 1;
+  padding-top: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+
+.summary-body-container-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 60%;
+  padding-right: 1rem;
+}
+
+.description-container {
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+.summary-item-task {
+  display: flex;
+}
+
+.summary-body-container-right {
+  box-sizing: border-box;
+  border-left: 1px dotted lightgray;
+  width: 40%;
+  font-size: 0.85rem;
+  padding-left: 0.5rem;
+}
+
+.summary-icon {
+  color: #cead87;
+  font-size: 0.75rem;
+  padding-right: 0.3rem;
+}
+
+.summary-item-container {
+  margin: 0 0.5rem;
+  border-bottom: 1px dotted lightgray;
+  padding: 0.75rem 0;
+}
+
+.summary-item-container-sub-task {
+  margin: 0 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.summary-item-title {
+  padding-bottom: 0.85rem;
+}
+
+.summary-item-task-completed {
+  width: 30%;
+}
+
+.parent-goal {
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+.parent-goal-title {
+  color: #cead87;
+}
+
+.parent-goal-description {
+  cursor: pointer;
+}
+
+.parent-goal-description:hover {
+  font-weight: 600;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  margin-left: 0.5rem;
+  position: relative;
+  display: inline-block;
+  width: 2rem;
+  height: 1rem;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 0.75rem;
+  width: 0.75rem;
+  left: 4px;
+  bottom: 2.5px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(0.8rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

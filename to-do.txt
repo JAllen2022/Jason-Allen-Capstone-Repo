@@ -1,13 +1,23 @@
 To-Do
-Tuesday 3/14
-
+Tuesday 3/15
 - Recurring tasks
+   - specify day, week, month, or year repeating. Then, indicate for how long. If days, specify how many days
+   - if Month, specify how many months, if years, specify number of years.
+   Default options -
+   daily,
+   weekly on friday,
+   monthly on the _____ weekday,
+   annually on March __,
+   every weekday (Monday to Friday)
+   custom
 
-Show priority somewhere on the summary page
-
+   - then, how long after that?
+- have rough outline for planner page
 - Start on third feature
    - Notes
 
+Drag and drop with
+https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 
 - have a overall state for time. Show time in nav-bar?
 - Finish splash page
@@ -57,6 +67,7 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- Show priority somewhere on the summary page
 - clicking on a sub-goal to mark it complete changes modal to sub-goal. can't have that happen
 - creating a sub-goal and then another sub-goal creates weird behaviour
    - correct parent not passed down

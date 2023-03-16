@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, Redirect } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
-import Navigation from "./components/Navigation";
-import Reflections from "./components/Reflections";
-import Tasks from "./components/Tasks";
-import Goals from "./components/Goals";
-import HomePage from "./components/Notebook";
-import SplashPage from "./components/SplashPage";
-import TestHomePage from "./components/TestHomePage";
+import Navigation from "./components/ReusableComponents/Navigation";
+import Reflections from "./components/04-Reflections";
+import Tasks from "./components/02-DailyTasks";
+import Goals from "./components/03-Goals";
+import Planner from "./components/01-Planner";
+import SplashPage from "./components/00-SplashPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +20,7 @@ function App() {
 
   return (
     <>
-      {!currentUser && <TestHomePage />}
+      {!currentUser && <SplashPage />}
       {currentUser && currentUser.id && (
         <>
           <Navigation isLoaded={isLoaded} />
@@ -31,13 +28,7 @@ function App() {
             {isLoaded && (
               <Switch>
                 <Route exact path="/">
-                  <HomePage />
-                </Route>
-                <Route path="/login">
-                  <LoginFormPage />
-                </Route>
-                <Route path="/signup">
-                  <SignupFormPage />
+                  <Planner />
                 </Route>
                 <Route path="/tasks">
                   <Tasks />
