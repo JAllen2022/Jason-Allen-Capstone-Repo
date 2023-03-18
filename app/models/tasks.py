@@ -20,6 +20,8 @@ class Task(db.Model):
     recurring_date=db.Column(db.String(30))
     completed=db.Column(db.Boolean)
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
+    notes=db.Column(db.Text)
+
 
     children=db.relationship("Task", backref=db.backref('parent', remote_side=[id]))
 
@@ -27,7 +29,6 @@ class Task(db.Model):
     tags = db.relationship("Tag", secondary=tag_tasks, back_populates="tasks")
 
     user = db.relationship("User", back_populates="tasks")
-    notes= db.relationship("Note", back_populates="task", cascade="all, delete")
 
 
     def to_dict(self):
@@ -44,5 +45,6 @@ class Task(db.Model):
             "recurring_date":self.recurring_date,
             "completed":self.completed,
             "parent_id":self.parent_id,
-            "goals": {goal.id:goal.to_dict() for goal in self.goals}
+            "goals": {goal.id:goal.to_dict() for goal in self.goals},
+            "notes": self.notes
         }

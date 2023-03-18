@@ -14,3 +14,4 @@ class GoalForm(FlaskForm):
     parent_id=StringField("ParentId")
     priority=StringField("Priority")
     completed=BooleanField("Completed", default=False)
+    notes=StringField("Notes")

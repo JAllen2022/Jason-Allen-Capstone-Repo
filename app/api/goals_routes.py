@@ -121,6 +121,7 @@ def edit_goal(id):
         goal.time_frame=form.data["time_frame"]
         goal.status=form.data["status"]
         goal.priority=form.data["priority"]
+        goal.notes = form.data["notes"]
         if form.data["year"] is not None:
             goal.year=form.data["year"]
         if form.data["month"] is not None:
@@ -132,6 +133,7 @@ def edit_goal(id):
             goal.parent_id=form.data["parent_id"]
         if form.data["due_date"] is not None:
             goal.due_date=form.data["due_date"]
+
 
 
         db.session.add(goal)

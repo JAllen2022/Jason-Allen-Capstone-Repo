@@ -1,5 +1,27 @@
 To-Do
-Tuesday 3/15
+Drag and drop with
+https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
+
+- Notes -
+- Need to handle delete of images
+- AutoSave
+  - need auto save feature. Whenever clicking out or leaving the tab, saves, and then auto save periodically
+- Needs to re-size with modal - media query
+- rotating cog animation whenever clicked
+
+- Update DB-Diagram
+- Habits
+  - Creating a habit - ONLY tracks for a week.
+  - Click into habit to extend it longer by editing it
+  - Variables
+      - Goal - integer
+      - Achieved - number of check marks - integer
+      - duration - number of weeks
+      - startDate
+      - endDate
+      - Associate it with a goal?
+      - Associate it with a task? Completing the task marks it off for the day?
+
 - Recurring tasks
    - specify day, week, month, or year repeating. Then, indicate for how long. If days, specify how many days
    - if Month, specify how many months, if years, specify number of years.
@@ -10,25 +32,21 @@ Tuesday 3/15
    annually on March __,
    every weekday (Monday to Friday)
    custom
-
    - then, how long after that?
-- have rough outline for planner page
-- Start on third feature
-   - Notes
 
-Drag and drop with
-https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
+- In-place editing for ALL goal/task modals
+   - Bubble modal for description?
+- Hover effect to determine what each button is
 
-- have a overall state for time. Show time in nav-bar?
 - Finish splash page
-- log-in and sign up modals
+- Update log-in and sign up modals
 - CSS animation for modals
-- search feature for goals/tasks
+- Search feature for goals/tasks/habits
 
 - Finish all the documentation required
-- how do we get the calendar to show for each day?
-- extra page for credits,
-
+- How do we get the calendar to show for each day?
+- extra page for credits
+- clean up all dates to use moment instead of javascript dates
 
 Planner page - can plan by week/month/year
 - Yearly -
@@ -40,33 +58,17 @@ Weekly/Monthly/Yearly Summary
 - Summarize what goals or tasks were accomplished
 
 
-This week: notes and tags
-
-
-Next week:
-- 2 features: reflections, habits
-
-
-- make sure all comments are read
-
-Next features:
-- Finish user-home page
-   - tasks to the right
-   - weekly goals to the left
-- draft the reflections page
-
--- Total task time estimated
--- Options to show Tags, as well as estimated time in line with task
 -- Add this link to use the favicon icon
 - <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons/term/arrow-left/" target="_blank" title="Arrow Left Icons">Noun Project</a>
 
-- Pronto
-- Hover effect to determine what each button is
-
-
 
 Done:
+- Edit Week planner to show All days of the week
+ - use context to manage the week when editing our list
+ - Make it so can't add task if it's past that date in planner
+ - why do completed tasks in planner now show as completed?
+- have a overall state for time. Show time in nav-bar?
 - Show priority somewhere on the summary page
 - clicking on a sub-goal to mark it complete changes modal to sub-goal. can't have that happen
 - creating a sub-goal and then another sub-goal creates weird behaviour

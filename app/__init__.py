@@ -13,6 +13,8 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.task_routes import task_routes
 from .api.goals_routes import goal_routes
+from .api.image_routes import image_routes
+
 
 
 from .seeds import seed_commands
@@ -38,6 +40,8 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(task_routes, url_prefix='/api/tasks')
 app.register_blueprint(goal_routes, url_prefix='/api/goals')
+app.register_blueprint(image_routes, url_prefix='/api/images')
+
 
 
 db.init_app(app)

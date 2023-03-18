@@ -32,6 +32,40 @@ def all_tasks():
     return {'all_tasks': {task.id:task.to_dict() for task in tasks}}
 
 
+@task_routes.route('/week')
+@login_required
+def all_week_tasks():
+    """
+    Query for all tasks and returns them in a dictionary of task dictionaries key value pairs
+    """
+    mon = request.args.get("mon")
+    tue = request.args.get("tue")
+    wed = request.args.get("wed")
+    thu = request.args.get("thu")
+    fri = request.args.get("fri")
+    sat = request.args.get("sat")
+    sun = request.args.get("sun")
+
+
+    tasks_mon = Task.query.filter(Task.due_date==mon, Task.user_id==current_user.id).all()
+    tasks_tue = Task.query.filter(Task.due_date==tue, Task.user_id==current_user.id).all()
+    tasks_wed = Task.query.filter(Task.due_date==wed, Task.user_id==current_user.id).all()
+    tasks_thu = Task.query.filter(Task.due_date==thu, Task.user_id==current_user.id).all()
+    tasks_fri = Task.query.filter(Task.due_date==fri, Task.user_id==current_user.id).all()
+    tasks_sat = Task.query.filter(Task.due_date==sat, Task.user_id==current_user.id).all()
+    tasks_sun = Task.query.filter(Task.due_date==sun, Task.user_id==current_user.id).all()
+
+
+    return {'mon': {task.id:task.to_dict() for task in tasks_mon},
+            'tue':{task.id:task.to_dict() for task in tasks_tue},
+            'wed':{task.id:task.to_dict() for task in tasks_wed},
+            'thu':{task.id:task.to_dict() for task in tasks_thu},
+            'fri':{task.id:task.to_dict() for task in tasks_fri},
+            'sat':{task.id:task.to_dict() for task in tasks_sat},
+            'sun':{task.id:task.to_dict() for task in tasks_sun}
+            }
+
+
 @task_routes.route('/<int:id>')
 @login_required
 def task(id):
@@ -119,6 +153,8 @@ def edit_task(id):
     task.recurring_frequency=form_data["recurring_frequency"]
     task.recurring_date=form_data["recurring_date"]
     task.completed=form_data["completed"]
+    task.notes=form_data["notes"]
+
 
     goals=[]
     if form_data.get("goals") is not None:

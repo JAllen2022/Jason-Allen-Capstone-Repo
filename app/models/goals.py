@@ -21,6 +21,7 @@ class Goal(db.Model):
     completed=db.Column(db.Boolean)
     priority = db.Column(db.String(30))
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
+    notes=db.Column(db.Text)
 
     parent = db.relationship("Goal", backref=db.backref("parent_goal", remote_side=[id]))
     children = db.relationship("Goal", backref=db.backref("child_goals", remote_side=[id]), lazy="joined")
@@ -31,7 +32,6 @@ class Goal(db.Model):
     tags = db.relationship("Tag", secondary=tag_goals, back_populates="goals")
 
     user = db.relationship("User", back_populates="goals")
-    notes= db.relationship("Note", back_populates="goal")
 
     def to_simple_dict(self):
         return {
@@ -80,5 +80,5 @@ class Goal(db.Model):
             "due_date": self.due_date,
             "sub_goals": {goal.id:goal.to_dict() for goal in self.children},
             "sub_tasks": {task.id:task.to_dict() for task in self.tasks},
-
+            "notes": self.notes
         }
