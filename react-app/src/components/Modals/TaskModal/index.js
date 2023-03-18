@@ -8,6 +8,7 @@ import EditTask from "./EditTask";
 import OpenModalButton from "../OpenModalButton";
 import DeleteConfirmation from "../DeleteConfirmation";
 import "./EditListField.css";
+import Notes from "../../ReusableComponents/Notes";
 
 export default function EditListField({ itemId }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -50,6 +51,7 @@ export default function EditListField({ itemId }) {
   if (edit === true) display = <EditTask setEdit={setEdit} setTab={setTab} />;
   if (tab === "sub-tasks")
     display = <CreateSubTask parentId={itemId} setTab={setTab} />;
+  if (tab === "notes") display = <Notes taskBool={true} item={singleTask} />;
 
   useEffect(() => {
     if (!showMenu) return;
@@ -109,12 +111,10 @@ export default function EditListField({ itemId }) {
           </div>
           <div
             className={
-              tab === "reflections"
-                ? "goal-tab-heading-active"
-                : "goal-tab-heading"
+              tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
             }
             onClick={() => {
-              setTab("reflections");
+              setTab("notes");
               setEdit(false);
             }}
           >

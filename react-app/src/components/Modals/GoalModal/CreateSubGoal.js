@@ -2,8 +2,7 @@ import ListItem from "../../ReusableComponents/ListField/ListItem";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGoalThunk } from "../../../store/goals";
-import { getCurrentWeek } from "../../03-Goals";
-import "./GoalModal.css";
+import { getCurrentWeek } from "../../../context/Date";
 
 export default function CreateSubGoal({ parentId, setTab }) {
   const [name, setName] = useState("");

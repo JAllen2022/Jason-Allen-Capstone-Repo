@@ -40,3 +40,130 @@
   margin: 0 1rem;
   cursor: pointer;
 }
+
+.planner-left-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.planner-goal-list-header {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.15rem 0;
+  margin: 0.25rem 0;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+.planner-weekly-habit-tracker-container {
+  /* border: 1px solid red; */
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+}
+
+.planner-habit-container {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+  width: 100%;
+  height: 86.5%;
+  margin-top: 1rem;
+}
+
+.planner-habit-tracker-heading-container {
+  border: 1px dotted lightgray;
+  display: grid;
+  grid-template-columns: 4fr repeat(7, 1fr) 2fr 2fr;
+  padding: 0.25rem 0;
+  width: 100%;
+  text-align: center;
+  height: 8%;
+}
+
+.planner-habit-tracker-body-container {
+  /* border: 1px dotted lightgray; */
+  display: grid;
+  grid-template-columns: 4fr repeat(7, 1fr) 2fr 2fr;
+  padding: 0.25rem 0;
+  width: 100%;
+  height: 70%;
+  overflow-y: scroll;
+}
+
+.planner-habit-tracker-name {
+  border: 1px dotted lightgray;
+}
+.planner-habit-tracker-check {
+  border: 1px dotted lightgray;
+  text-align: center;
+}
+
+.planner-habit-tracker-count {
+  border: 1px dotted lightgray;
+  text-align: center;
+}
+
+.planner-habit-tracker-footer-container {
+  display: grid;
+  grid-template-columns: 11fr 2fr 2fr;
+  padding: 0.25rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+.planner-page-right-container {
+  box-sizing: border-box;
+  padding: 0.25rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 1px solid red; */
+  justify-content: space-around;
+  height: 100%;
+}
+
+/* WeekDayList CSS */
+
+.week-day-list-container {
+  /* border: 1px solid red; */
+  width: 47.5%;
+  height: 24.5%;
+}
+
+.weekday-list-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.weekday-list-create-list-item-input-field {
+  width: 100%;
+  border-radius: 3px;
+  border: none;
+  border-bottom: 1px dotted lightgray;
+  background-color: transparent;
+  padding: 0.25rem;
+}
+
+.weekday-list-create-list-item-input-field:focus {
+  outline: none;
+}
+
+.week-day-list-title {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #cead87;
+  border-bottom: 1px dotted lightgray;
+  height: 15%;
+  padding: 0.25rem;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+
+.week-day-list-body {
+  overflow-y: scroll;
+  /* border: 1px solid purple; */
+  height: 84%;
+}

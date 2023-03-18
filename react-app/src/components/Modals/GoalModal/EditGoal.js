@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editGoalThunk, getAllGoalsThunk } from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
-import { getCurrentWeek } from "../../03-Goals";
+import { getCurrentWeek, useDate } from "../../../context/Date";
 import "./GoalModal.css";
 
 export default function EditGoal({ setEdit, setTab }) {
@@ -21,6 +21,7 @@ export default function EditGoal({ setEdit, setTab }) {
   const [errors, setErrors] = useState({});
   const [parentOptions, setParentOptions] = useState("");
   const [parentId, setParentId] = useState("");
+  const { restrictedDay } = useDate();
   // const [childChoices, setChildChoices] = useState("");
   // const [showChildGoals, setShowChildGoals] = useState(false);
 
@@ -120,26 +121,6 @@ export default function EditGoal({ setEdit, setTab }) {
       setPriority(singleGoal.priority);
     }
   }, [singleGoal]);
-
-  // Formatting time constraints for google doc form
-  const now = new Date();
-  const yearS = now.getFullYear();
-  const monthS = now.getMonth() + 1;
-  const day = now.getDate();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
-  const addZero = (num) => (num < 10 ? "0" + num : num);
-  const restrictedDay = yearS + "-" + addZero(monthS) + "-" + addZero(day);
-  const restrictedDateInput =
-    yearS +
-    "-" +
-    addZero(monthS) +
-    "-" +
-    addZero(day) +
-    "T" +
-    addZero(hour) +
-    ":" +
-    addZero(minute);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

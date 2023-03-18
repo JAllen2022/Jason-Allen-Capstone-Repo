@@ -8,6 +8,7 @@ import CreateSubGoal from "./CreateSubGoal";
 import GoalSummary from "./GoalSummary";
 import EditGoal from "./EditGoal";
 import CreateSubTask from "./CreateSubTask";
+import Notes from "../../ReusableComponents/Notes/index.js";
 import "./GoalModal.css";
 
 export default function GoalModal({ itemId }) {
@@ -18,8 +19,6 @@ export default function GoalModal({ itemId }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
-
-  console.log("checking single goal", singleGoal);
 
   const cancelClick = () => {
     closeModal();
@@ -36,7 +35,7 @@ export default function GoalModal({ itemId }) {
   if (tab === "sub-goal")
     display = <CreateSubGoal parentId={itemId} setTab={setTab} />;
   if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
-  // else if(tab=="sub-goal") display= <SubGoals />
+  if (tab === "notes") display = <Notes item={singleGoal} />;
   // else display= <Reflections />
   const deleteClick = () => {
     dispatch(deleteGoalThunk(itemId));
@@ -114,17 +113,15 @@ export default function GoalModal({ itemId }) {
           </div>
           <div
             className={
-              tab === "reflections"
-                ? "goal-tab-heading-active"
-                : "goal-tab-heading"
+              tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
             }
             onClick={() => {
-              setTab("reflections");
+              setTab("notes");
               setEdit(false);
             }}
           >
             {" "}
-            Reflections{" "}
+            Notes{" "}
           </div>
         </div>
 

@@ -32,7 +32,7 @@ const addGoal = (goal) => ({
   payload: goal,
 });
 
-const addSubTask = (task) => ({
+export const addSubTask = (task) => ({
   type: ADD_SUB_TASK,
   payload: task,
 });
@@ -130,25 +130,8 @@ export const addGoalThunk = (goal) => async (dispatch) => {
   }
 };
 
-export const addGoalSubTaskThunk = (task) => async (dispatch) => {
-  const res = await fetch(`/api/tasks`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
-  });
-
-  if (res.ok) {
-    const task = await res.json();
-    dispatch(addSubTask(task));
-  } else {
-    const data = await res.json();
-    if (data.errors) return res;
-  }
-};
-
 export const editGoalThunk = (goal, goalId) => async (dispatch) => {
-  // console.log("track edit", 1);
-  // console.log("Checking inputs", goalId, goal);
+  console.log("checking goal", goal);
   const res = await fetch(`/api/goals/${goalId}`, {
     method: "PUT",
     headers: {
@@ -156,13 +139,10 @@ export const editGoalThunk = (goal, goalId) => async (dispatch) => {
     },
     body: JSON.stringify(goal),
   });
-  // console.log("track edit", 2);
 
   if (res.ok) {
-    // console.log("track edit", 3);
-
     const data = await res.json();
-    // console.log("track edit 4", data);
+    console.log("track edit", data);
 
     dispatch(editGoal(data));
   } else {

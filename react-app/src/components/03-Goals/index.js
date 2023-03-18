@@ -4,25 +4,8 @@ import { addDisplayTime, getGoalsThunk } from "../../store/goals";
 import ListField from "../ReusableComponents/ListField";
 import Notebook from "../ReusableComponents/Notebook";
 import { useDate } from "../../context/Date";
+import { getCurrentWeek } from "../../context/Date";
 import "./Goals.css";
-
-// Helper function to get the week for a date object passed in
-export function getCurrentWeek(currentDate) {
-  const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
-  const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-  const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
-  const monday = new Date(currentDate.getTime() - daysToMonday * 86400000); // 86400000 = 1 day in milliseconds
-  const sunday = new Date(currentDate.getTime() + daysFromSunday * 86400000);
-  const mondayString = monday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-  const sundayString = sunday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-  return `Weekly Goals: ${mondayString} - ${sundayString}`;
-}
 
 export default function Goals() {
   const user = useSelector((state) => state.session.user);
@@ -33,12 +16,6 @@ export default function Goals() {
   const { year, setYear, month, setMonth, day, setDay, date, setDate } =
     useDate();
 
-  // Use state here to determine date and pass down date object to children elements
-  // const currDate = new Date();
-  // const [month, setMonth] = useState(currDate.getMonth());
-  // const [year, setYear] = useState(currDate.getFullYear());
-  // const [day, setDay] = useState(currDate.getDate());
-  // const [date, setDate] = useState(currDate);
   const monthstring = date.toLocaleString("default", { month: "long" });
   const week = getCurrentWeek(date);
 
@@ -69,29 +46,41 @@ export default function Goals() {
     dispatch(addDisplayTime(dispYear, monthDisp, week));
   }, [date]);
 
-  // <div className="goals-outer-container">
-  //   <h1>All Goals</h1>
-  //   <div className="goals-inner-container">
-  //     <div className="goals-container">
-  //       <ListField
-  //         incomingList={Object.values(year_goals)}
-  //         timeFrame={"year"}
-  //         year={year}
-  //         dueDate={year}
-  //         setYear={setYear}
-  //         month={month}
-  //         day={day}
-  //         setDay={setDay}
-  //         date={date}
-  //         setDate={setDate}
-  //         increase={increaseYear}
-  //         decrease={decreaseYear}
-  //         monthString={monthstring}
-  //         defaultFilter={user.goal_year_filter}
-  //       />
-  //     </div>
-  //   </div>
-  // </div>;
+  const displayHeaderYear = (
+    <h4 className="list-header">
+      <span className="list-header-date-buttons" onClick={decreaseYear}>
+        <i className="fa-solid fa-circle-chevron-left"></i>
+      </span>
+      <span className="header-timefame-text">{`${date.getFullYear()} Goals`}</span>
+      <span className="list-header-date-buttons" onClick={increaseYear}>
+        <i className="fa-solid fa-circle-chevron-right"></i>
+      </span>
+    </h4>
+  );
+
+  const displayHeaderMonth = (
+    <h4 className="list-header">
+      <span className="list-header-date-buttons" onClick={decreaseMonth}>
+        <i className="fa-solid fa-circle-chevron-left"></i>
+      </span>
+      <span className="header-timefame-text">{`${monthstring} Goals`}</span>
+      <span className="list-header-date-buttons" onClick={increaseMonth}>
+        <i className="fa-solid fa-circle-chevron-right"></i>
+      </span>
+    </h4>
+  );
+
+  const displayHeaderWeek = (
+    <h4 className="list-header">
+      <span className="list-header-date-buttons" onClick={decreaseWeek}>
+        <i className="fa-solid fa-circle-chevron-left"></i>
+      </span>
+      <span className="header-timefame-text">{week}</span>
+      <span className="list-header-date-buttons" onClick={increaseWeek}>
+        <i className="fa-solid fa-circle-chevron-right"></i>
+      </span>
+    </h4>
+  );
 
   const leftPage = (
     <ListField
@@ -104,10 +93,9 @@ export default function Goals() {
       setDay={setDay}
       date={date}
       setDate={setDate}
-      increase={increaseYear}
-      decrease={decreaseYear}
       monthString={monthstring}
       defaultFilter={user.goal_year_filter}
+      displayHeader={displayHeaderYear}
     />
   );
 
@@ -124,11 +112,10 @@ export default function Goals() {
           setDay={setDay}
           date={date}
           setDate={setDate}
-          decrease={decreaseMonth}
-          increase={increaseMonth}
           monthString={monthstring}
           truncate={true}
           defaultFilter={user.goal_month_filter}
+          displayHeader={displayHeaderMonth}
         />
       </div>
       <div className="goals-container-right">
@@ -142,12 +129,11 @@ export default function Goals() {
           setDay={setDay}
           date={date}
           setDate={setDate}
-          increase={increaseWeek}
-          decrease={decreaseWeek}
           week={week}
           monthString={monthstring}
           truncate={true}
           defaultFilter={user.goal_week_filter}
+          displayHeader={displayHeaderWeek}
         />
       </div>
     </>

@@ -1,12 +1,16 @@
 import ListItem from "../../ReusableComponents/ListField/ListItem";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGoalSubTaskThunk } from "../../../store/goals";
+import { addSubTask } from "../../../store/goals";
+import { useDate } from "../../../context/Date";
+import { addTaskThunk } from "../../../store/tasks";
 
 export default function CreateSubTask({ parentId }) {
   const [name, setName] = useState("");
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [date, setDate] = useState("");
+  const { fetchDates, restrictedDay } = useDate();
+
   const dateOptions = {
     weekday: "short",
     year: "2-digit",
@@ -31,24 +35,30 @@ export default function CreateSubTask({ parentId }) {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const dueDate = new Date(
+      date.slice(0, 4),
+      parseInt(date.slice(5, 7)) - 1,
+      date.slice(8)
+    ).toLocaleDateString("en-US", dateOptions);
 
     const newListItem = {
       name,
-      goal_id: parentId,
-      due_date: new Date(
-        date.slice(0, 4),
-        parseInt(date.slice(5, 7)) - 1,
-        date.slice(8)
-      ).toLocaleDateString("en-US", dateOptions),
+      goals: [singleGoal.id],
+      due_date: dueDate,
       priority: "4",
     };
 
     // Validation to check that a task isn't a character of just spaces
+    let response;
+    if (fetchDates.includes(dueDate))
+      response = await dispatch(
+        addTaskThunk(newListItem, dueDate, dueDate.slice(0, 3).toLowerCase())
+      );
+    else response = await dispatch(addTaskThunk(newListItem, dueDate));
 
-    const res = dispatch(addGoalSubTaskThunk(newListItem, parentId));
-    if (res) console.log("checking response", res);
+    dispatch(addSubTask(response));
 
     setName("");
   };
@@ -66,14 +76,6 @@ export default function CreateSubTask({ parentId }) {
       displayList.push(<ListItem empty={true} />);
     }
   }
-
-  // Adding restritive due date function
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const addZero = (num) => (num < 10 ? "0" + num : num);
-  const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
 
   // Validation to ensure name is not all spaces
   function handleNameChange(event) {

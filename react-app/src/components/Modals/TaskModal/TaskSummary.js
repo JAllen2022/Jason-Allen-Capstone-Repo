@@ -14,8 +14,6 @@ export default function TaskSummary() {
     dispatch(getTaskThunk(singleTask.parent_id));
   };
 
-  console.log("checking single goals", singleTask);
-
   const relatedGoals =
     singleTask.goals && Object.values(singleTask.goals).length
       ? Object.values(singleTask.goals).map((goal) => <GoalSpan goal={goal} />)

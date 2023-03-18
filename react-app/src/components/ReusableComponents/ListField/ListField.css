@@ -113,6 +113,10 @@
   padding: 0.25rem;
 }
 
+.list-create-list-item-input-field:focus {
+  outline: none;
+}
+
 .list-view-section {
   overflow-y: scroll;
   margin-right: 0.2rem;

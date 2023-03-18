@@ -2,6 +2,7 @@
 const GET_TASKS = "tasks/GET_TASKS";
 const GET_TASK = "tasks/GET_TASK";
 const GET_ALL_TASKS = "task/GET_ALL_TASKS";
+const GET_WEEK_TASKS = "goals/GET_WEEK_TASKS";
 const ADD_TASK = "tasks/ADD_TASK";
 const EDIT_TASK = "tasks/EDIT_TASK";
 const DELETE_TASK = "tasks/DELETE_TASK";
@@ -23,19 +24,24 @@ const getAllTasks = (tasks) => ({
   payload: tasks,
 });
 
-const addTask = (task, currDate) => ({
+const getWeekTasks = (tasks) => ({
+  type: GET_WEEK_TASKS,
+  payload: tasks,
+});
+
+const addTask = (task, currDate, weekday) => ({
   type: ADD_TASK,
-  payload: { task, currDate },
+  payload: { task, currDate, weekday },
 });
 
-const editTask = (task) => ({
+const editTask = (editedTask, weekday, deleteFromWeek) => ({
   type: EDIT_TASK,
-  payload: task,
+  payload: { editedTask, weekday, deleteFromWeek },
 });
 
-const deleteTask = (taskId) => ({
+const deleteTask = (taskId, weekday) => ({
   type: DELETE_TASK,
-  payload: taskId,
+  payload: { taskId, weekday },
 });
 
 export const setDisplayTime = (time) => ({
@@ -95,7 +101,25 @@ export const getAllTasksThunk = () => async (dispatch) => {
   }
 };
 
-export const addTaskThunk = (task, currDate) => async (dispatch) => {
+export const getWeekTasksThunk = (data) => async (dispatch) => {
+  const searchParameters = new URLSearchParams(data).toString();
+  const res = await fetch(`/api/tasks/week?${searchParameters}`, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(getWeekTasks(data));
+  } else {
+    const data = await res.json();
+    if (data.errors) return res;
+  }
+};
+
+export const addTaskThunk = (task, currDate, weekday) => async (dispatch) => {
   const res = await fetch(`/api/tasks`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -104,38 +128,44 @@ export const addTaskThunk = (task, currDate) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(addTask(data, currDate));
+    dispatch(addTask(data, currDate, weekday));
+    return data;
   } else {
     const data = await res.json();
     if (data.errors) return res;
   }
 };
 
-export const editTaskThunk = (task, taskId) => async (dispatch) => {
-  const res = await fetch(`/api/tasks/${taskId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(task),
-  });
+export const editTaskThunk =
+  (task, taskId, weekday, deleteFromWeek) => async (dispatch) => {
+    const res = await fetch(`/api/tasks/${taskId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
 
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(editTask(data));
-  } else {
-    const data = await res.json();
-    if (data.errors) return res;
-  }
-};
+    console.log("we here 12345 ", deleteFromWeek);
 
-export const deleteTaskThunk = (taskId) => async (dispatch) => {
+    if (res.ok) {
+      console.log("we here 12346 ");
+
+      const data = await res.json();
+      dispatch(editTask(data, weekday, deleteFromWeek));
+    } else {
+      const data = await res.json();
+      if (data.errors) return res;
+    }
+  };
+
+export const deleteTaskThunk = (taskId, weekday) => async (dispatch) => {
   const res = await fetch(`/api/tasks/${taskId}`, {
     method: "DELETE",
   });
 
   if (res.ok) {
-    dispatch(deleteTask(taskId));
+    dispatch(deleteTask(taskId, weekday));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -147,6 +177,13 @@ const initialState = {
   currentTasks: {},
   singleTask: {},
   allTasks: {},
+  mon: {},
+  tue: {},
+  wed: {},
+  thu: {},
+  fri: {},
+  sat: {},
+  sun: {},
 };
 
 export default function reducer(state = initialState, action) {
@@ -157,9 +194,12 @@ export default function reducer(state = initialState, action) {
       return { ...state, singleTask: action.payload };
     case GET_ALL_TASKS:
       return { ...state, allTasks: action.payload };
+    case GET_WEEK_TASKS:
+      const { mon, tue, wed, thu, fri, sat, sun } = action.payload;
+      return { ...state, mon, tue, wed, thu, fri, sat, sun };
     case ADD_TASK: {
       // Refactored
-      const { task, currDate } = action.payload;
+      const { task, currDate, weekday } = action.payload;
       const { id } = task;
       const newState = {
         ...state,
@@ -183,6 +223,11 @@ export default function reducer(state = initialState, action) {
           };
         }
       }
+
+      if (weekday) {
+        newState[weekday][task.id] = task;
+      }
+
       return newState;
       // Old Code
       // const newState = { ...state };
@@ -197,7 +242,7 @@ export default function reducer(state = initialState, action) {
       // return newState;
     }
     case EDIT_TASK: {
-      const editedTask = action.payload;
+      const { editedTask, weekday, deleteFromWeek } = action.payload;
       const { id } = editedTask;
       const newState = {
         ...state,
@@ -217,7 +262,7 @@ export default function reducer(state = initialState, action) {
       if (newState.singleTask.id) {
         if (id === state.singleTask.id) {
           newState.singleTask = { ...editedTask };
-        } else if (newState.singleTask.sub_tasks[id]) {
+        } else if (newState.singleTask?.sub_tasks[id]) {
           newState.singleTask.sub_tasks = {
             ...state.singleTask.sub_tasks,
             [id]: {
@@ -225,6 +270,22 @@ export default function reducer(state = initialState, action) {
               ...editedTask,
             },
           };
+        }
+      }
+      if (weekday) {
+        newState[weekday] = {
+          ...state[weekday],
+        };
+        console.log("are we doing anything", weekday);
+        newState[weekday][editedTask.id] = editedTask;
+        console.log("what is the new newState", newState[weekday]);
+        if (deleteFromWeek) {
+          const oldWeekDay = state.singleTask.due_date
+            .slice(0, 3)
+            .toLowerCase();
+          console.log("checking old week day", oldWeekDay);
+          newState[oldWeekDay] = { ...state[oldWeekDay] };
+          delete newState[oldWeekDay][editedTask.id];
         }
       }
 
@@ -242,11 +303,12 @@ export default function reducer(state = initialState, action) {
       //   return newState;
     }
     case DELETE_TASK: {
-      const taskId = action.payload;
-      const { currentTasks, singleTask } = state;
+      const { taskId, weekday } = action.payload;
+      const { singleTask } = state;
       const newState = {
-        currentTasks: { ...currentTasks },
-        singleTask: { ...singleTask },
+        ...state,
+        currentTasks: { ...state.currentTasks },
+        singleTask: { ...state.singleTask },
       };
 
       delete newState.currentTasks[taskId];
@@ -256,6 +318,13 @@ export default function reducer(state = initialState, action) {
       } else if (singleTask.id && singleTask.sub_tasks[taskId]) {
         newState.singleTask.sub_tasks = { ...singleTask.sub_tasks };
         delete newState.singleTask.sub_tasks[taskId];
+      }
+
+      if (weekday) {
+        newState[weekday] = {
+          ...state[weekday],
+        };
+        delete newState[weekday][taskId];
       }
 
       return newState;

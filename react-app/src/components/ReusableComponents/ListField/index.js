@@ -12,8 +12,7 @@ export default function ListField({
   timeFrame,
   year,
   date,
-  increase,
-  decrease,
+  displayHeader,
   dueDate,
   week,
   monthString,
@@ -27,7 +26,7 @@ export default function ListField({
   const [showMenu, setShowMenu] = useState(false);
   const [allTasks, setAllTasks] = useState("");
   const [incompleted, setIncompleted] = useState("");
-  const [completed, setCompleted] = useState("");
+  const [completedTasks, setCompletedTasks] = useState("");
   const dispatch = useDispatch();
   const [displayList, setDisplayList] = useState([]);
   const menuRef = useRef();
@@ -40,25 +39,6 @@ export default function ListField({
   };
 
   // Code to determine the header to display on each column
-  const displayHeader = (
-    <h4 className="list-header">
-      <span className="list-header-date-buttons" onClick={decrease}>
-        <i className="fa-solid fa-circle-chevron-left"></i>
-      </span>
-      {timeFrame === "year" && (
-        <span className="header-timefame-text">{`${date.getFullYear()} Goals`}</span>
-      )}
-      {timeFrame === "month" && (
-        <span className="header-timefame-text">{`${monthString} Goals`}</span>
-      )}
-      {timeFrame === "week" && (
-        <span className="header-timefame-text">{week}</span>
-      )}
-      <span className="list-header-date-buttons" onClick={increase}>
-        <i className="fa-solid fa-circle-chevron-right"></i>
-      </span>
-    </h4>
-  );
 
   // Generate the different lists to display
   useEffect(() => {
@@ -109,14 +89,14 @@ export default function ListField({
 
     setAllTasks([...allTasksNotCompleted, ...allTasksCompleted]);
     setIncompleted(allTasksNotCompleted);
-    setCompleted(allTasksCompleted);
+    setCompletedTasks(allTasksCompleted);
   }, [filter, incomingList]);
 
   useEffect(() => {
     let listToDisplay;
     if (tab === "all") {
       listToDisplay = allTasks;
-    } else if (tab === "complete") listToDisplay = completed;
+    } else if (tab === "complete") listToDisplay = completedTasks;
     else if (tab === "incomplete") listToDisplay = incompleted;
 
     let newDisplayList;

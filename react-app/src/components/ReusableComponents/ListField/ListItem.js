@@ -6,6 +6,8 @@ import GoalModal from "../../Modals/GoalModal";
 import DeleteConfirmation from "../../Modals/DeleteConfirmation";
 import { editTaskThunk, getTaskThunk } from "../../../store/tasks";
 import { editGoalThunk, editSubTask, getGoalThunk } from "../../../store/goals";
+import { useDate } from "../../../context/Date";
+
 import "./ListField.css";
 
 export default function ListItem({
@@ -16,11 +18,14 @@ export default function ListItem({
   setTab,
   subGoal,
   indivSubTask,
+  weekday,
 }) {
   const dispatch = useDispatch();
+  const { fetchDates } = useDate();
+
   const currTask = useSelector((state) => state.tasks.singleTask);
-  const [completed, setCompleted] = useState(item?.completed || false);
-  const { modalRef, closeModal, setModalContent } = useModal();
+  let completed = item?.completed;
+  const { setModalContent } = useModal();
   let tagColor = {};
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked
@@ -29,10 +34,11 @@ export default function ListItem({
   useEffect(() => {
     if (item && currTask.id === item.id) {
       if (currTask.completed !== completed) {
-        setCompleted(currTask.completed);
+        completed = currTask.completed;
       }
     }
   }, [currTask]);
+
   if (item?.priority == "1") {
     tagColor.borderLeft = `2px solid #d1453a`;
   } else if (item?.priority == "2") {
@@ -46,19 +52,32 @@ export default function ListItem({
   if (item?.completed) {
     tagColor.opacity = ".5";
   }
-  console.log("what is tag color", tagColor);
-
   // Handle check box click on the right side of the container to mark something complete
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCompleted((prev) => !prev);
     const updatedItem = {
       ...item,
       completed: !completed,
     };
+    completed = !completed;
 
     if (taskBool) {
-      dispatch(editTaskThunk(updatedItem, item.id));
+      if (fetchDates.includes(item.due_date)) {
+        dispatch(
+          editTaskThunk(
+            updatedItem,
+            item.id,
+            item.due_date.slice(0, 3).toLowerCase()
+          )
+        );
+        console.log(
+          "checking due date",
+          item.due_date,
+          fetchDates.includes(item.due_date)
+        );
+      }
+
+      dispatch(editTaskThunk(updatedItem, item.id, weekday));
       if (subTask) {
         dispatch(editSubTask(updatedItem));
       }
@@ -85,7 +104,12 @@ export default function ListItem({
 
   const deleteClick = () => {
     setModalContent(
-      <DeleteConfirmation item={item} taskBool={taskBool} subTask={subTask} />
+      <DeleteConfirmation
+        item={item}
+        taskBool={taskBool}
+        subTask={subTask}
+        weekday={weekday}
+      />
     );
   };
 
@@ -98,10 +122,7 @@ export default function ListItem({
           {item.name}{" "}
         </div>
         <div className="inner-list-edit-buttons-container">
-          <form
-            onSubmit={handleSubmit}
-            className="list-edit-button-checkbox-form"
-          >
+          <form className="list-edit-button-checkbox-form">
             <input
               type="checkbox"
               checked={completed}

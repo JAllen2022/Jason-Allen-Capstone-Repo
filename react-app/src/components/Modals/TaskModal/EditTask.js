@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editTaskThunk, getAllTasksThunk } from "../../../store/tasks";
 import { getAllGoalsThunk } from "../../../store/goals";
+import { useDate } from "../../../context/Date";
+
 import "./EditListField.css";
 
 export default function EditGoal({ setEdit, setTab }) {
   const singleTask = useSelector((state) => state.tasks.singleTask);
   const allTasks = useSelector((state) => state.tasks.allTasks);
   const allGoals = useSelector((state) => state.goals.allGoals);
+  const { fetchDates } = useDate();
 
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -51,9 +54,6 @@ export default function EditGoal({ setEdit, setTab }) {
     const year = newDate.getFullYear().toString().slice(-2);
     const newTimeStr = `${getDayName(newDate)}, ${month} ${day}, ${year}`;
 
-    console.log("checking newDate", newDate);
-    console.log("checking newDate", dueDate);
-
     // Combining both arrays for the edit
 
     const goal_ids = [...existingGoals.map((ele) => ele.id), ...relatedGoal];
@@ -72,8 +72,32 @@ export default function EditGoal({ setEdit, setTab }) {
       completed: completed ? true : false,
     };
 
-    console.log("checking payload", editItem);
-    const res = dispatch(editTaskThunk(editItem, singleTask.id));
+    if (fetchDates.includes(newTimeStr)) {
+      if (
+        newTimeStr !== singleTask.due_date &&
+        fetchDates.includes(singleTask.due_date)
+      ) {
+        const deleteFromWeek = true;
+        dispatch(
+          editTaskThunk(
+            editItem,
+            singleTask.id,
+            newTimeStr.slice(0, 3).toLowerCase(),
+            deleteFromWeek
+          )
+        );
+      } else {
+        dispatch(
+          editTaskThunk(
+            editItem,
+            singleTask.id,
+            newTimeStr.slice(0, 3).toLowerCase()
+          )
+        );
+      }
+    } else {
+      dispatch(editTaskThunk(editItem, singleTask.id));
+    }
     setTab("summary");
     setEdit(false);
   };

@@ -2,11 +2,13 @@ import ListItem from "../../ReusableComponents/ListField/ListItem";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTaskThunk } from "../../../store/tasks";
+import { useDate } from "../../../context/Date";
 
 export default function CreateSubTask({ parentId, setTab }) {
   const [name, setName] = useState("");
   const singleTask = useSelector((state) => state.tasks.singleTask);
   const [date, setDate] = useState("");
+  const { fetchDates, restrictedDay } = useDate();
   const dateOptions = {
     weekday: "short",
     year: "2-digit",
@@ -40,8 +42,15 @@ export default function CreateSubTask({ parentId, setTab }) {
     // Validation to check that a task isn't a character of just spaces
     const emptyStringCheck = name.split(" ").join("");
     if (name.length && emptyStringCheck) {
-      const res = dispatch(addTaskThunk(newListItem, inputDate));
-      if (res) console.log("checking response", res);
+      if (fetchDates.includes(inputDate))
+        dispatch(
+          addTaskThunk(
+            newListItem,
+            inputDate,
+            inputDate.slice(0, 3).toLowerCase()
+          )
+        );
+      else dispatch(addTaskThunk(newListItem, inputDate));
     }
     setName("");
     setDate("");
@@ -66,13 +75,6 @@ export default function CreateSubTask({ parentId, setTab }) {
       displayList.push(<ListItem empty={true} />);
     }
   }
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-  const addZero = (num) => (num < 10 ? "0" + num : num);
-  const restrictedDay = year + "-" + addZero(month) + "-" + addZero(day);
 
   // Validation to ensure name is not all spaces
   function handleNameChange(event) {
