@@ -195,7 +195,7 @@ export default function Planner() {
 
   return (
     <div className="planner-container">
-      <div className="planner-week-text">Week of {week}</div>
+      <div className="planner-week-text">Week of {week.slice(14)}</div>
       <Notebook leftPageContent={leftPage} rightPageContent={rightPage} />{" "}
       <div className="planner-arrow-container">
         {" "}
