@@ -12,9 +12,10 @@ import Notebook from "../ReusableComponents/Notebook";
 import ListField from "../ReusableComponents/ListField";
 import Arrow from "../../Assets/Arrow";
 import moment from "moment";
+import WeeklyHabitTracker from "./WeeklyHabitTracker";
+import WeekDayList from "./WeekDayList";
 
 import "./Planner.css";
-import WeekDayList from "./WeekDayList";
 
 export default function Planner() {
   const allTasks = useSelector((state) => state.tasks.currentTasks);
@@ -84,25 +85,6 @@ export default function Planner() {
     </h4>
   );
 
-  const habitContainer = [];
-  const displayHabitCount = 5;
-  for (let i = 0; i < displayHabitCount; i++) {
-    habitContainer.push(
-      <>
-        {" "}
-        <div className="planner-habit-tracker-name"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-check"></div>
-        <div className="planner-habit-tracker-count"></div>
-        <div className="planner-habit-tracker-count"></div>
-      </>
-    );
-  }
   console.log("what is week", week);
   const leftPage = (
     <div className="planner-left-page">
@@ -124,37 +106,9 @@ export default function Planner() {
           displayHeader={leftPageDisplayGoalHeader}
         />
       </div>
-      <div className="planner-weekly-habit-tracker-container">
-        <h4 className="planner-goal-list-header">
-          <span className="header-timefame-text">Habit Tracker</span>
-        </h4>
-        <div className="planner-habit-container">
-          <div className="planner-habit-tracker-heading-container">
-            <div className="planner-habit-tracker-headings">Habit</div>
-            <div className="planner-habit-tracker-headings">M</div>
-            <div className="planner-habit-tracker-headings">T</div>
-            <div className="planner-habit-tracker-headings">W</div>
-            <div className="planner-habit-tracker-headings">T</div>
-            <div className="planner-habit-tracker-headings">F</div>
-            <div className="planner-habit-tracker-headings">S</div>
-            <div className="planner-habit-tracker-headings">S</div>
-            <div className="planner-habit-tracker-headings">Achievied </div>
-            <div className="planner-habit-tracker-headings">Goal</div>
-          </div>
-          <div className="planner-habit-tracker-body-container">
-            {habitContainer}
-          </div>
-          <div className="planner-habit-tracker-footer-container">
-            <div className="planner-habit-tracker-headings">Total</div>
-            <div className="planner-habit-tracker-count">Count </div>
-            <div className="planner-habit-tracker-count">Count</div>
-          </div>
-        </div>
-      </div>
+      <WeeklyHabitTracker />
     </div>
   );
-
-  // Set the date for the desired week (in this case, the week of March 20, 2023)
 
   const rightPage = (
     <div className="planner-page-right-container">
@@ -165,31 +119,6 @@ export default function Planner() {
           fetchDate={fetchDates[index]}
         />
       ))}
-      {/* <h4 className="list-header">
-        <span
-          className="list-header-date-buttons"
-          onClick={() => setDay((prev) => prev - 1)}
-        >
-          <i className="fa-solid fa-circle-chevron-left"></i>
-        </span>
-        <span className="header-timefame-text">
-          {weekdays[date.getDay()]}, {`${month + 1}/${day}/${year}`}
-        </span>
-        <span
-          className="list-header-date-buttons"
-          onClick={() => setDay((prev) => prev + 1)}
-        >
-          <i className="fa-solid fa-circle-chevron-right"></i>
-        </span>
-      </h4>
-      <div className="task-left-page-list-field">
-        <ListField
-          taskBool={true}
-          dueDate={dateString}
-          incomingList={Object.values(allTasks)}
-          defaultFilter={user.task_filter}
-        />
-      </div> */}
     </div>
   );
 

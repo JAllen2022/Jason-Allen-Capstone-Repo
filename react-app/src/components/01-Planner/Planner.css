@@ -77,17 +77,19 @@
   border: 1px dotted lightgray;
   display: grid;
   grid-template-columns: 4fr repeat(7, 1fr) 2fr 2fr;
-  padding: 0.25rem 0;
+  margin: 0.35rem 0;
   width: 100%;
   text-align: center;
+  align-items: center;
   height: 8%;
+  font-size: 0.85rem;
+  margin-right: 15px;
 }
 
 .planner-habit-tracker-body-container {
-  /* border: 1px dotted lightgray; */
+  /* border: 1px solid green; */
   display: grid;
   grid-template-columns: 4fr repeat(7, 1fr) 2fr 2fr;
-  padding: 0.25rem 0;
   width: 100%;
   height: 70%;
   overflow-y: scroll;
@@ -99,6 +101,7 @@
 .planner-habit-tracker-check {
   border: 1px dotted lightgray;
   text-align: center;
+  margin: auto 0;
 }
 
 .planner-habit-tracker-count {
@@ -166,4 +169,74 @@
   overflow-y: scroll;
   /* border: 1px solid purple; */
   height: 84%;
+}
+
+.habit-check:checked + label svg path {
+  stroke-dashoffset: 0;
+}
+.habit-check:focus + label {
+  /* transform: scale(1.03); */
+}
+
+.habit-check {
+  display: none;
+  border: 1px solid #333;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.habit-label:active {
+  /* transform: scale(1.05); */
+  /* border-radius: 30px; */
+}
+/* .habit-check + label svg {
+  pointer-events: none;
+} */
+.habit-path {
+  fill: none;
+  stroke: #333;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 101;
+  transition: all 350ms cubic-bezier(1, 0, 0.37, 0.91);
+}
+
+/*  next version */
+
+input.check {
+  position: absolute;
+  opacity: 0;
+}
+input.check:checked + label.check-label svg path {
+  stroke-dashoffset: 0;
+}
+input.check:focus + label.check-label {
+  transform: scale(1.03);
+}
+
+.check + .check-label {
+  display: block;
+  border-radius: 14px;
+  border: 1px solid lightgray;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.check + .check-label:active {
+  transform: scale(1.05);
+  border-radius: 30px;
+}
+.check + .check-label svg {
+  pointer-events: none;
+}
+.check + .check-label svg path {
+  fill: none;
+  stroke: #333;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 101;
+  transition: all 150ms cubic-bezier(1, 0, 0.37, 0.91);
 }
