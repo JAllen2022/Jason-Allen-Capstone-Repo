@@ -14,14 +14,11 @@ class Task(db.Model):
     description = db.Column(db.Text)
     priority = db.Column(db.String(30))
     task_duration = db.Column(db.String(30))
-    assign_date=db.Column(db.String(30))
     due_date=db.Column(db.String(30))
     recurring_frequency=db.Column(db.String(30))
-    recurring_date=db.Column(db.String(30))
     completed=db.Column(db.Boolean)
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
     notes=db.Column(db.Text)
-
 
     children=db.relationship("Task", backref=db.backref('parent', remote_side=[id]))
 
@@ -30,6 +27,7 @@ class Task(db.Model):
 
     user = db.relationship("User", back_populates="tasks")
 
+    task_instances = db.relationship("TaskInstance", back_populates="task")
 
     def to_dict(self):
         return {
@@ -39,10 +37,8 @@ class Task(db.Model):
             "description":self.description,
             "priority":self.priority,
             "task_duration":self.task_duration,
-            "assign_date":self.assign_date,
             "due_date": self.due_date,
             "recurring_frequency":self.recurring_frequency,
-            "recurring_date":self.recurring_date,
             "completed":self.completed,
             "parent_id":self.parent_id,
             "goals": {goal.id:goal.to_dict() for goal in self.goals},
