@@ -3,6 +3,8 @@ const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const EDIT_USER = "session/EDIT_USER";
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 const setUser = (user) => ({
   type: SET_USER,
   payload: user,
@@ -16,6 +18,8 @@ const editUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER,
 });
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Thunks ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/", {
@@ -117,6 +121,8 @@ export const editUserThunk = (user) => async (dispatch) => {
   }
 };
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 const initialState = {
   user: null,
   taskFilter: {},
@@ -124,6 +130,8 @@ const initialState = {
   monthFilter: {},
   weekFilter: {},
 };
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Reducer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

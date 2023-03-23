@@ -66,12 +66,7 @@ const deleteGoal = (goalId) => ({
 
 export const getGoalsThunk = (data) => async (dispatch) => {
   const searchParameters = new URLSearchParams(data).toString();
-  const res = await fetch(`/api/goals?${searchParameters}`, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(`/api/goals?${searchParameters}`);
 
   if (res.ok) {
     const data = await res.json();
@@ -83,11 +78,7 @@ export const getGoalsThunk = (data) => async (dispatch) => {
 };
 
 export const getGoalThunk = (goalId) => async (dispatch) => {
-  const res = await fetch(`/api/goals/${goalId}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await fetch(`/api/goals/${goalId}`);
 
   if (res.ok) {
     const data = await res.json();
@@ -164,6 +155,8 @@ export const deleteGoalThunk = (goalId) => async (dispatch) => {
   }
 };
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 const initialState = {
   displaytime: {},
   year: {},
@@ -172,6 +165,8 @@ const initialState = {
   singleGoal: {},
   allGoals: {},
 };
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Reducer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export default function reducer(state = initialState, action) {
   const newState = {

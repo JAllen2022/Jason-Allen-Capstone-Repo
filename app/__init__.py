@@ -14,6 +14,8 @@ from .api.auth_routes import auth_routes
 from .api.task_routes import task_routes
 from .api.goals_routes import goal_routes
 from .api.image_routes import image_routes
+from .api.habit_routes import habit_routes
+
 
 
 
@@ -41,6 +43,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(task_routes, url_prefix='/api/tasks')
 app.register_blueprint(goal_routes, url_prefix='/api/goals')
 app.register_blueprint(image_routes, url_prefix='/api/images')
+app.register_blueprint(habit_routes, url_prefix='/api/habits')
+
 
 
 

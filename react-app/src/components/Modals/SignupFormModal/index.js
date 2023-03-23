@@ -10,7 +10,7 @@ function SignupFormModal() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
@@ -23,23 +23,14 @@ function SignupFormModal() {
         closeModal();
       }
     } else {
-      setErrors([
-        "Confirm Password field must be the same as the Password field",
-      ]);
+      setErrors({ ...errors, password: "Passwords do not match." });
     }
   };
-
+  console.log("checking errors", errors);
   return (
     <div className="sign-up-modal-container">
       <h1 className="log-in-header">Sign Up</h1>
       <form className="log-in-form" onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li style={{ color: "darkred" }} key={idx}>
-              {error}
-            </li>
-          ))}
-        </ul>
         <label>
           Email
           <input
@@ -51,11 +42,14 @@ function SignupFormModal() {
             required
           />
         </label>
+        {errors.email && <div style={{ color: "maroon" }}>{errors.email}</div>}
         <label>
           Username
           <input
             className="log-in-input"
             type="text"
+            minLength="2"
+            maxLength="10"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -67,6 +61,7 @@ function SignupFormModal() {
             className="log-in-input"
             type="password"
             value={password}
+            minLength="6"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -78,10 +73,14 @@ function SignupFormModal() {
             className="log-in-input"
             type="password"
             value={confirmPassword}
+            minLength="6"
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
+        {errors.password && (
+          <div style={{ color: "maroon" }}>{errors.password}</div>
+        )}
         <button className="log-in-button-modal" type="submit">
           Sign Up
         </button>

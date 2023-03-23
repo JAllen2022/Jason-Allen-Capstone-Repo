@@ -174,9 +174,7 @@
 .habit-check:checked + label svg path {
   stroke-dashoffset: 0;
 }
-.habit-check:focus + label {
-  /* transform: scale(1.03); */
-}
+
 
 .habit-check {
   display: none;
@@ -185,13 +183,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.habit-label:active {
-  /* transform: scale(1.05); */
-  /* border-radius: 30px; */
-}
-/* .habit-check + label svg {
-  pointer-events: none;
-} */
+
 .habit-path {
   fill: none;
   stroke: #333;

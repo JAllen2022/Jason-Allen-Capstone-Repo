@@ -172,6 +172,9 @@ export const deleteTaskThunk = (taskId, weekday) => async (dispatch) => {
   }
 };
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 const initialState = {
   displayDay: {},
   currentTasks: {},
@@ -185,6 +188,9 @@ const initialState = {
   sat: {},
   sun: {},
 };
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Reducer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {

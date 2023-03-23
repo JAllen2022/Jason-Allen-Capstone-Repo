@@ -100,10 +100,13 @@ export default function TestHomePage() {
         </div>
         <div className="home-page-footer">
           <div className="footer-dev-links">
-            <a href="https://github.com/JAllen2022">
+            <a href="https://github.com/JAllen2022" target="_blank">
               <i className="fa-brands fa-github"></i>
             </a>{" "}
-            <a href="https://www.linkedin.com/in/jasonallen715/">
+            <a
+              href="https://www.linkedin.com/in/jasonallen715/"
+              target="_blank"
+            >
               <i className="fa-brands fa-linkedin"></i>
             </a>
           </div>

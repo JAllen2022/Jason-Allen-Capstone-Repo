@@ -9,7 +9,7 @@ function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const history = useHistory();
 
@@ -28,14 +28,10 @@ function LoginFormModal() {
     <>
       <div className="log-in-container">
         <h1 className="log-in-header">Log In</h1>
+        {Object.values(errors) && (
+          <div style={{ color: "maroon" }}>Invalid email or password.</div>
+        )}
         <form className="log-in-form" onSubmit={handleSubmit}>
-          <ul>
-            {errors.map((error, idx) => (
-              <li style={{ color: "darkred" }} key={idx}>
-                {error}
-              </li>
-            ))}
-          </ul>
           <div>
             <label> Email</label>
           </div>

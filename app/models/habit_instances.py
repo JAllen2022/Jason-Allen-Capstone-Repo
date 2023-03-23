@@ -13,6 +13,7 @@ class HabitInstance(db.Model):
     week = db.Column(db.String(50))
     goal_to_complete = db.Column(db.Integer)
     acutally_completed = db.Column(db.Integer)
+    created_at = db.Column(db.Date)
 
     habit = db.relationship('Habit', back_populates='habit_instances')
 
@@ -24,5 +25,17 @@ class HabitInstance(db.Model):
             "month": self.month,
             "week": self.week,
             "goal_to_complete": self.goal_to_complete,
-            "actually_completed":self.acutally_completed
+            "actually_completed":self.acutally_completed,
+            "habit":self.habit.to_dict_for_instance()
+        }
+
+    def to_dict_for_habit(self):
+        return {
+            "id": self.id,
+            "habit_id": self.habit_id,
+            "year":self.year,
+            "month": self.month,
+            "week": self.week,
+            "goal_to_complete": self.goal_to_complete,
+            "actually_completed":self.acutally_completed,
         }

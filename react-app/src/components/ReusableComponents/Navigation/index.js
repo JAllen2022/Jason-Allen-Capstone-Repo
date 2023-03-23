@@ -64,7 +64,7 @@ function Navigation({ isLoaded }) {
           <div className="developer-info-nav-bottom ">
             <div className="nav-item">
               <div className="nav-button-dev ">
-                <a href="https://github.com/JAllen2022">
+                <a href="https://github.com/JAllen2022" target="_blank">
                   <i
                     style={{ color: "#color: #e0dfdf;" }}
                     className="fa-brands fa-github"
@@ -77,7 +77,10 @@ function Navigation({ isLoaded }) {
             </div>
             <div className="nav-item">
               <div className="nav-button-dev">
-                <a href="https://www.linkedin.com/in/jasonallen715/">
+                <a
+                  href="https://www.linkedin.com/in/jasonallen715/"
+                  target="_blank"
+                >
                   <i className="fa-brands fa-linkedin"></i>
                 </a>
               </div>
