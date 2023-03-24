@@ -63,6 +63,7 @@ export default function EditGoal({ setEdit, setTab }) {
       name,
       description,
       priority,
+      parent_id: parentId,
       task_duration: taskDuration,
       //   assign_date: assignDate,
       due_date: newTimeStr,

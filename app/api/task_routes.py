@@ -149,8 +149,10 @@ def edit_task(id):
     task.priority=form_data["priority"]
     task.task_duration=form_data["task_duration"]
     task.due_date=form_data["due_date"]
-    task.recurring_frequency=form_data["recurring_frequency"]
-    task.recurring_date=form_data["recurring_date"]
+    if form_data.get("parent_id"):
+        task.parent_id = form_data["parent_id"]
+    task.recurring_frequency=form_data["recurring_frequency"]  if form_data.get("recurring_frequency") else None
+    task.recurring_date=form_data["recurring_date"] if form_data.get("recurring_date") else None
     task.completed=form_data["completed"]
     task.notes=form_data["notes"]
 
