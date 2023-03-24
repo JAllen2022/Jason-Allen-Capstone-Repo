@@ -64,7 +64,12 @@ export default function WeekDayList({ dayString, fetchDate }) {
 
     compiledList.forEach((ele) =>
       displayBody.push(
-        <ListItem taskBool={true} item={ele} weekday={weekDay.toLowerCase()} />
+        <ListItem
+          key={`${ele.name}${ele.id}`}
+          taskBool={true}
+          item={ele}
+          weekday={weekDay.toLowerCase()}
+        />
       )
     );
     if (currentDate.isSameOrBefore(dateToCheck, "day")) {

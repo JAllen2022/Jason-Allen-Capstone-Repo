@@ -1,34 +1,79 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { editHabitThunk, getHabitThunk } from "../../store/habits";
+import { useModal } from "../../context/Modal";
+import HabitModal from "../Modals/HabitModal";
 
-export default function WeeklyHabit() {
-  const [name, setName] = useState("");
-  const [goal, setGoal] = useState(0);
-  const [monday, setMonday] = useState(true);
-  const [tuesday, setTuesday] = useState(false);
-  const [wednesday, setWednesday] = useState(false);
-  const [thursday, setThursday] = useState(false);
-  const [friday, setFriday] = useState(false);
-  const [saturday, setSaturday] = useState(false);
-  const [sunday, setSunday] = useState(false);
+export default function WeeklyHabit({ habit }) {
+  const dispatch = useDispatch();
+  const { setModalContent } = useModal();
 
-  const handleSubmit = () => {};
-  const weeklyInput = (
-    <form
-      className="weekday-list-form-container"
-      onSubmit={handleSubmit}
-      type="submit"
-    >
-      <input
-        className="weekday-list-create-list-item-input-field"
-        placeholder={"Add a task..."}
-        type="text"
-        maxLength="50"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      ></input>
-      <input type="submit" style={{ position: "absolute", display: "none" }} />
-    </form>
+  const [name, setName] = useState(habit?.name);
+  const [goal, setGoal] = useState(habit?.goal_to_complete || 0);
+  const [monday, setMonday] = useState(habit?.monday);
+  const [tuesday, setTuesday] = useState(habit?.tuesday);
+  const [wednesday, setWednesday] = useState(habit?.wednesday);
+  const [thursday, setThursday] = useState(habit?.thursday);
+  const [friday, setFriday] = useState(habit?.friday);
+  const [saturday, setSaturday] = useState(habit?.saturday);
+  const [sunday, setSunday] = useState(habit?.sunday);
+  const goalSum =
+    monday + tuesday + wednesday + thursday + friday + saturday + sunday;
+  console.log(
+    "checking habit",
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday
   );
+
+  const handleSubmit = (e) => {
+    if (e) e.preventDefault();
+
+    const newHabit = {
+      ...habit,
+      name,
+      goal_to_complete: goal,
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday,
+      actually_completed: goalSum,
+    };
+
+    // console.log("checking new habit", newHabit);
+    // const emptyStringCheck = name.split(" ").join("");
+    // if (name.length && emptyStringCheck) {
+    dispatch(editHabitThunk(newHabit));
+    // }
+  };
+  // const weeklyInput = (
+  //   <form
+  //     className="weekday-list-form-container"
+  //     onSubmit={handleSubmit}
+  //     type="submit"
+  //   >
+  //     <input
+  //       className="weekday-list-create-list-item-input-field"
+  //       placeholder={"Add a task..."}
+  //       type="text"
+  //       maxLength="50"
+  //       value={name || habit?.name}
+  //       onChange={(e) => setName(e.target.value)}
+  //     ></input>
+  //     <input type="submit" style={{ position: "absolute", display: "none" }} />
+  //   </form>
+  // );
+
+  useEffect(() => {
+    if (habit) handleSubmit();
+  }, [monday, tuesday, wednesday, thursday, friday, saturday, sunday, goal]);
 
   const goalInput = (
     <form
@@ -37,7 +82,7 @@ export default function WeeklyHabit() {
       type="submit"
     >
       <input
-        className="weekday-list-create-list-item-input-field"
+        className="habit-goal-field"
         placeholder={"Add a number"}
         type="number"
         min="1"
@@ -49,115 +94,158 @@ export default function WeeklyHabit() {
     </form>
   );
 
-  const goalSum =
-    monday + tuesday + wednesday + thursday + friday + saturday + sunday;
+  const onClickName = () => {
+    // dispatch(getHabitThunk(habit.habit_id));
+    setModalContent(<HabitModal habitId={habit.habit_id} />);
+  };
 
-  return (
-    <>
-      {" "}
-      <div className="planner-habit-tracker-name">{weeklyInput}</div>
-      <div className="planner-habit-tracker-check">
-        <div className="form">
+  let displayBody;
+
+  if (habit) {
+    displayBody = (
+      <>
+        {" "}
+        <div className="planner-habit-tracker-name" onClick={onClickName}>
+          <span className="planner-habit-tracker-name-span">{habit?.name}</span>
+        </div>
+        {/* <div className="planner-habit-tracker-check">
+          <div className="form">
+            <input
+              type="checkbox"
+              id={`1-${habit.name}${habit.id}`}
+              className="check"
+              checked={monday}
+              onChange={() => setMonday((prev) => !prev)}
+            />
+            <label
+              htmlFor={`1-${habit.name}${habit.id}`}
+              className="check-label"
+            >
+              <svg viewBox="0,0,50,50">
+                <path d="M5 30 L 20 45 L 45 5"></path>
+              </svg>
+            </label>
+          </div>
+        </div> */}
+        <div className="planner-habit-tracker-check">
           <input
             type="checkbox"
-            id="check1"
+            id={`1-${habit.name}${habit.id}`}
             className="check"
             checked={monday}
             onChange={() => setMonday((prev) => !prev)}
           />
-          <label for="check1" className="check-label">
+          <label htmlFor={`1-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
               <path d="M5 30 L 20 45 L 45 5"></path>
             </svg>
           </label>
         </div>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check2"
-          className="check"
-          checked={tuesday}
-          onChange={() => setTuesday((prev) => !prev)}
-        />
-        <label for="check2" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check3"
-          className="check"
-          checked={wednesday}
-          onChange={() => setWednesday((prev) => !prev)}
-        />
-        <label for="check3" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check4"
-          className="check"
-          checked={thursday}
-          onChange={() => setThursday((prev) => !prev)}
-        />
-        <label for="check4" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check5"
-          className="check"
-          checked={friday}
-          onChange={() => setFriday((prev) => !prev)}
-        />
-        <label for="check5" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check6"
-          className="check"
-          checked={saturday}
-          onChange={() => setSaturday((prev) => !prev)}
-        />
-        <label for="check6" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-check">
-        <input
-          type="checkbox"
-          id="check7"
-          className="check"
-          checked={sunday}
-          onChange={() => setSunday((prev) => !prev)}
-        />
-        <label for="check7" className="check-label">
-          <svg viewBox="0,0,50,50">
-            <path d="M5 30 L 20 45 L 45 5"></path>
-          </svg>
-        </label>
-      </div>
-      <div className="planner-habit-tracker-count">{goalSum}</div>
-      <div className="planner-habit-tracker-count">{goalInput}</div>
-    </>
-  );
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`2-${habit.name}${habit.id}`}
+            className="check"
+            checked={tuesday}
+            onChange={() => setTuesday((prev) => !prev)}
+          />
+          <label htmlFor={`2-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`3-${habit.name}${habit.id}`}
+            className="check"
+            checked={wednesday}
+            onChange={() => setWednesday((prev) => !prev)}
+          />
+          <label htmlFor={`3-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`4-${habit.name}${habit.id}`}
+            className="check"
+            checked={thursday}
+            onChange={(e) => setThursday((prev) => !prev)}
+          />
+          <label htmlFor={`4-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`5-${habit.name}${habit.id}`}
+            className="check"
+            checked={friday}
+            onChange={() => setFriday((prev) => !prev)}
+          />
+          <label htmlFor={`5-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`6-${habit.name}${habit.id}`}
+            className="check"
+            checked={saturday}
+            onChange={() => setSaturday((prev) => !prev)}
+          />
+          <label htmlFor={`6-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-check">
+          <input
+            type="checkbox"
+            id={`7-${habit.name}${habit.id}`}
+            className="check"
+            checked={sunday}
+            onChange={() => setSunday((prev) => !prev)}
+          />
+          <label htmlFor={`7-${habit.name}${habit.id}`} className="check-label">
+            <svg viewBox="0,0,50,50">
+              <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
+          </label>
+        </div>
+        <div className="planner-habit-tracker-count">
+          {goalSum ? goalSum : "0"}
+        </div>
+        <div className="planner-habit-tracker-count">{goalInput}</div>
+      </>
+    );
+  } else {
+    displayBody = (
+      <>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+        <div className="planner-habit-tracker-count"></div>
+      </>
+    );
+  }
+  return displayBody;
 }

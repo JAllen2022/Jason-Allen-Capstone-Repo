@@ -66,7 +66,7 @@ function Navigation({ isLoaded }) {
               <div className="nav-button-dev ">
                 <a href="https://github.com/JAllen2022" target="_blank">
                   <i
-                    style={{ color: "#color: #e0dfdf;" }}
+                    style={{ color: "#e0dfdf" }}
                     className="fa-brands fa-github"
                   ></i>
                 </a>

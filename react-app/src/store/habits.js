@@ -37,7 +37,7 @@ export const getHabitsThunk = (data) => async (dispatch) => {
   const res = await fetch(`/api/habits?${searchParameters}`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(getHabits(data));
+    dispatch(getHabits(data.habits));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -97,7 +97,7 @@ export const deleteHabitThunk = (id) => async (dispatch) => {
   });
 
   if (res.ok) {
-    dispatch(deleteHabit(data));
+    dispatch(deleteHabit(id));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -119,6 +119,10 @@ export default function reducer(state = initialState, action) {
     case GET_HABIT:
       return { ...state, habit: action.payload };
     case CREATE_HABIT:
+      newState.habits = {
+        ...state.habits,
+        [action.payload.id]: action.payload,
+      };
       return newState;
     case EDIT_HABIT:
       return newState;

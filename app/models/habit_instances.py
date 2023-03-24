@@ -11,23 +11,40 @@ class HabitInstance(db.Model):
     year = db.Column(db.String(50))
     month = db.Column(db.String(50))
     week = db.Column(db.String(50))
+    monday = db.Column(db.Boolean)
+    tuesday = db.Column(db.Boolean)
+    wednesday = db.Column(db.Boolean)
+    thursday = db.Column(db.Boolean)
+    friday = db.Column(db.Boolean)
+    saturday = db.Column(db.Boolean)
+    sunday = db.Column(db.Boolean)
+
     goal_to_complete = db.Column(db.Integer)
-    acutally_completed = db.Column(db.Integer)
+    actually_completed = db.Column(db.Integer)
     created_at = db.Column(db.Date)
 
     habit = db.relationship('Habit', back_populates='habit_instances')
 
     def to_dict(self):
-        return {
+        ret= {
             "id": self.id,
             "habit_id": self.habit_id,
             "year":self.year,
             "month": self.month,
             "week": self.week,
             "goal_to_complete": self.goal_to_complete,
-            "actually_completed":self.acutally_completed,
-            "habit":self.habit.to_dict_for_instance()
+            "actually_completed":self.actually_completed,
+            "monday":self.monday,
+            "tuesday":self.tuesday,
+            "wednesday":self.wednesday,
+            "thursday":self.thursday,
+            "friday":self.friday,
+            "saturday":self.saturday,
+            "sunday":self.sunday
         }
+        ret.update(self.habit.to_dict_for_instance())
+        ret["id"]=self.id
+        return ret
 
     def to_dict_for_habit(self):
         return {
@@ -37,5 +54,5 @@ class HabitInstance(db.Model):
             "month": self.month,
             "week": self.week,
             "goal_to_complete": self.goal_to_complete,
-            "actually_completed":self.acutally_completed,
+            "actually_completed":self.actually_completed,
         }

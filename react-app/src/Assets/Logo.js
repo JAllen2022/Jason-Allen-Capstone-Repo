@@ -7,10 +7,9 @@ export default function Logo() {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       role="img"
-      class="iconify iconify--emojione-monotone"
       preserveAspectRatio="xMidYMid meet"
       fill="#e0dfdf"
-      className="home-page-logo-svg"
+      className="iconify iconify--emojione-monotone home-page-logo-svg"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
 

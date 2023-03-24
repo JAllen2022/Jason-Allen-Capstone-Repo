@@ -51,6 +51,10 @@ export function DateProvider({ children }) {
   const [day, setDay] = useState(today.getDate());
   const [date, setDate] = useState(today);
   const [fetchDates, displayDates] = getDisplayDates(date);
+  const monthstring = date.toLocaleString("default", { month: "long" });
+  const monthDisp = `${monthstring}, ${date.getFullYear()}`;
+  const weekString = getCurrentWeek(date);
+
   const addZero = (num) => (num < 10 ? "0" + num : num);
   const restrictedDay =
     today.getFullYear() +
@@ -94,6 +98,8 @@ export function DateProvider({ children }) {
     setDateString,
     fetchDates,
     displayDates,
+    monthDisp,
+    weekString,
   };
 
   return (

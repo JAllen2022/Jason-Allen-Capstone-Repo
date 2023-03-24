@@ -11,7 +11,7 @@ import {
 import Notebook from "../ReusableComponents/Notebook";
 import ListField from "../ReusableComponents/ListField";
 import Arrow from "../../Assets/Arrow";
-import moment from "moment";
+import { getHabitsThunk } from "../../store/habits";
 import WeeklyHabitTracker from "./WeeklyHabitTracker";
 import WeekDayList from "./WeekDayList";
 
@@ -38,9 +38,9 @@ export default function Planner() {
     setDateString,
     fetchDates,
     displayDates,
+    weekString,
   } = useDate();
   const monthstring = date.toLocaleString("default", { month: "long" });
-  const week = getCurrentWeek(date);
 
   useEffect(() => {
     setDate(new Date(year, month, day));
@@ -53,7 +53,7 @@ export default function Planner() {
       getGoalsThunk({
         year: dispYear,
         month: monthDisp,
-        week,
+        week: weekString,
       })
     );
     dispatch(
@@ -67,13 +67,14 @@ export default function Planner() {
         sun: fetchDates[6],
       })
     );
-    dispatch(addDisplayTime(dispYear, monthDisp, week));
+    dispatch(addDisplayTime(dispYear, monthDisp, weekString));
     setDateString(date.toLocaleDateString("en-US", dateOptions));
     const dueDate = {
       due_date: date.toLocaleDateString("en-US", dateOptions),
     };
     dispatch(getTasksThunk(dueDate));
     dispatch(setDisplayTime(dueDate));
+    dispatch(getHabitsThunk({ week: weekString }));
   }, [date]);
 
   const decreaseWeek = () => setDay(day - 7);
@@ -85,7 +86,6 @@ export default function Planner() {
     </h4>
   );
 
-  console.log("what is week", week);
   const leftPage = (
     <div className="planner-left-page">
       <div className="goals-container-right">
@@ -99,7 +99,7 @@ export default function Planner() {
           setDay={setDay}
           date={date}
           setDate={setDate}
-          week={week}
+          week={weekString}
           monthString={monthstring}
           truncate={true}
           defaultFilter={user.goal_week_filter}
@@ -124,7 +124,7 @@ export default function Planner() {
 
   return (
     <div className="planner-container">
-      <div className="planner-week-text">Week of {week.slice(14)}</div>
+      <div className="planner-week-text">Week of {weekString.slice(14)}</div>
       <Notebook leftPageContent={leftPage} rightPageContent={rightPage} />{" "}
       <div className="planner-arrow-container">
         {" "}

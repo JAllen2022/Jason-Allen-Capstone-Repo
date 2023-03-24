@@ -25,7 +25,7 @@ export default function TaskSummary() {
       <>
         <i
           style={{ color: "#d1453a" }}
-          class="fa-solid fa-flag-checkered summary-icon"
+          className="fa-solid fa-flag-checkered summary-icon"
         ></i>
         <span>Priority 1</span>
       </>
@@ -35,7 +35,7 @@ export default function TaskSummary() {
       <>
         <i
           style={{ color: "#eb8907" }}
-          class="fa-solid fa-flag-checkered summary-icon"
+          className="fa-solid fa-flag-checkered summary-icon"
         ></i>
         <span>Priority 2</span>
       </>
@@ -45,7 +45,7 @@ export default function TaskSummary() {
       <>
         <i
           style={{ color: "#246ee0" }}
-          class="fa-solid fa-flag-checkered summary-icon"
+          className="fa-solid fa-flag-checkered summary-icon"
         ></i>
         <span>Priority 3</span>
       </>
@@ -55,7 +55,7 @@ export default function TaskSummary() {
       <>
         <i
           style={{ color: "rgb(156, 156, 156)" }}
-          class="fa-solid fa-flag-checkered summary-icon"
+          className="fa-solid fa-flag-checkered summary-icon"
         ></i>
         <span>Priority 4</span>
       </>

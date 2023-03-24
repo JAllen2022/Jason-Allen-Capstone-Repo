@@ -204,22 +204,34 @@
 }
 
 /* width */
-::-webkit-scrollbar {
+.list-view-section-truncated::-webkit-scrollbar,
+.list-view-section::-webkit-scrollbar,
+.week-day-list-body::-webkit-scrollbar,
+.planner-habit-tracker-body-container::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.list-view-section-truncated::-webkit-scrollbar-track,
+.list-view-section::-webkit-scrollbar-track,
+.week-day-list-body::-webkit-scrollbar-track,
+.planner-habit-tracker-body-container::-webkit-scrollbar-track {
   background: transparent;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.list-view-section-truncated::-webkit-scrollbar-thumb,
+.list-view-section::-webkit-scrollbar-thumb,
+.week-day-list-body::-webkit-scrollbar-thumb,
+.planner-habit-tracker-body-container::-webkit-scrollbar-thumb {
   background: lightgray;
   border-radius: 5px;
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+.list-view-section-truncated::-webkit-scrollbar-thumb:hover,
+.list-view-section::-webkit-scrollbar-thumb:hover,
+.week-day-list-body::-webkit-scrollbar-thumb:hover,
+.planner-habit-tracker-body-container::-webkit-scrollbar-thumb:hover {
   background: #999999;
 }

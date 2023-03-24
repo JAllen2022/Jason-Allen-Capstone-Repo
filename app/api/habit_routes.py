@@ -65,20 +65,30 @@ def create_habit():
             total_habit_completed=0
         )
 
+        db.session.add(habit)
+        db.session.commit()
+
+
         habit_instance = HabitInstance(
             habit_id=habit.id,
             year= form.data["year"],
             month=form.data["month"],
             week=form.data["week"],
+            monday=False,
+            tuesday=False,
+            wednesday=False,
+            thursday=False,
+            friday=False,
+            saturday=False,
+            sunday=False,
             goal_to_complete=0,
             actually_completed=0,
-            created_at=datetime.now()
+            created_at=datetime.datetime.now()
         )
 
-        db.session.add(habit)
         db.session.add(habit_instance)
         db.session.commit()
-        return {'habit': habit.to_dict(), 'habit_instance': habit_instance.to_dict()}
+        return habit_instance.to_dict()
     else:
         return {'errors': form.errors}
 
@@ -132,24 +142,34 @@ def edit_habit(id):
     Edit the habit and habit instance
     """
 
+    print("what is going on here ", id)
+
     habit_instance = HabitInstance.query.get(id)
 
     if not habit_instance:
-        return {"errors":"Habit not found"}, 404
+        return {"errors":"Habit instance not found"}, 404
 
-    if not current_user.id == habit_instance.habit_id:
+    print("what is going on here 22")
+
+
+    if not current_user.id == habit_instance.habit.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
+
+
+    print("what is going on here 33")
 
     habit = Habit.query.get(habit_instance.habit_id)
 
     form = HabitForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
+    print("what is going on here 44")
+
     if form.validate_on_submit():
+        print("what is going on here 55")
+
         habit.name = form.data["name"]
         habit.weeks_repeat = form.data["weeks_repeat"]
-        habit.total_habit_goal += form.data["goal_to_complete"]
-        habit.total_habit_completed += form.data["actually_completed"]
 
 
         habit_instance.year= form.data["year"]
@@ -157,6 +177,15 @@ def edit_habit(id):
         habit_instance.week=form.data["week"]
         habit_instance.goal_to_complete=form.data["goal_to_complete"]
         habit_instance.actually_completed=form.data["actually_completed"]
+        habit_instance.monday=form.data["monday"]
+        habit_instance.tuesday=form.data["tuesday"]
+        habit_instance.wednesday=form.data["wednesday"]
+        habit_instance.thursday=form.data["thursday"]
+        habit_instance.friday=form.data["friday"]
+        habit_instance.saturday=form.data["saturday"]
+        habit_instance.sunday=form.data["sunday"]
+
+
 
         db.session.add(habit)
         db.session.add(habit_instance)
@@ -196,7 +225,7 @@ def delete_habit_and_instance(id):
 # DELETE ONLY INSTANCE
 @habit_routes.route('/instance/<int:id>', methods=['DELETE'])
 @login_required
-def delete_habit_and_instance(id):
+def delete_instance(id):
     """
     Delete the habit and habit instance
     """

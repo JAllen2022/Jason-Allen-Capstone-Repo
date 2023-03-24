@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b3b49d0d0e7f
+Revision ID: 8d85d5f79c74
 Revises: 
-Create Date: 2023-03-22 01:06:53.301009
+Create Date: 2023-03-23 17:23:15.645126
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b3b49d0d0e7f'
+revision = '8d85d5f79c74'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -94,8 +94,16 @@ def upgrade():
     sa.Column('year', sa.String(length=50), nullable=True),
     sa.Column('month', sa.String(length=50), nullable=True),
     sa.Column('week', sa.String(length=50), nullable=True),
+    sa.Column('monday', sa.Boolean(), nullable=True),
+    sa.Column('tuesday', sa.Boolean(), nullable=True),
+    sa.Column('wednesday', sa.Boolean(), nullable=True),
+    sa.Column('thursday', sa.Boolean(), nullable=True),
+    sa.Column('friday', sa.Boolean(), nullable=True),
+    sa.Column('saturday', sa.Boolean(), nullable=True),
+    sa.Column('sunday', sa.Boolean(), nullable=True),
     sa.Column('goal_to_complete', sa.Integer(), nullable=True),
-    sa.Column('acutally_completed', sa.Integer(), nullable=True),
+    sa.Column('actually_completed', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.Date(), nullable=True),
     sa.ForeignKeyConstraint(['habit_id'], ['habits.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

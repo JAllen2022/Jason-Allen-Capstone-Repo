@@ -1,26 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createHabitThunk, getHabitsThunk } from "../../store/habits";
+import { useDate } from "../../context/Date";
 import WeeklyHabit from "./WeeklyHabit";
 
 export default function WeeklyHabitTracker() {
   const [name, setName] = useState("");
+  const { year, monthDisp, weekString } = useDate();
+  const [countAccomplished, setCountAccomplished] = useState(0);
+  const [countGoal, setCountGoal] = useState(0);
+
+  const habits = useSelector((state) => state.habits.habits);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const newHabit = {
+      name,
+      year,
+      month: monthDisp,
+      week: weekString,
+    };
+
+    const emptyStringCheck = name.split(" ").join("");
+    if (name.length && emptyStringCheck) {
+      dispatch(createHabitThunk(newHabit));
+      setName("");
+    }
   };
 
   const createHabit = (
     <>
-      <div className="planner-habit-tracker-name">
+      <div className="planner-habit-tracker-input">
         <form
           className="weekday-list-form-container"
           onSubmit={handleSubmit}
           type="submit"
         >
           <input
-            className="weekday-list-create-list-item-input-field"
+            className="habit-goal-name-field"
             placeholder={"Add a habit..."}
             type="text"
-            maxLength="50"
+            minLength="1"
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></input>
@@ -44,11 +66,26 @@ export default function WeeklyHabitTracker() {
 
   const habitContainer = [];
   const displayHabitCount = 4;
-  for (let i = 0; i < displayHabitCount; i++) {
-    habitContainer.push(<WeeklyHabit />);
+  const habitsArray = Object.values(habits);
+  if (habitsArray.length) {
+    habitsArray.forEach((habit) =>
+      habitContainer.push(
+        <WeeklyHabit
+          key={`${habit.name}${habit.id}-weeklyhabit`}
+          habit={habit}
+          setCountAccomplished={setCountAccomplished}
+          setCountGoal={setCountGoal}
+        />
+      )
+    );
   }
   habitContainer.push(createHabit);
-
+  if (habitsArray.length < displayHabitCount) {
+    const lengthDifference = displayHabitCount - habitsArray.length;
+    for (let i = 0; i < lengthDifference; i++) {
+      habitContainer.push(<WeeklyHabit key={`empty-${i}`} />);
+    }
+  }
   return (
     <div className="planner-weekly-habit-tracker-container">
       <h4 className="planner-goal-list-header">
@@ -64,7 +101,9 @@ export default function WeeklyHabitTracker() {
           <div className="planner-habit-tracker-headings">F</div>
           <div className="planner-habit-tracker-headings">S</div>
           <div className="planner-habit-tracker-headings">S</div>
-          <div className="planner-habit-tracker-headings">Achievied </div>
+          <div className="planner-habit-tracker-headings">
+            <i class="fa-regular fa-square-check"></i>
+          </div>
           <div className="planner-habit-tracker-headings">Goal</div>
         </div>
         <div className="planner-habit-tracker-body-container">
@@ -72,8 +111,10 @@ export default function WeeklyHabitTracker() {
         </div>
         <div className="planner-habit-tracker-footer-container">
           <div className="planner-habit-tracker-headings">Total</div>
-          <div className="planner-habit-tracker-count">Count </div>
-          <div className="planner-habit-tracker-count">Count</div>
+          <div className="planner-habit-tracker-count">
+            {countAccomplished}{" "}
+          </div>
+          <div className="planner-habit-tracker-count">{countGoal}</div>
         </div>
       </div>
     </div>
