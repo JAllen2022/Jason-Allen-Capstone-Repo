@@ -140,6 +140,9 @@
 .planner-habit-tracker-count {
   border: 1px dotted lightgray;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .planner-habit-tracker-footer-container {

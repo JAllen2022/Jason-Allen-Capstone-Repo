@@ -37,7 +37,7 @@ export const getHabitsThunk = (data) => async (dispatch) => {
   const res = await fetch(`/api/habits?${searchParameters}`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(getHabits(data.habits));
+    dispatch(getHabits(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -73,8 +73,9 @@ export const createHabitThunk = (data) => async (dispatch) => {
   }
 };
 
-export const editHabitThunk = (data) => async (dispatch) => {
-  const res = await fetch(`/api/habits/${data.id}`, {
+export const editHabitThunk = (data, week) => async (dispatch) => {
+  const searchParameters = new URLSearchParams(week).toString();
+  const res = await fetch(`/api/habits/${data.id}?${searchParameters}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -108,6 +109,8 @@ export const deleteHabitThunk = (id) => async (dispatch) => {
 const initialState = {
   habits: {},
   habit: {},
+  totalWeekAccomplished: 0,
+  totalWeekGoal: 0,
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Reducer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,7 +118,12 @@ export default function reducer(state = initialState, action) {
   const newState = { ...state };
   switch (action.type) {
     case GET_HABITS:
-      return { habits: action.payload, habit: {} };
+      return {
+        habits: action.payload.habits,
+        habit: {},
+        totalWeekAccomplished: action.payload.total_accomplished,
+        totalWeekGoal: action.payload.total_goal,
+      };
     case GET_HABIT:
       return { ...state, habit: action.payload };
     case CREATE_HABIT:
@@ -124,7 +132,12 @@ export default function reducer(state = initialState, action) {
         [action.payload.id]: action.payload,
       };
       return newState;
+
     case EDIT_HABIT:
+      newState.habits = {
+        ...state.habits,
+        [action.payload.id]: action.payload.habit,
+      };
       return newState;
     case DELETE_HABIT:
       return newState;

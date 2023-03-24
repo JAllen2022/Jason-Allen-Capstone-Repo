@@ -4,6 +4,19 @@ import { createHabitThunk, getHabitsThunk } from "../../store/habits";
 import { useDate } from "../../context/Date";
 import WeeklyHabit from "./WeeklyHabit";
 
+function hash(str) {
+  let hash = 0;
+  if (str.length === 0) {
+    return hash;
+  }
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+
 export default function WeeklyHabitTracker() {
   const [name, setName] = useState("");
   const { year, monthDisp, weekString } = useDate();
@@ -11,6 +24,11 @@ export default function WeeklyHabitTracker() {
   const [countGoal, setCountGoal] = useState(0);
 
   const habits = useSelector((state) => state.habits.habits);
+  const totalWeekAccomplished = useSelector(
+    (state) => state.habits.totalWeekAccomplished
+  );
+  const totalWeekGoal = useSelector((state) => state.habits.totalWeekGoal);
+
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -22,6 +40,7 @@ export default function WeeklyHabitTracker() {
       month: monthDisp,
       week: weekString,
     };
+    console.log("checking new habit", newHabit);
 
     const emptyStringCheck = name.split(" ").join("");
     if (name.length && emptyStringCheck) {
@@ -68,10 +87,10 @@ export default function WeeklyHabitTracker() {
   const displayHabitCount = 4;
   const habitsArray = Object.values(habits);
   if (habitsArray.length) {
-    habitsArray.forEach((habit) =>
+    habitsArray.forEach((habit, index) =>
       habitContainer.push(
         <WeeklyHabit
-          key={`${habit.name}${habit.id}-weeklyhabit`}
+          key={`${habit.name}${index}-weeklyhabit`}
           habit={habit}
           setCountAccomplished={setCountAccomplished}
           setCountGoal={setCountGoal}
@@ -112,9 +131,9 @@ export default function WeeklyHabitTracker() {
         <div className="planner-habit-tracker-footer-container">
           <div className="planner-habit-tracker-headings">Total</div>
           <div className="planner-habit-tracker-count">
-            {countAccomplished}{" "}
+            {totalWeekAccomplished}{" "}
           </div>
-          <div className="planner-habit-tracker-count">{countGoal}</div>
+          <div className="planner-habit-tracker-count">{totalWeekGoal}</div>
         </div>
       </div>
     </div>

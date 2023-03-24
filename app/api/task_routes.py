@@ -149,7 +149,6 @@ def edit_task(id):
     task.priority=form_data["priority"]
     task.task_duration=form_data["task_duration"]
     task.due_date=form_data["due_date"]
-    task.assign_date=form_data["assign_date"]
     task.recurring_frequency=form_data["recurring_frequency"]
     task.recurring_date=form_data["recurring_date"]
     task.completed=form_data["completed"]

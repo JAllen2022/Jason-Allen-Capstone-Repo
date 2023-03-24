@@ -23,10 +23,20 @@ def week_habits():
         .filter(Habit.user_id == current_user.id, HabitInstance.week == week)\
         .all()
 
-    return {'habits':{habit_instance.id:habit_instance.to_dict() for habit_instance in habit_instances}}
+    habit_dict = {habit_instance.id:habit_instance.to_dict() for habit_instance in habit_instances}
+
+    total_accomplished =0
+    total_goal = 0
+    for habit in habit_dict:
+        total_goal += habit_dict[habit]["goal_to_complete"]
+        total_accomplished += habit_dict[habit]["actually_completed"]
+
+    return {'habits':habit_dict,
+            "total_accomplished": total_accomplished,
+            "total_goal": total_goal}
 
 # GET A SINGLE HABIT AND ALL INSTANCES
-@habit_routes.route('/<int>:id')
+@habit_routes.route('/<int:id>')
 @login_required
 def habit(id):
     """
@@ -41,7 +51,9 @@ def habit(id):
     if not current_user.id == habit.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
 
-    return habit.to_dict()
+    habit_dict = habit.to_dict()
+
+    return habit_dict
 
 # POST ROUTES
 
@@ -141,6 +153,9 @@ def edit_habit(id):
     """
     Edit the habit and habit instance
     """
+
+    week = request.args.get("week")
+
 
     print("what is going on here ", id)
 

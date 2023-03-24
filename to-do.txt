@@ -9,6 +9,8 @@ https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 - Needs to re-size with modal - media query
 - rotating cog animation whenever clicked
 
+- disable input fields for goals and habits in previous weeks/months/years
+
 - Update DB-Diagram
 - Habits
   - Creating a habit - ONLY tracks for a week.

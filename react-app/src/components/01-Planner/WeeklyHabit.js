@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { editHabitThunk, getHabitThunk } from "../../store/habits";
 import { useModal } from "../../context/Modal";
 import HabitModal from "../Modals/HabitModal";
+import { useDate } from "../../context/Date";
+
 
 export default function WeeklyHabit({ habit }) {
   const dispatch = useDispatch();
   const { setModalContent } = useModal();
+  const { weekString } = useDate();
 
-  const [name, setName] = useState(habit?.name);
+  // const [name, setName] = useState(habit?.name);
   const [goal, setGoal] = useState(habit?.goal_to_complete || 0);
   const [monday, setMonday] = useState(habit?.monday);
   const [tuesday, setTuesday] = useState(habit?.tuesday);
@@ -17,25 +20,15 @@ export default function WeeklyHabit({ habit }) {
   const [friday, setFriday] = useState(habit?.friday);
   const [saturday, setSaturday] = useState(habit?.saturday);
   const [sunday, setSunday] = useState(habit?.sunday);
+  const isMountedRef = useRef(false);
   const goalSum =
     monday + tuesday + wednesday + thursday + friday + saturday + sunday;
-  console.log(
-    "checking habit",
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday
-  );
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
 
     const newHabit = {
       ...habit,
-      name,
       goal_to_complete: goal,
       monday,
       tuesday,
@@ -50,7 +43,7 @@ export default function WeeklyHabit({ habit }) {
     // console.log("checking new habit", newHabit);
     // const emptyStringCheck = name.split(" ").join("");
     // if (name.length && emptyStringCheck) {
-    dispatch(editHabitThunk(newHabit));
+    dispatch(editHabitThunk(newHabit, weekString));
     // }
   };
   // const weeklyInput = (
@@ -72,6 +65,11 @@ export default function WeeklyHabit({ habit }) {
   // );
 
   useEffect(() => {
+    // Only run effect on mount
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      return;
+    }
     if (habit) handleSubmit();
   }, [monday, tuesday, wednesday, thursday, friday, saturday, sunday, goal]);
 
