@@ -1,4 +1,7 @@
 To-Do
+- fix habit functionality
+- edit the habit modal to be functional and allow for edit in place
+
 Drag and drop with
 https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 
@@ -10,6 +13,8 @@ https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 - rotating cog animation whenever clicked
 
 - disable input fields for goals and habits in previous weeks/months/years
+- deleting a sub-task from the goal modal doesn't delete it from the week
+
 
 - Update DB-Diagram
 - Habits
@@ -66,6 +71,7 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- fix delete task
 - Edit Week planner to show All days of the week
  - use context to manage the week when editing our list
  - Make it so can't add task if it's past that date in planner

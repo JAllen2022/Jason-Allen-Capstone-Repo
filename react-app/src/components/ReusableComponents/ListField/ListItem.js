@@ -108,7 +108,11 @@ export default function ListItem({
         item={item}
         taskBool={taskBool}
         subTask={subTask}
-        weekday={weekday}
+        weekday={
+          fetchDates.includes(item.due_date)
+            ? item.due_date.slice(0, 3).toLowerCase()
+            : ""
+        }
       />
     );
   };

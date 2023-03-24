@@ -174,7 +174,6 @@ export const deleteTaskThunk = (taskId, weekday) => async (dispatch) => {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 const initialState = {
   displayDay: {},
   currentTasks: {},
@@ -190,7 +189,6 @@ const initialState = {
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Reducer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -235,17 +233,6 @@ export default function reducer(state = initialState, action) {
       }
 
       return newState;
-      // Old Code
-      // const newState = { ...state };
-      // newState.allTasks = { ...state.allTasks };
-      // newState.allTasks[action.payload.id] = action.payload;
-
-      // newState.singleTask = { ...state.singleTask };
-      // if (state.singleTask.id) {
-      //   newState.singleTask.sub_tasks = { ...state.singleTask.sub_tasks };
-      //   newState.singleTask.sub_tasks[action.payload.id] = action.payload;
-      // }
-      // return newState;
     }
     case EDIT_TASK: {
       const { editedTask, weekday, deleteFromWeek } = action.payload;
@@ -268,14 +255,16 @@ export default function reducer(state = initialState, action) {
       if (newState.singleTask.id) {
         if (id === state.singleTask.id) {
           newState.singleTask = { ...editedTask };
-        } else if (newState.singleTask?.sub_tasks[id]) {
-          newState.singleTask.sub_tasks = {
-            ...state.singleTask.sub_tasks,
-            [id]: {
-              ...state.singleTask.sub_tasks[id],
-              ...editedTask,
-            },
-          };
+        } else if (newState.singleTask?.sub_tasks) {
+          if (newState.singleTask?.sub_tasks[id]) {
+            newState.singleTask.sub_tasks = {
+              ...state.singleTask.sub_tasks,
+              [id]: {
+                ...state.singleTask.sub_tasks[id],
+                ...editedTask,
+              },
+            };
+          }
         }
       }
       if (weekday) {
@@ -296,17 +285,6 @@ export default function reducer(state = initialState, action) {
       }
 
       return newState;
-      //   const editedTask = action.payload;
-      //   const newState = { ...state };
-      //   newState.allTasks = { ...newState.allTasks };
-      //   newState.allTasks[editedTask.id] = {
-      //     ...state.allTasks[editedTask.id],
-      //     ...editedTask,
-      //   };
-
-      //   newState.singleTask = { ...state.singleTask, ...editedTask };
-      //   newState.singleTask.sub_tasks = { ...editedTask.sub_tasks };
-      //   return newState;
     }
     case DELETE_TASK: {
       const { taskId, weekday } = action.payload;
