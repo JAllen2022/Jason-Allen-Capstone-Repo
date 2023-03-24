@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f7934b341995
+Revision ID: 043a3606bed6
 Revises: 
-Create Date: 2023-03-24 00:29:28.556473
+Create Date: 2023-03-24 01:06:57.246947
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f7934b341995'
+revision = '043a3606bed6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,13 +39,13 @@ def upgrade():
     op.create_table('goals',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=False),
+    sa.Column('name', sa.Text(), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
-    sa.Column('time_frame', sa.String(length=30), nullable=True),
+    sa.Column('time_frame', sa.String(length=75), nullable=True),
     sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('month', sa.String(length=30), nullable=True),
-    sa.Column('week', sa.String(length=30), nullable=True),
-    sa.Column('due_date', sa.String(length=30), nullable=True),
+    sa.Column('week', sa.String(length=75), nullable=True),
+    sa.Column('due_date', sa.String(length=75), nullable=True),
     sa.Column('status', sa.String(length=30), nullable=True),
     sa.Column('completed', sa.Boolean(), nullable=True),
     sa.Column('priority', sa.String(length=30), nullable=True),
@@ -68,11 +68,11 @@ def upgrade():
     op.create_table('tasks',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=50), nullable=False),
+    sa.Column('name', sa.Text(), nullable=False),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('priority', sa.String(length=30), nullable=True),
-    sa.Column('task_duration', sa.String(length=30), nullable=True),
-    sa.Column('due_date', sa.String(length=30), nullable=True),
+    sa.Column('task_duration', sa.String(length=75), nullable=True),
+    sa.Column('due_date', sa.String(length=75), nullable=True),
     sa.Column('recurring_frequency', sa.String(length=30), nullable=True),
     sa.Column('completed', sa.Boolean(), nullable=True),
     sa.Column('parent_id', sa.Integer(), nullable=True),
