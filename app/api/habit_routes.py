@@ -156,36 +156,27 @@ def edit_habit(id):
 
     week = request.args.get("week")
 
-
-    print("what is going on here ", id)
-
     habit_instance = HabitInstance.query.get(id)
 
     if not habit_instance:
         return {"errors":"Habit instance not found"}, 404
 
-    print("what is going on here 22")
-
-
     if not current_user.id == habit_instance.habit.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
-
-
-    print("what is going on here 33")
 
     habit = Habit.query.get(habit_instance.habit_id)
 
     form = HabitForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
-    print("what is going on here 44")
+
 
     if form.validate_on_submit():
-        print("what is going on here 55")
-
         habit.name = form.data["name"]
         habit.weeks_repeat = form.data["weeks_repeat"]
 
+        goal_difference = int(habit_instance.goal_to_complete)-int(form.data["goal_to_complete"])
+        accomplished_difference  = habit_instance.actually_completed-form.data["actually_completed"]
 
         habit_instance.year= form.data["year"]
         habit_instance.month=form.data["month"]
@@ -200,12 +191,15 @@ def edit_habit(id):
         habit_instance.saturday=form.data["saturday"]
         habit_instance.sunday=form.data["sunday"]
 
-
-
         db.session.add(habit)
         db.session.add(habit_instance)
         db.session.commit()
-        return {'habit': habit.to_dict(), 'habit_instance': habit_instance.to_dict()}
+
+
+        return {'habit': habit.to_dict(),
+            'habit_instance': habit_instance.to_dict(),
+            "accomplished_difference":accomplished_difference,
+            "goal_difference":goal_difference}
     else:
         return {'errors': form.errors}
 
@@ -225,7 +219,7 @@ def delete_habit_and_instance(id):
     if not habit_instance:
         return {"errors":"Habit not found"}, 404
 
-    if not current_user.id == habit_instance.habit_id:
+    if not current_user.id == habit_instance.habit.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
 
     habit = Habit.query.get(habit_instance.habit_id)

@@ -20,8 +20,6 @@ function hash(str) {
 export default function WeeklyHabitTracker() {
   const [name, setName] = useState("");
   const { year, monthDisp, weekString } = useDate();
-  const [countAccomplished, setCountAccomplished] = useState(0);
-  const [countGoal, setCountGoal] = useState(0);
 
   const habits = useSelector((state) => state.habits.habits);
   const totalWeekAccomplished = useSelector(
@@ -89,12 +87,7 @@ export default function WeeklyHabitTracker() {
   if (habitsArray.length) {
     habitsArray.forEach((habit, index) =>
       habitContainer.push(
-        <WeeklyHabit
-          key={`${habit.name}${index}-weeklyhabit`}
-          habit={habit}
-          setCountAccomplished={setCountAccomplished}
-          setCountGoal={setCountGoal}
-        />
+        <WeeklyHabit key={`${habit.name}${index}-weeklyhabit`} habit={habit} />
       )
     );
   }

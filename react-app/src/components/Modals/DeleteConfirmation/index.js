@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { deleteGoalThunk, deleteGoalSubTask } from "../../../store/goals";
 import { deleteTaskThunk } from "../../../store/tasks";
 import "./DeleteConfirmation.css";
+import { deleteHabitThunk } from "../../../store/habits";
 
 export default function DeleteConfirmation({
   item,
   taskBool,
+  habitBool,
   subTask,
   weekday,
 }) {
@@ -15,6 +17,8 @@ export default function DeleteConfirmation({
   const deleteObject = () => {
     if (taskBool) {
       dispatch(deleteTaskThunk(item.id, weekday));
+    } else if (habitBool) {
+      dispatch(deleteHabitThunk(item.id));
     } else {
       dispatch(deleteGoalThunk(item.id));
     }

@@ -55,4 +55,11 @@ class HabitInstance(db.Model):
             "week": self.week,
             "goal_to_complete": self.goal_to_complete,
             "actually_completed":self.actually_completed,
+            "monday":self.monday,
+            "tuesday":self.tuesday,
+            "wednesday":self.wednesday,
+            "thursday":self.thursday,
+            "friday":self.friday,
+            "saturday":self.saturday,
+            "sunday":self.sunday
         }

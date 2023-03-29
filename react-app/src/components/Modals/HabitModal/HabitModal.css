@@ -1,0 +1,328 @@
+.habit-modal-container {
+  width: 50rem;
+  height: 40rem;
+  border-radius: 5px;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+}
+
+.habit-modal-title-container {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.habit-modal-title-icon-left,
+.habit-week-icon-container,
+.habit-modoal-year-icon-left {
+  padding-top: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.habit-modal-sub-headings {
+  padding: 0;
+  margin: 0;
+  padding-top: 0.37rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.habit-modal-title-container-right {
+  width: 100%;
+}
+
+.habit-under-title-div {
+  font-size: 14px;
+}
+
+.habit-modal-body-container {
+  overflow-y: scroll;
+  display: flex;
+  height: fit-content;
+}
+
+.habit-modal-body-left {
+  height: fit-content;
+  width: 75%;
+  margin-top: 1rem;
+  border-right: 1px dotted lightgray;
+}
+
+.habit-week-container-right {
+  width: 100%;
+}
+
+.habit-week-container,
+.habit-modal-year-calendar {
+  display: flex;
+}
+
+.habit-modal-year-calendar {
+  margin-top: 1rem;
+}
+
+.habit-modal-single-week {
+  width: 75%;
+  border: 1px dotted lightgray;
+  font-size: 14px;
+}
+
+.habit-modal-single-week-container-title {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr) 2.5rem 3.15rem;
+  padding: 0.25rem 0;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  margin-right: 15px;
+  border-bottom: 1px dotted lightgray;
+}
+
+.habit-modal-single-week-inputs-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr) 2.5rem 3.15rem;
+  grid-template-rows: 2rem;
+}
+
+.habit-modal-body-right {
+  margin-top: 1rem;
+  width: 25%;
+  padding-left: 0.5rem;
+  height: 100%;
+}
+
+.modal-container-title {
+  color: #cead87;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-title-form-container {
+  width: 100%;
+}
+
+.modal-title-input {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  height: fit-content;
+  overflow: hidden;
+  height: auto;
+  width: 99%;
+  resize: none;
+}
+
+.month-container-title {
+  color: #cead87;
+  padding-top: 0.5rem;
+  margin: 0;
+  padding-left: 0.5rem;
+  text-decoration: underline;
+}
+
+.month-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+  flex-wrap: wrap;
+}
+
+.month-container {
+  margin: 5px;
+  padding: 1px;
+  border: 1px dotted lightgray;
+  border-radius: 0.5rem;
+  width: 15rem;
+  padding: 0 0.45rem;
+}
+
+.current-month {
+  /* background-image: linear-gradient(
+    to right,
+    rgb(243, 243, 243),
+    rgb(235, 235, 235)
+  );
+  background-color: rgb(235, 235, 235); */
+  border: 3px solid maroon;
+}
+
+.day-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1px;
+  margin-top: 1px;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  border-radius: 50%;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.planner-single-habit-tracker-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid lightgray;
+  padding: 0.15rem;
+}
+
+input.single-check {
+  position: absolute;
+  display: none;
+}
+input.single-check:checked + label.single-check-label svg path {
+  stroke-dashoffset: 0;
+}
+input.single-check:focus + label.single-check-label {
+  transform: scale(1.03);
+}
+
+.single-check + .single-check-label {
+  display: block;
+  border-radius: 14px;
+  border: 1px solid lightgray;
+  cursor: pointer;
+  width: 75%;
+  height: 100%;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.single-check + .single-check-label:active {
+  transform: scale(1.05);
+  /* border-radius: 30px; */
+}
+.single-check + .single-check-label svg {
+  pointer-events: none;
+  height: 100%;
+}
+.single-check + .single-check-label svg path {
+  fill: none;
+  stroke: #333;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 101;
+  transition: all 150ms cubic-bezier(1, 0, 0.37, 0.91);
+}
+
+.planner-single-habit-tracker-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+
+#habit-modal-goal-sum {
+  border-right: 1px dotted lightgray;
+}
+
+.habit-stat-button {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.habit-stats-container {
+  font-size: 14px;
+}
+.habit-icon {
+  color: #cead87;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.habit-button-icon {
+  color: #cead87;
+  padding-right: 0.5rem;
+}
+
+.month-circle {
+  background-color: rgb(32, 42, 68);
+  color: aliceblue;
+}
+
+.habit-modal-action-options {
+  position: relative;
+}
+
+.habit-modal-action-button {
+  background-color: rgb(221, 221, 221);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 14px;
+  margin: 0.5rem 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition-property: background-color;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.habit-modal-action-button:hover {
+  background-color: rgb(215, 215, 215);
+}
+
+.habit-modal-action-menu {
+  position: absolute;
+  background-color: rgb(248, 248, 248);
+  border: 1px solid rgb(171, 171, 171, 0.7);
+  top: 4rem;
+  width: 105%;
+  right: 1rem;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 2px;
+  box-shadow: 0.5px 0.5px 1px 0.75px rgb(201, 201, 201, 0.5);
+  padding: 5px;
+}
+
+.habit-modal-action-title-container {
+  font-size: 16px;
+  color: #cead87;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid lightgray;
+  position: relative;
+}
+
+.habit-modal-action-x-spot {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+.habit-modal-action-x-spot:hover {
+  color: rgb(201, 160, 113);
+  font-weight: 900;
+}
+
+.habit-modal-action-label {
+  font-size: 14px;
+}
+
+.habit-modal-action-select {
+  background-color: transparent;
+  font-size: 13px;
+}
+
+.habit-modal-submit-action-button {
+  background-color: rgb(51, 51, 51);
+  border: none;
+  color: rgb(224, 223, 223);
+  width: 100%;
+  font-size: 14px;
+  border-radius: 3px;
+}

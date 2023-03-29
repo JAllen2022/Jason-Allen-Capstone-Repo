@@ -136,10 +136,26 @@ export default function reducer(state = initialState, action) {
     case EDIT_HABIT:
       newState.habits = {
         ...state.habits,
-        [action.payload.id]: action.payload.habit,
+        [action.payload.habit_instance.id]: action.payload.habit_instance,
       };
+      newState.totalWeekAccomplished =
+        state.totalWeekAccomplished - action.payload.accomplished_difference;
+      newState.totalWeekGoal =
+        state.totalWeekGoal - action.payload.goal_difference;
+      newState.habit = { ...state.habit, ...action.payload.habit };
       return newState;
     case DELETE_HABIT:
+      const id = action.payload;
+      console.log("checking what this is ", action.payload);
+      console.log("this", state.habits[id]);
+      if (state.habits[id]) {
+        newState.habits = { ...state.habits };
+        delete newState.habits[id];
+      }
+      console.log("what is new state", newState);
+
+      newState.habit = {};
+
       return newState;
     default:
       return state;

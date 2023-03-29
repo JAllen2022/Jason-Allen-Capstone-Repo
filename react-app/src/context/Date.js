@@ -3,7 +3,7 @@ import moment from "moment";
 
 const DateContext = React.createContext();
 
-function getDisplayDates(date) {
+export function getDisplayDates(date) {
   // Create a moment object from the input date
   const startOfWeek = moment(date);
 
@@ -21,8 +21,8 @@ function getDisplayDates(date) {
       startOfWeek.clone().add(i, "day").format("ddd, MMMM D, YY")
     );
   }
-  // Example return for fetchDates ['Mon, March 13, 23', ... etc to Sunday]
   // Example return for displayDates ['Mon 3/13', 'Tues 3/14', ...etc to Sunday]
+  // Example return for fetchDates ['Mon, March 13, 23', ... etc to Sunday]
 
   return [fetchDates, displayDates];
 }
@@ -51,8 +51,8 @@ export function DateProvider({ children }) {
   const [day, setDay] = useState(today.getDate());
   const [date, setDate] = useState(today);
   const [fetchDates, displayDates] = getDisplayDates(date);
-  const monthstring = date.toLocaleString("default", { month: "long" });
-  const monthDisp = `${monthstring}, ${date.getFullYear()}`;
+  const monthString = date.toLocaleString("default", { month: "long" });
+  const monthDisp = `${monthString}, ${date.getFullYear()}`;
   const weekString = getCurrentWeek(date);
 
   const addZero = (num) => (num < 10 ? "0" + num : num);
@@ -99,6 +99,7 @@ export function DateProvider({ children }) {
     fetchDates,
     displayDates,
     monthDisp,
+    monthString,
     weekString,
   };
 
