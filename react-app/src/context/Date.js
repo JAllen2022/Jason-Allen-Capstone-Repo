@@ -44,6 +44,47 @@ export function getCurrentWeek(currentDate) {
   return `Weekly Goals: ${mondayString} - ${sundayString}`;
 }
 
+export function getWeekStrings(year, weekString, numberOfWeeks) {
+  const currentDate = getCurrentDate(year, weekString);
+
+  const returnArray = [];
+
+  for (let i = 1; i <= numberOfWeeks; i++) {
+    const startOfWeek = moment(currentDate).add(i, "weeks");
+    const endOfWeek = moment(startOfWeek).add(6, "days");
+    const formattedString =
+      "Weekly Goals: " +
+      startOfWeek.format("MMMM D") +
+      " - " +
+      endOfWeek.format("MMMM D");
+    const currentYear = moment(currentDate).format("YYYY");
+    const currentMonth = moment(currentDate).format("MMMM, YYYY");
+
+    // NEED TO ADD CURRENT YEAR AND MONTH STRING INTO THIS ARRAY AS WELL
+    returnArray.push([currentYear, currentMonth, formattedString]);
+  }
+
+  return returnArray;
+}
+
+export function getCurrentDate(year, weekString) {
+  const week = weekString.slice(14).split(" - ")[0];
+  const startOfWeek = moment(week + " " + year);
+  return startOfWeek;
+}
+
+export const getWeekDates = (year, weekString) => {
+  const startOfWeek = getCurrentDate(year, weekString);
+  const fetchDates = [];
+  for (let i = 0; i < 7; i++) {
+    fetchDates.push(
+      startOfWeek.clone().add(i, "day").format("MMMM D").split(" ")
+    );
+  }
+  console.log("checking weekDates", fetchDates);
+  return fetchDates;
+};
+
 export function DateProvider({ children }) {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());

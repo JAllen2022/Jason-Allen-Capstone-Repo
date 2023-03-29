@@ -122,7 +122,7 @@ export default function WeeklyHabitTracker() {
           {habitContainer}
         </div>
         <div className="planner-habit-tracker-footer-container">
-          <div className="planner-habit-tracker-headings">Total</div>
+          <div className="planner-habit-footer-heading">Total</div>
           <div className="planner-habit-tracker-count">
             {totalWeekAccomplished}{" "}
           </div>

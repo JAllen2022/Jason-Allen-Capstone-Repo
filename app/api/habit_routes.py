@@ -2,6 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import db, Habit, HabitInstance
 from app.forms import HabitForm
+import json
 import datetime
 
 habit_routes = Blueprint('habits', __name__)
@@ -105,44 +106,75 @@ def create_habit():
         return {'errors': form.errors}
 
 # CREATE ADDITIONAL INSTANCES. NOT HABITS
-@habit_routes.route('/instances', methods=['POST'])
+@habit_routes.route('/<int:id>/instances', methods=['POST'])
 @login_required
-def add_habit_instances():
+def add_habit_instances(id):
     """
-    Create habit instance(s) for a corresponding habit for additional weeks
+    Create habit instance(s) for an existing habit instance for additional weeks.
+    Essentially we're copying one instance over several weeks.
     """
 
-    habit = Habit.query.get(id)
-
-    if not habit:
-        return {"errors":"Habit not found"}, 404
-
-    if not current_user.id == habit.user_id:
-        return {"errors":"User cannot authorized to edit goal"}, 400
-
-    form = HabitForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-
-    if form.validate_on_submit():
-        habit.name=form.data["name"]
-        habit.weeks_repeat=form.data["weeks_repeat"]
-
-        habit_instance = HabitInstance(
+    OG_habit_instance = HabitInstance.query.get(id)
+    habit = Habit.query.get(OG_habit_instance.habit_id)
+    data = request.data.decode('utf-8')
+    form_data = json.loads(data)
+    print("checking dates", form_data)
+    dates = form_data["dates"]
+    print("checking data", dates)
+    for year,month,week in dates:
+         habit_instance = HabitInstance(
             habit_id=habit.id,
-            year= form.data["year"],
-            month=form.data["month"],
-            week=form.data["week"],
-            goal_to_complete=0,
+            year= year,
+            month=month,
+            week=week,
+            monday=False,
+            tuesday=False,
+            wednesday=False,
+            thursday=False,
+            friday=False,
+            saturday=False,
+            sunday=False,
+            goal_to_complete=OG_habit_instance.goal_to_complete,
             actually_completed=0,
-            created_at=datetime.now()
+            created_at=datetime.datetime.now()
         )
 
-        db.session.add(habit)
-        db.session.add(habit_instance)
-        db.session.commit()
-        return {'habit': habit.to_dict(), 'habit_instance': habit_instance.to_dict()}
-    else:
-        return {'errors': form.errors}
+         habit.habit_instances.append(habit_instance)
+
+    db.session.add(habit)
+    db.session.commit()
+
+    return {'habit': habit.to_dict()}
+
+    # if not habit:
+    #     return {"errors":"Habit not found"}, 404
+
+    # if not current_user.id == habit.user_id:
+    #     return {"errors":"User cannot authorized to edit goal"}, 400
+
+    # form = HabitForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+
+    # if form.validate_on_submit():
+    #     habit.name=form.data["name"]
+    #     habit.weeks_repeat=form.data["weeks_repeat"]
+
+    #     habit_instance = HabitInstance(
+    #         habit_id=habit.id,
+    #         year= form.data["year"],
+    #         month=form.data["month"],
+    #         week=form.data["week"],
+    #         goal_to_complete=0,
+    #         actually_completed=0,
+    #         created_at=datetime.now()
+    #     )
+
+    #     db.session.add(habit)
+    #     db.session.add(habit_instance)
+    #     db.session.commit()
+    #     return {'habit': habit.to_dict(), 'habit_instance': habit_instance.to_dict()}
+    # else:
+    #     return {'errors': form.errors}
 
 
 # EDIT ROUTES

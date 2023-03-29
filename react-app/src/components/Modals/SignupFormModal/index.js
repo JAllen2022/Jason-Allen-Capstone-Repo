@@ -26,6 +26,7 @@ function SignupFormModal() {
       setErrors({ ...errors, password: "Passwords do not match." });
     }
   };
+  
   console.log("checking errors", errors);
   return (
     <div className="sign-up-modal-container">

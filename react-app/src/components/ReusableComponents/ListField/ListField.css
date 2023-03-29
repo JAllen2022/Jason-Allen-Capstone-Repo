@@ -124,11 +124,8 @@
 }
 
 .list-view-section-truncated {
-  /* border: 1px solid green; */
   overflow-y: scroll;
-  /* height: 60%; */
   flex: 1;
-  /* max-height: 11rem; */
 }
 
 .list-item-container {
@@ -137,7 +134,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* border: 1px solid red; */
 }
 
 .add-pointer {
@@ -153,22 +149,35 @@
   padding-left: 0.5rem;
   position: relative;
   width: 92%;
+  height: fit-content;
 }
 
-.add-opacity {
+.inner-list-item-text {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.inner-list-item-text:hover {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.inner-list-item-text::-webkit-scrollbar {
+  width: 5px;
+  height: 7.5px;
+  background-color: transparent; /* set the background color of the scrollbar */
+}
+
+.inner-list-item-text::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 5px;
+}
+
+.inner-list-item-text-c .add-opacity {
   opacity: 0.9;
 }
-
-/* .red {
-  border-left: 2px solid ;
-}
-.orange {
-  border-left: 2px solid ;
-}
-
-.blue {
-  border-left: 2px solid ;
-} */
 
 .inner-list-item-text {
   width: 100%;
@@ -204,38 +213,22 @@
 }
 
 /* width */
-/* .list-view-section-truncated::-webkit-scrollbar,
-.list-view-section::-webkit-scrollbar,
-.week-day-list-body::-webkit-scrollbar,
-.planner-habit-tracker-body-container::-webkit-scrollbar { */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
-/* .list-view-section-truncated::-webkit-scrollbar-track,
-.list-view-section::-webkit-scrollbar-track,
-.week-day-list-body::-webkit-scrollbar-track,
-.planner-habit-tracker-body-container::-webkit-scrollbar-track { */
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
 /* Handle */
-/* .list-view-section-truncated::-webkit-scrollbar-thumb,
-.list-view-section::-webkit-scrollbar-thumb,
-.week-day-list-body::-webkit-scrollbar-thumb,
-.planner-habit-tracker-body-container::-webkit-scrollbar-thumb { */
 ::-webkit-scrollbar-thumb {
   background: lightgray;
   border-radius: 5px;
 }
 
 /* Handle on hover */
-/* .list-view-section-truncated::-webkit-scrollbar-thumb:hover,
-.list-view-section::-webkit-scrollbar-thumb:hover,
-.week-day-list-body::-webkit-scrollbar-thumb:hover,
-.planner-habit-tracker-body-container::-webkit-scrollbar-thumb:hover { */
 ::-webkit-scrollbar-thumb:hover {
   background: #999999;
 }

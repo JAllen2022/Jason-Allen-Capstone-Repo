@@ -147,10 +147,16 @@
 
 .planner-habit-tracker-footer-container {
   display: grid;
-  grid-template-columns: 11fr 2fr 2fr;
+  grid-template-columns: 11fr 3rem 3rem;
   padding: 0.25rem 0;
   width: 100%;
   text-align: center;
+}
+
+.planner-habit-footer-heading {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
 }
 
 .planner-page-right-container {
@@ -229,7 +235,7 @@
 }
 
 .week-day-list-body {
-  overflow-y: scroll;
+  overflow-x: hidden;
   /* border: 1px solid purple; */
   height: 84%;
 }

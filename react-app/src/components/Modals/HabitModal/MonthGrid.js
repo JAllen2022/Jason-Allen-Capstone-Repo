@@ -2,17 +2,7 @@ import React from "react";
 import moment from "moment";
 import { useDate, getDisplayDates } from "../../../context/Date";
 import { useSelector } from "react-redux";
-
-const getFirstDayOfTheWeek = (year, week) => {
-  const startOfWeek = moment(week + " " + year);
-  const fetchDates = [];
-  for (let i = 0; i < 7; i++) {
-    fetchDates.push(
-      startOfWeek.clone().add(i, "day").format("MMMM D").split(" ")
-    );
-  }
-  return fetchDates;
-};
+import { getWeekDates } from "../../../context/Date";
 
 export default function MonthGrid() {
   const { year, monthString: currentMonth } = useDate();
@@ -26,18 +16,57 @@ export default function MonthGrid() {
     week_instances.forEach((week) => {
       const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } =
         week;
-      const getDates = getFirstDayOfTheWeek(
-        year,
-        week.week.slice(14).split(" - ")[0]
-      );
+      const getDates = getWeekDates(year, week.week);
 
-      if (monday) completed[getDates[0][1]] = getDates[0][0];
-      if (tuesday) completed[getDates[1][1]] = getDates[1][0];
-      if (wednesday) completed[getDates[2][1]] = getDates[2][0];
-      if (thursday) completed[getDates[3][1]] = getDates[3][0];
-      if (friday) completed[getDates[4][1]] = getDates[4][0];
-      if (saturday) completed[getDates[5][1]] = getDates[5][0];
-      if (sunday) completed[getDates[6][1]] = getDates[6][0];
+      if (monday) {
+        if (completed[getDates[0][0]])
+          completed[getDates[0][0]].add(getDates[0][1]);
+        else {
+          completed[getDates[0][0]] = new Set([getDates[0][1]]);
+        }
+      }
+      if (tuesday) {
+        if (completed[getDates[1][0]])
+          completed[getDates[1][0]].add(getDates[1][1]);
+        else {
+          completed[getDates[1][0]] = new Set([getDates[1][1]]);
+        }
+      }
+      if (wednesday) {
+        if (completed[getDates[2][0]])
+          completed[getDates[2][0]].add(getDates[2][1]);
+        else {
+          completed[getDates[2][0]] = new Set([getDates[2][1]]);
+        }
+      }
+      if (thursday) {
+        if (completed[getDates[3][0]])
+          completed[getDates[3][0]].add(getDates[3][1]);
+        else {
+          completed[getDates[3][0]] = new Set([getDates[3][1]]);
+        }
+      }
+      if (friday) {
+        if (completed[getDates[4][0]])
+          completed[getDates[4][0]].add(getDates[4][1]);
+        else {
+          completed[getDates[4][0]] = new Set([getDates[4][1]]);
+        }
+      }
+      if (saturday) {
+        if (completed[getDates[5][0]])
+          completed[getDates[5][0]].add(getDates[5][1]);
+        else {
+          completed[getDates[5][0]] = new Set([getDates[5][1]]);
+        }
+      }
+      if (sunday) {
+        if (completed[getDates[6][0]])
+          completed[getDates[6][0]].add(getDates[6][1]);
+        else {
+          completed[getDates[6][0]] = new Set([getDates[6][1]]);
+        }
+      }
     });
   }
 
@@ -66,20 +95,22 @@ export default function MonthGrid() {
           >
             <h2 className="month-container-title">{month}</h2>
             <div className="day-grid">
-              {daysArray.map((day, index) => (
-                <div
-                  key={index}
-                  className={`day ${day === null ? "empty" : ""} ${
-                    completed[day]
-                      ? completed[day] == month
-                        ? " month-circle"
+              {daysArray.map((day, index) => {
+                return (
+                  <div
+                    key={index}
+                    className={`day ${day === null ? "empty" : ""} ${
+                      completed[month]
+                        ? completed[month].has(day?.toString())
+                          ? " month-circle"
+                          : ""
                         : ""
-                      : ""
-                  }`}
-                >
-                  {day}
-                </div>
-              ))}
+                    }`}
+                  >
+                    {day}
+                  </div>
+                );
+              })}
             </div>
           </div>
         );

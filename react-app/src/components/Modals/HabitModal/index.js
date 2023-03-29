@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { useModal } from "../../../context/Modal";
-import { getHabitThunk, editHabitThunk } from "../../../store/habits";
+import {
+  getHabitThunk,
+  editHabitThunk,
+  createHabitInstancesThunk,
+} from "../../../store/habits";
 import DeleteConfirmation from "../DeleteConfirmation";
 import OpenModalButton from "../OpenModalButton";
 import MonthGrid from "./MonthGrid";
-import { useDate } from "../../../context/Date";
+import { useDate, getWeekStrings } from "../../../context/Date";
 
 import "./HabitModal.css";
 
@@ -14,13 +18,14 @@ export default function HabitModal({ habitId, habit }) {
   const [showMenu, setShowMenu] = useState(false);
   const [repeatOption, setRepeatOption] = useState("");
   const [showAddWeek, setShowAddWeek] = useState(false);
+  const [nameError, setNameError] = useState("");
   const ulRef = useRef(null);
   const textAreaRef = useRef(null);
 
   const dispatch = useDispatch();
 
   const [tab, setTab] = useState("summary");
-  const { weekString } = useDate();
+  const { weekString, year } = useDate();
 
   const [name, setName] = useState(habit.name);
   const [goal, setGoal] = useState(habit.goal_to_complete || 0);
@@ -34,10 +39,27 @@ export default function HabitModal({ habitId, habit }) {
   const isMountedRef = useRef(false);
   const goalSum =
     monday + tuesday + wednesday + thursday + friday + saturday + sunday;
-
   const handleNameSubmit = (object) => {
-    dispatch(editHabitThunk(object, weekString));
+    const emptyStringCheck = object.name.split(" ").join("");
+    if (object.name.length && emptyStringCheck) {
+      dispatch(editHabitThunk(object, weekString));
+    }
   };
+  const handleInstanceAdd = (e) => {
+    e.preventDefault();
+
+    const weeks = getWeekStrings(year, weekString, repeatOption);
+
+    const data = {};
+    data["dates"] = weeks;
+
+    dispatch(createHabitInstancesThunk(data, habit.id));
+
+    setShowAddWeek(false);
+  };
+
+  const weeks = getWeekStrings(year, weekString, repeatOption);
+  console.log("checking weeks", weeks);
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -71,16 +93,24 @@ export default function HabitModal({ habitId, habit }) {
     console.log("what is show add week", showAddWeek);
     if (!showAddWeek && !ulRef.current) return;
 
+    let isMenuOpened = false;
+
+    const openMenu = () => {
+      isMenuOpened = true;
+    };
+
     const closeMenu = (e) => {
       console.log("we in here 2");
 
-      if (!ulRef.current.contains(e.target)) {
+      if (isMenuOpened && !ulRef.current.contains(e.target)) {
         console.log("we in here 3");
 
         setShowAddWeek(false);
+        isMenuOpened = false;
       }
     };
     console.log("we in here 1");
+
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
@@ -154,16 +184,25 @@ export default function HabitModal({ habitId, habit }) {
               minLength="1"
               value={name || habit?.name}
               rows={1}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (e.target.value.trim().length === 0) {
+                  setNameError("Name must not be empty or only spaces.");
+                } else {
+                  setNameError("");
+                }
+              }}
               onBlur={(e) => {
                 e.preventDefault();
-                if (e.target.value.length < 1) {
-                  return;
+                if (nameError) {
+                  e.preventDefault();
+                } else {
+                  setName(e.target.value);
+                  handleNameSubmit({ ...habit, name: e.target.value });
                 }
-                setName(e.target.value);
-                handleNameSubmit({ ...habit, name: e.target.value });
               }}
             ></textarea>
+            {nameError && <div style={{ color: "maroon" }}>**{nameError}</div>}
             <input
               type="submit"
               style={{ position: "absolute", display: "none" }}
@@ -424,7 +463,7 @@ export default function HabitModal({ habitId, habit }) {
           </div>
 
           <div className="habit-modal-action-options">
-            Actions:
+            <div className="habit-modal-action-title">Actions:</div>
             <div
               className="habit-modal-action-button"
               onClick={() => setShowAddWeek((prev) => !prev)}
@@ -439,43 +478,52 @@ export default function HabitModal({ habitId, habit }) {
                   Add weeks:{" "}
                   <span
                     className="habit-modal-action-x-spot"
-                    // onClick={() => setShowAddWeek((prev) => !prev)}
+                    onClick={() => setShowAddWeek((prev) => !prev)}
                   >
                     X
                   </span>
                 </div>
-                <label htmlFor="priority" className="habit-modal-action-label">
-                  Add weeks to track this habit:
-                </label>
-                <select
-                  className="habit-modal-action-select"
-                  name="priority"
-                  value={repeatOption}
-                  onChange={(e) => setRepeatOption(e.target.value)}
-                >
-                  <option value="">None</option>
-                  <option value="1">1 week</option>
-                  <option value="2">2 weeks</option>
-                  <option value="3">3 weeks</option>
-                  <option value="4">1 month</option>
-                  <option value="8">2 months</option>
-                  <option value="12">3 months</option>
-                  <option value="16">4 months</option>
-                  <option value="20">5 months</option>
-                  <option value="24">6 months</option>
-                  <option value="28">7 months</option>
-                  <option value="32">8 months</option>
-                  <option value="36">9 months</option>
-                  <option value="40">10 months</option>
-                  <option value="44">11 months</option>
-                  <option value="48">1 year</option>
-                </select>
-                <button
+                <form
+                  className="habit-modal-action-form"
+                  onSubmit={handleInstanceAdd}
                   type="submit"
-                  className="habit-modal-submit-action-button"
                 >
-                  Add
-                </button>
+                  <label
+                    htmlFor="priority"
+                    className="habit-modal-action-label"
+                  >
+                    Track this habbit for an additional:
+                  </label>
+                  <select
+                    className="habit-modal-action-select"
+                    name="priority"
+                    value={repeatOption}
+                    onChange={(e) => setRepeatOption(e.target.value)}
+                  >
+                    <option value="">None</option>
+                    <option value="1">1 week</option>
+                    <option value="2">2 weeks</option>
+                    <option value="3">3 weeks</option>
+                    <option value="4">1 month</option>
+                    <option value="8">2 months</option>
+                    <option value="12">3 months</option>
+                    <option value="16">4 months</option>
+                    <option value="20">5 months</option>
+                    <option value="24">6 months</option>
+                    <option value="28">7 months</option>
+                    <option value="32">8 months</option>
+                    <option value="36">9 months</option>
+                    <option value="40">10 months</option>
+                    <option value="44">11 months</option>
+                    <option value="52">1 year</option>
+                  </select>
+                  <button
+                    type="submit"
+                    className="habit-modal-submit-action-button"
+                  >
+                    Add
+                  </button>
+                </form>
               </div>
             )}
           </div>

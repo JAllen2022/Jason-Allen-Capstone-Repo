@@ -3,6 +3,7 @@ const GET_HABITS = "habits/GET_HABITS";
 const GET_HABIT = "habits/GET_HABIT";
 const CREATE_HABIT = "habits/CREATE_HABIT";
 const EDIT_HABIT = "habits/EDIT_HABIT";
+const ADD_INSTANCES = "habits/ADD_INSTANCES";
 const DELETE_HABIT = "habits/DELETE_HABIT";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,6 +25,11 @@ const createHabit = (habit) => ({
 const editHabit = (habit) => ({
   type: EDIT_HABIT,
   payload: habit,
+});
+
+const addInstances = (habits) => ({
+  type: ADD_INSTANCES,
+  payload: habits,
 });
 
 const deleteHabit = (habitId) => ({
@@ -92,6 +98,26 @@ export const editHabitThunk = (data, week) => async (dispatch) => {
   }
 };
 
+export const createHabitInstancesThunk =
+  (data, instanceId) => async (dispatch) => {
+    const res = await fetch(`/api/habits/${instanceId}/instances`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      console.log("~~~~~~~~ checking instances", data);
+      dispatch(addInstances(data));
+    } else {
+      const data = await res.json();
+      if (data.errors) return res;
+    }
+  };
+
 export const deleteHabitThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/habits/${id}`, {
     method: "DELETE",
@@ -143,6 +169,8 @@ export default function reducer(state = initialState, action) {
       newState.totalWeekGoal =
         state.totalWeekGoal - action.payload.goal_difference;
       newState.habit = { ...state.habit, ...action.payload.habit };
+      return newState;
+    case ADD_INSTANCES:
       return newState;
     case DELETE_HABIT:
       const id = action.payload;
