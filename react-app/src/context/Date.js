@@ -81,7 +81,6 @@ export const getWeekDates = (year, weekString) => {
       startOfWeek.clone().add(i, "day").format("MMMM D").split(" ")
     );
   }
-  console.log("checking weekDates", fetchDates);
   return fetchDates;
 };
 

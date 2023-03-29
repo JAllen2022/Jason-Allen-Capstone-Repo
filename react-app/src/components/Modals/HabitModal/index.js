@@ -13,7 +13,46 @@ import { useDate, getWeekStrings } from "../../../context/Date";
 
 import "./HabitModal.css";
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Helper Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function renderOptions(numberOfFutureHabits) {
+  const maxWeeks = 52 - numberOfFutureHabits;
+  const options = [];
+
+  for (let i = 1; i <= Math.min(maxWeeks, 4); i++) {
+    options.push(
+      <option key={i} value={i}>
+        {i} week{i > 1 ? "s" : ""}
+      </option>
+    );
+  }
+
+  // Show months from 1 to 10
+  for (let i = 1; i <= maxWeeks / 4; i++) {
+    const weeksInMonth = i * 4;
+    if (weeksInMonth < maxWeeks) {
+      options.push(
+        <option key={i + 4} value={weeksInMonth}>
+          {i} month{i > 1 ? "s" : ""}
+        </option>
+      );
+    }
+  }
+
+  return options;
+}
+
+function findLargestId(instances) {
+  return Math.max(...Object.keys(instances));
+}
+
+function getStartAddDate(habit) {
+  const key = findLargestId(habit.habit_instances);
+  return [habit.habit_instances[key].year, habit.habit_instances[key].week];
+}
+
 export default function HabitModal({ habitId, habit }) {
+  // ~~~~~~~~~~~~~~~~~~~~ Declaration of Variables ~~~~~~~~~~~~~~~~~~~~~~~~~
+
   const singleHabit = useSelector((state) => state.habits.habit);
   const [showMenu, setShowMenu] = useState(false);
   const [repeatOption, setRepeatOption] = useState("");
@@ -39,6 +78,15 @@ export default function HabitModal({ habitId, habit }) {
   const isMountedRef = useRef(false);
   const goalSum =
     monday + tuesday + wednesday + thursday + friday + saturday + sunday;
+
+  let numberOfFutureHabits = 0;
+  if (singleHabit?.habit_instances) {
+    numberOfFutureHabits = singleHabit.habit_instances[habit.id]?.future_events;
+  }
+
+  const futureAddOptions = renderOptions(numberOfFutureHabits);
+
+  // ~~~~~~~~~~~~~~~~~~~~ Handle Submit Functions ~~~~~~~~~~~~~~~~~~~~~~~~~
   const handleNameSubmit = (object) => {
     const emptyStringCheck = object.name.split(" ").join("");
     if (object.name.length && emptyStringCheck) {
@@ -47,8 +95,10 @@ export default function HabitModal({ habitId, habit }) {
   };
   const handleInstanceAdd = (e) => {
     e.preventDefault();
+    const startDate = getStartAddDate(singleHabit);
+    const weeks = getWeekStrings(...startDate, repeatOption);
 
-    const weeks = getWeekStrings(year, weekString, repeatOption);
+    console.log("checking weeks", weeks);
 
     const data = {};
     data["dates"] = weeks;
@@ -59,7 +109,6 @@ export default function HabitModal({ habitId, habit }) {
   };
 
   const weeks = getWeekStrings(year, weekString, repeatOption);
-  console.log("checking weeks", weeks);
 
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
@@ -77,7 +126,6 @@ export default function HabitModal({ habitId, habit }) {
       actually_completed: goalSum,
     };
 
-    console.log("checking new habit", newHabit);
     // const emptyStringCheck = name.split(" ").join("");
     // if (name.length && emptyStringCheck) {
     dispatch(editHabitThunk(newHabit, weekString));
@@ -88,6 +136,8 @@ export default function HabitModal({ habitId, habit }) {
   const cancelClick = () => {
     closeModal();
   };
+
+  // ~~~~~~~~~~~~~~~~~~~~ UseEffect Functions ~~~~~~~~~~~~~~~~~~~~~~~~~
 
   useEffect(() => {
     console.log("what is show add week", showAddWeek);
@@ -100,16 +150,11 @@ export default function HabitModal({ habitId, habit }) {
     };
 
     const closeMenu = (e) => {
-      console.log("we in here 2");
-
       if (isMenuOpened && !ulRef.current.contains(e.target)) {
-        console.log("we in here 3");
-
         setShowAddWeek(false);
         isMenuOpened = false;
       }
     };
-    console.log("we in here 1");
 
     document.addEventListener("click", closeMenu);
 
@@ -160,6 +205,7 @@ export default function HabitModal({ habitId, habit }) {
     }
   }, [name]);
 
+  // ~~~~~~~~~~~~~~~~~~~~ Rendered Display ~~~~~~~~~~~~~~~~~~~~~~~~~
   return (
     <div className="habit-modal-container">
       <div className="x-marks-the-spot">
@@ -253,7 +299,11 @@ export default function HabitModal({ habitId, habit }) {
               onItemClick={closeMenu}
               className="goal-delete"
               modalComponent={
-                <DeleteConfirmation item={habit} habitBool={true} />
+                <DeleteConfirmation
+                  item={singleHabit}
+                  instanceId={habit.id}
+                  habitBool={true}
+                />
               }
             />
           </span>
@@ -457,7 +507,7 @@ export default function HabitModal({ habitId, habit }) {
               <div>Additional weeks tracked:</div>
               <div className="habit-stat-details">
                 <i class="fa-solid fa-calendar-days habit-icon"></i>
-                <span>0</span>
+                <span>{numberOfFutureHabits}</span>
               </div>
             </div>
           </div>
@@ -501,7 +551,7 @@ export default function HabitModal({ habitId, habit }) {
                     onChange={(e) => setRepeatOption(e.target.value)}
                   >
                     <option value="">None</option>
-                    <option value="1">1 week</option>
+                    {/* <option value="1">1 week</option>
                     <option value="2">2 weeks</option>
                     <option value="3">3 weeks</option>
                     <option value="4">1 month</option>
@@ -515,7 +565,8 @@ export default function HabitModal({ habitId, habit }) {
                     <option value="36">9 months</option>
                     <option value="40">10 months</option>
                     <option value="44">11 months</option>
-                    <option value="52">1 year</option>
+                    <option value="52">1 year</option> */}
+                    {futureAddOptions}
                   </select>
                   <button
                     type="submit"

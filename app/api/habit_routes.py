@@ -115,12 +115,19 @@ def add_habit_instances(id):
     """
 
     OG_habit_instance = HabitInstance.query.get(id)
+
+    if not OG_habit_instance:
+        return {"errors":"Habit instance not found"}, 404
+
+    if not current_user.id == OG_habit_instance.habit.user_id:
+        return {"errors":"User cannot authorized to edit goal"}, 400
+
     habit = Habit.query.get(OG_habit_instance.habit_id)
     data = request.data.decode('utf-8')
     form_data = json.loads(data)
-    print("checking dates", form_data)
     dates = form_data["dates"]
-    print("checking data", dates)
+    # print("checking dates", form_data)
+    # print("checking data", dates)
     for year,month,week in dates:
          habit_instance = HabitInstance(
             habit_id=habit.id,
@@ -144,7 +151,7 @@ def add_habit_instances(id):
     db.session.add(habit)
     db.session.commit()
 
-    return {'habit': habit.to_dict()}
+    return habit.to_dict()
 
     # if not habit:
     #     return {"errors":"Habit not found"}, 404
@@ -239,26 +246,34 @@ def edit_habit(id):
 # DELETE ROUTES
 
 # DELETE HABIT AND INSTANCE
-@habit_routes.route('/<int:id>', methods=['DELETE'])
+@habit_routes.route('/<int:id>/<string:option>', methods=['DELETE'])
 @login_required
-def delete_habit_and_instance(id):
+def delete_habit_and_instance(id, option):
     """
     Delete the habit and habit instance
     """
 
-    habit_instance = HabitInstance.query.get(id)
+    if option=="all":
+        habit = Habit.query.get(id)
 
-    if not habit_instance:
-        return {"errors":"Habit not found"}, 404
+        if not habit:
+            return {"errors":"Habit not found"}, 404
 
-    if not current_user.id == habit_instance.habit.user_id:
-        return {"errors":"User cannot authorized to edit goal"}, 400
+        if not current_user.id == habit.user_id:
+            return {"errors":"User cannot authorized to edit goal"}, 400
 
-    habit = Habit.query.get(habit_instance.habit_id)
+        db.session.delete(habit)
+    elif option=="single":
+        habit_instance = HabitInstance.query.get(id)
 
+        if not habit_instance:
+            return {"errors":"Habit not found"}, 404
 
-    db.session.delete(habit)
-    db.session.delete(habit_instance)
+        if not current_user.id == habit_instance.habit.user_id:
+            return {"errors":"User cannot authorized to edit goal"}, 400
+
+        db.session.delete(habit_instance)
+
     db.session.commit()
 
     return {"message": "Delete successful"}

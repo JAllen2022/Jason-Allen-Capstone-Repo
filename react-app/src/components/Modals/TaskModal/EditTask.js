@@ -417,7 +417,6 @@ export default function EditGoal({ setEdit, setTab }) {
                   onChange={(e) =>
                     setShowGoals((prev) => {
                       if (prev) {
-                        console.log("we in here");
                         setRelatedGoal("");
                       }
                       return !prev;

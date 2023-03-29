@@ -16,7 +16,8 @@ class Habit(db.Model):
     # total_habit_goal = db.Column(db.Integer)
     # total_habit_completed = db.Column(db.Integer)
 
-    habit_instances = db.relationship('HabitInstance', back_populates='habit')
+    habit_instances = db.relationship('HabitInstance', back_populates='habit', cascade='all, delete-orphan',
+        passive_deletes=True)
 
     # Define column properties to calculate the total habit goal and completed values
     total_habit_goal = column_property(

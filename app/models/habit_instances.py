@@ -61,5 +61,10 @@ class HabitInstance(db.Model):
             "thursday":self.thursday,
             "friday":self.friday,
             "saturday":self.saturday,
-            "sunday":self.sunday
+            "sunday":self.sunday,
+            "future_events": self.calculate_count()
         }
+
+    def calculate_count(self):
+        count = HabitInstance.query.filter(HabitInstance.habit_id == self.habit_id, HabitInstance.id > self.id).count()
+        return count

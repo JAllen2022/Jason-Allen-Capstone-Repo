@@ -27,9 +27,9 @@ const editHabit = (habit) => ({
   payload: habit,
 });
 
-const addInstances = (habits) => ({
+const addInstances = (habit) => ({
   type: ADD_INSTANCES,
-  payload: habits,
+  payload: habit,
 });
 
 const deleteHabit = (habitId) => ({
@@ -110,7 +110,6 @@ export const createHabitInstancesThunk =
 
     if (res.ok) {
       const data = await res.json();
-      console.log("~~~~~~~~ checking instances", data);
       dispatch(addInstances(data));
     } else {
       const data = await res.json();
@@ -118,18 +117,20 @@ export const createHabitInstancesThunk =
     }
   };
 
-export const deleteHabitThunk = (id) => async (dispatch) => {
-  const res = await fetch(`/api/habits/${id}`, {
-    method: "DELETE",
-  });
+export const deleteHabitThunk =
+  (id, option, instanceId) => async (dispatch) => {
+    const res = await fetch(`/api/habits/${id}/${option}`, {
+      method: "DELETE",
+    });
 
-  if (res.ok) {
-    dispatch(deleteHabit(id));
-  } else {
-    const data = await res.json();
-    if (data.errors) return res;
-  }
-};
+    if (res.ok) {
+      const passId = instanceId ? instanceId : id;
+      dispatch(deleteHabit(passId));
+    } else {
+      const data = await res.json();
+      if (data.errors) return res;
+    }
+  };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Initial State ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const initialState = {
@@ -171,6 +172,7 @@ export default function reducer(state = initialState, action) {
       newState.habit = { ...state.habit, ...action.payload.habit };
       return newState;
     case ADD_INSTANCES:
+      newState.habit = action.payload;
       return newState;
     case DELETE_HABIT:
       const id = action.payload;
