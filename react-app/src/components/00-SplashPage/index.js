@@ -6,7 +6,7 @@ import SplashSlider from "./SplashPageSlider";
 import Logo from "../../Assets/Logo";
 import "./TestHomePage.css";
 
-export default function TestHomePage() {
+export default function SplashPage() {
   const [showMenu, setShowMenu] = useState(false);
 
   const ulRef = useRef();

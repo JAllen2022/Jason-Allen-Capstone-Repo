@@ -13,7 +13,8 @@ export default function HabitModal({ habitId, habit }) {
   const singleHabit = useSelector((state) => state.habits.habit);
   const [showMenu, setShowMenu] = useState(false);
   const [repeatOption, setRepeatOption] = useState("");
-  const ulRef = useRef();
+  const [showAddWeek, setShowAddWeek] = useState(false);
+  const ulRef = useRef(null);
   const textAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -67,18 +68,23 @@ export default function HabitModal({ habitId, habit }) {
   };
 
   useEffect(() => {
-    if (!showMenu) return;
+    console.log("what is show add week", showAddWeek);
+    if (!showAddWeek && !ulRef.current) return;
 
     const closeMenu = (e) => {
+      console.log("we in here 2");
+
       if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
+        console.log("we in here 3");
+
+        setShowAddWeek(false);
       }
     };
-
+    console.log("we in here 1");
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  }, [showAddWeek]);
 
   useEffect(() => {
     dispatch(getHabitThunk(habitId, weekString));
@@ -419,48 +425,59 @@ export default function HabitModal({ habitId, habit }) {
 
           <div className="habit-modal-action-options">
             Actions:
-            <div className="habit-modal-action-button">
+            <div
+              className="habit-modal-action-button"
+              onClick={() => setShowAddWeek((prev) => !prev)}
+            >
               {" "}
               <i class="fa-solid fa-calendar-plus habit-button-icon"></i>
               Add weeks
             </div>
-            <div className="habit-modal-action-menu">
-              <div className="habit-modal-action-title-container">
-                Add weeks: <span className="habit-modal-action-x-spot">X</span>
+            {showAddWeek && (
+              <div className="habit-modal-action-menu" ref={ulRef}>
+                <div className="habit-modal-action-title-container">
+                  Add weeks:{" "}
+                  <span
+                    className="habit-modal-action-x-spot"
+                    // onClick={() => setShowAddWeek((prev) => !prev)}
+                  >
+                    X
+                  </span>
+                </div>
+                <label htmlFor="priority" className="habit-modal-action-label">
+                  Add weeks to track this habit:
+                </label>
+                <select
+                  className="habit-modal-action-select"
+                  name="priority"
+                  value={repeatOption}
+                  onChange={(e) => setRepeatOption(e.target.value)}
+                >
+                  <option value="">None</option>
+                  <option value="1">1 week</option>
+                  <option value="2">2 weeks</option>
+                  <option value="3">3 weeks</option>
+                  <option value="4">1 month</option>
+                  <option value="8">2 months</option>
+                  <option value="12">3 months</option>
+                  <option value="16">4 months</option>
+                  <option value="20">5 months</option>
+                  <option value="24">6 months</option>
+                  <option value="28">7 months</option>
+                  <option value="32">8 months</option>
+                  <option value="36">9 months</option>
+                  <option value="40">10 months</option>
+                  <option value="44">11 months</option>
+                  <option value="48">1 year</option>
+                </select>
+                <button
+                  type="submit"
+                  className="habit-modal-submit-action-button"
+                >
+                  Add
+                </button>
               </div>
-              <label htmlFor="priority" className="habit-modal-action-label">
-                Add weeks to track this habit:
-              </label>
-              <select
-                className="habit-modal-action-select"
-                name="priority"
-                value={repeatOption}
-                onChange={(e) => setRepeatOption(e.target.value)}
-              >
-                <option value="">None</option>
-                <option value="1">1 week</option>
-                <option value="2">2 weeks</option>
-                <option value="3">3 weeks</option>
-                <option value="4">1 month</option>
-                <option value="8">2 months</option>
-                <option value="12">3 months</option>
-                <option value="16">4 months</option>
-                <option value="20">5 months</option>
-                <option value="24">6 months</option>
-                <option value="28">7 months</option>
-                <option value="32">8 months</option>
-                <option value="36">9 months</option>
-                <option value="40">10 months</option>
-                <option value="44">11 months</option>
-                <option value="48">1 year</option>
-              </select>
-              <button
-                type="submit"
-                className="habit-modal-submit-action-button"
-              >
-                Add
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>

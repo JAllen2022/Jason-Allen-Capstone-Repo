@@ -26,22 +26,11 @@ export default function MonthGrid() {
     week_instances.forEach((week) => {
       const { monday, tuesday, wednesday, thursday, friday, saturday, sunday } =
         week;
-      console.log("week is", week);
       const getDates = getFirstDayOfTheWeek(
         year,
         week.week.slice(14).split(" - ")[0]
       );
-      console.log("checking get dates", getDates[0], getDates[1], getDates[2]);
-      console.log(
-        "checking dates,",
-        monday,
-        tuesday,
-        wednesday,
-        thursday,
-        friday,
-        saturday,
-        sunday
-      );
+
       if (monday) completed[getDates[0][1]] = getDates[0][0];
       if (tuesday) completed[getDates[1][1]] = getDates[1][0];
       if (wednesday) completed[getDates[2][1]] = getDates[2][0];
@@ -51,9 +40,6 @@ export default function MonthGrid() {
       if (sunday) completed[getDates[6][1]] = getDates[6][0];
     });
   }
-  console.log("checking completed", completed);
-
-  console.log("what is currentMonth", currentMonth);
 
   return (
     <div className="month-grid">
