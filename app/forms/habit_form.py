@@ -4,12 +4,9 @@ from wtforms.validators import DataRequired, NumberRange
 
 class HabitForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    weeks_repeat = StringField('Weeks to Repeat')
-    total_habit_goal = StringField('Total Habit Goal')
     habit_id = StringField("Habit id")
     goal_to_complete = StringField("Goal to complete")
     actually_completed = StringField("Actually completed")
-    weeks_repeat = StringField("Weeks repeated")
     total_habit_goal = StringField("Total habit goal")
     total_habit_completed = StringField("Total habit goal")
     year = StringField("Year")
@@ -22,7 +19,4 @@ class HabitForm(FlaskForm):
     friday = BooleanField("friday")
     saturday = BooleanField("saturday")
     sunday = BooleanField("sunday")
-
-
-
     submit = SubmitField('Create Habit')

@@ -163,7 +163,10 @@ export default function reducer(state = initialState, action) {
     case EDIT_HABIT:
       newState.habits = {
         ...state.habits,
-        [action.payload.habit_instance.id]: action.payload.habit_instance,
+        [action.payload.habit_instance.id]: {
+          ...state.habits[[action.payload.habit_instance.id]],
+          ...action.payload.habit_instance,
+        },
       };
       newState.totalWeekAccomplished =
         state.totalWeekAccomplished - action.payload.accomplished_difference;

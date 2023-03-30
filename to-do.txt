@@ -1,10 +1,10 @@
 To-Do
-- fix habit functionality
-- edit the habit modal to be functional and allow for edit in place
+
 
 Drag and drop with
 https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 
+- reset habit counter for a new year
 - Notes -
 - Need to handle delete of images
 - AutoSave
@@ -12,8 +12,6 @@ https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 - Needs to re-size with modal - media query
 - rotating cog animation whenever clicked
 
-- disable input fields for goals and habits in previous weeks/months/years
-- deleting a sub-task from the goal modal doesn't delete it from the week
 
 
 - Update DB-Diagram
@@ -71,6 +69,10 @@ Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons
 
 
 Done:
+- deleting a sub-task from the goal modal doesn't delete it from the week
+
+- fix habit functionality
+- edit the habit modal to be functional and allow for edit in place
 - fix delete task
 - Edit Week planner to show All days of the week
  - use context to manage the week when editing our list

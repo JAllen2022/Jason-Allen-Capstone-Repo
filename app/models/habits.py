@@ -11,8 +11,9 @@ class Habit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
-    name = db.Column(db.String(50))
-    weeks_repeat = db.Column(db.Integer)
+    name = db.Column(db.Text, nullable=False)
+    notes=db.Column(db.Text)
+
     # total_habit_goal = db.Column(db.Integer)
     # total_habit_completed = db.Column(db.Integer)
 
@@ -41,7 +42,6 @@ class Habit(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "name": self.name,
-            "weeks_repeat": self.weeks_repeat,
             "total_habit_goal":self.total_habit_goal,
             "total_habit_completed":self.total_habit_completed,
             "habit_instances":{habit_instance.id:habit_instance.to_dict_for_habit() for habit_instance in self.habit_instances},
@@ -53,7 +53,6 @@ class Habit(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "name": self.name,
-            "weeks_repeat": self.weeks_repeat,
             "total_habit_goal":self.total_habit_goal,
             "total_habit_completed":self.total_habit_completed
         }

@@ -73,7 +73,6 @@ def create_habit():
         habit = Habit(
             user_id=current_user.id,
             name=form.data["name"],
-            weeks_repeat=0,
             total_habit_goal=0,
             total_habit_completed=0
         )
@@ -121,7 +120,7 @@ def add_habit_instances(id):
 
     if not current_user.id == OG_habit_instance.habit.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
-
+    print("aeehjkljklhlhljklhjklkhjkl")
     habit = Habit.query.get(OG_habit_instance.habit_id)
     data = request.data.decode('utf-8')
     form_data = json.loads(data)
@@ -153,36 +152,6 @@ def add_habit_instances(id):
 
     return habit.to_dict()
 
-    # if not habit:
-    #     return {"errors":"Habit not found"}, 404
-
-    # if not current_user.id == habit.user_id:
-    #     return {"errors":"User cannot authorized to edit goal"}, 400
-
-    # form = HabitForm()
-    # form['csrf_token'].data = request.cookies['csrf_token']
-
-    # if form.validate_on_submit():
-    #     habit.name=form.data["name"]
-    #     habit.weeks_repeat=form.data["weeks_repeat"]
-
-    #     habit_instance = HabitInstance(
-    #         habit_id=habit.id,
-    #         year= form.data["year"],
-    #         month=form.data["month"],
-    #         week=form.data["week"],
-    #         goal_to_complete=0,
-    #         actually_completed=0,
-    #         created_at=datetime.now()
-    #     )
-
-    #     db.session.add(habit)
-    #     db.session.add(habit_instance)
-    #     db.session.commit()
-    #     return {'habit': habit.to_dict(), 'habit_instance': habit_instance.to_dict()}
-    # else:
-    #     return {'errors': form.errors}
-
 
 # EDIT ROUTES
 
@@ -192,8 +161,6 @@ def edit_habit(id):
     """
     Edit the habit and habit instance
     """
-
-    week = request.args.get("week")
 
     habit_instance = HabitInstance.query.get(id)
 
@@ -209,10 +176,8 @@ def edit_habit(id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
 
-
     if form.validate_on_submit():
         habit.name = form.data["name"]
-        habit.weeks_repeat = form.data["weeks_repeat"]
 
         goal_difference = int(habit_instance.goal_to_complete)-int(form.data["goal_to_complete"])
         accomplished_difference  = habit_instance.actually_completed-form.data["actually_completed"]

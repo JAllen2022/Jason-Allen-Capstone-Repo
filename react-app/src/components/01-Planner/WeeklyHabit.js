@@ -23,25 +23,11 @@ export default function WeeklyHabit({ habit }) {
   const goalSum =
     monday + tuesday + wednesday + thursday + friday + saturday + sunday;
 
-  const handleSubmit = (e) => {
-    if (e) e.preventDefault();
-
-    const newHabit = {
-      ...habit,
-      goal_to_complete: goal,
-      monday,
-      tuesday,
-      wednesday,
-      thursday,
-      friday,
-      saturday,
-      sunday,
-      actually_completed: goalSum,
-    };
-
+  const handleSubmit = (newHabit) => {
     console.log("checking new habit", newHabit);
     // const emptyStringCheck = name.split(" ").join("");
     // if (name.length && emptyStringCheck) {
+    console.log("we in the planner");
     dispatch(editHabitThunk(newHabit, weekString));
     // }
   };
@@ -49,14 +35,27 @@ export default function WeeklyHabit({ habit }) {
 
   // );
 
+  // useEffect(() => {
+  //   // Only run effect on mount
+  //   if (!isMountedRef.current) {
+  //     isMountedRef.current = true;
+  //     return;
+  //   }
+  //   if (habit) handleSubmit();
+  // }, [monday, tuesday, wednesday, thursday, friday, saturday, sunday, goal]);
+
   useEffect(() => {
-    // Only run effect on mount
-    if (!isMountedRef.current) {
-      isMountedRef.current = true;
-      return;
-    }
-    if (habit) handleSubmit();
-  }, [monday, tuesday, wednesday, thursday, friday, saturday, sunday, goal]);
+    setGoal(habit?.goal_to_complete);
+    setMonday(habit?.monday);
+    setTuesday(habit?.tuesday);
+    setWednesday(habit?.wednesday);
+    setThursday(habit?.thursday);
+    setFriday(habit?.friday);
+    setSaturday(habit?.saturday);
+    setSunday(habit?.sunday);
+  }, [habit]);
+
+  console.log("checking re-render amount");
 
   const goalInput = (
     <form
@@ -71,7 +70,11 @@ export default function WeeklyHabit({ habit }) {
         min="1"
         max="7"
         value={goal}
-        onChange={(e) => setGoal(e.target.value)}
+        onChange={(e) => {
+          e.preventDefault();
+          setGoal(e.target.value);
+          handleSubmit({ ...habit, goal: e.target.value });
+        }}
       ></input>
       <input type="submit" style={{ position: "absolute", display: "none" }} />
     </form>
@@ -97,7 +100,11 @@ export default function WeeklyHabit({ habit }) {
             id={`1-${habit.name}${habit.id}`}
             className="check"
             checked={monday}
-            onChange={() => setMonday((prev) => !prev)}
+            onChange={(e) => {
+              setMonday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, monday: !monday });
+            }}
           />
           <label htmlFor={`1-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -111,7 +118,11 @@ export default function WeeklyHabit({ habit }) {
             id={`2-${habit.name}${habit.id}`}
             className="check"
             checked={tuesday}
-            onChange={() => setTuesday((prev) => !prev)}
+            onChange={(e) => {
+              setTuesday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, tuesday: !tuesday });
+            }}
           />
           <label htmlFor={`2-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -125,7 +136,11 @@ export default function WeeklyHabit({ habit }) {
             id={`3-${habit.name}${habit.id}`}
             className="check"
             checked={wednesday}
-            onChange={() => setWednesday((prev) => !prev)}
+            onChange={(e) => {
+              setWednesday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, wednesday: !wednesday });
+            }}
           />
           <label htmlFor={`3-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -139,7 +154,11 @@ export default function WeeklyHabit({ habit }) {
             id={`4-${habit.name}${habit.id}`}
             className="check"
             checked={thursday}
-            onChange={(e) => setThursday((prev) => !prev)}
+            onChange={(e) => {
+              setThursday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, thursday: !thursday });
+            }}
           />
           <label htmlFor={`4-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -153,7 +172,11 @@ export default function WeeklyHabit({ habit }) {
             id={`5-${habit.name}${habit.id}`}
             className="check"
             checked={friday}
-            onChange={() => setFriday((prev) => !prev)}
+            onChange={(e) => {
+              setFriday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, friday: !friday });
+            }}
           />
           <label htmlFor={`5-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -167,7 +190,11 @@ export default function WeeklyHabit({ habit }) {
             id={`6-${habit.name}${habit.id}`}
             className="check"
             checked={saturday}
-            onChange={() => setSaturday((prev) => !prev)}
+            onChange={(e) => {
+              setSaturday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, saturday: !saturday });
+            }}
           />
           <label htmlFor={`6-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
@@ -181,7 +208,11 @@ export default function WeeklyHabit({ habit }) {
             id={`7-${habit.name}${habit.id}`}
             className="check"
             checked={sunday}
-            onChange={() => setSunday((prev) => !prev)}
+            onChange={(e) => {
+              setSunday((prev) => !prev);
+              e.preventDefault();
+              handleSubmit({ ...habit, sunday: !sunday });
+            }}
           />
           <label htmlFor={`7-${habit.name}${habit.id}`} className="check-label">
             <svg viewBox="0,0,50,50">
