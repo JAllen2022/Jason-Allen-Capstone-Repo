@@ -66,6 +66,8 @@ Weekly/Monthly/Yearly Summary
 -- Add this link to use the favicon icon
 - <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons/term/arrow-left/" target="_blank" title="Arrow Left Icons">Noun Project</a>
+https://codepen.io/nikkipantony/pen/wpPGZp
+
 
 
 Done:

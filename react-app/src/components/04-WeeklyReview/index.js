@@ -1,19 +1,22 @@
 import Notebook from "../ReusableComponents/Notebook";
 import { useDate } from "../../context/Date";
+import { useState } from "react";
 import "./WeeklyReview.css";
 
 export default function WeeklyReview() {
   const { weekString } = useDate();
+  const [selectedOption, setSelectedOption] = useState("neutral");
+  console.log("checking selected option", selectedOption);
   const leftPageContent = (
     <div className="weekly-review-left-page-container">
       <div className="weekly-review-title-container">
-        <div className="weekly-review-title">Weekly Review</div>
+        <div className="weekly-review-title">Weekly Reflection</div>
         <div className="weekly-review-sub-title">
           Week of {weekString.slice(14)}
         </div>
       </div>
       <div className="weekly-review-left-page-question-container">
-        <div className="weekly-review-question-title">Weekly Wins</div>
+        <div className="weekly-review-question-title">Weekly wins</div>
         <div className="weekly-review-question-sub-title">
           What's going well? Any wins (big or little)?
         </div>
@@ -59,6 +62,8 @@ export default function WeeklyReview() {
                     className="super-happy week-review"
                     id="super-happy"
                     value="super-happy"
+                    checked={selectedOption === "super-happy"}
+                    onClick={() => setSelectedOption("super-happy")}
                   />
                   <svg className="review-svg" viewBox="0 0 24 24">
                     <path d="M12,17.5C14.33,17.5 16.3,16.04 17.11,14H6.89C7.69,16.04 9.67,17.5 12,17.5M8.5,11A1.5,1.5 0 0,0 10,9.5A1.5,1.5 0 0,0 8.5,8A1.5,1.5 0 0,0 7,9.5A1.5,1.5 0 0,0 8.5,11M15.5,11A1.5,1.5 0 0,0 17,9.5A1.5,1.5 0 0,0 15.5,8A1.5,1.5 0 0,0 14,9.5A1.5,1.5 0 0,0 15.5,11M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
@@ -72,7 +77,8 @@ export default function WeeklyReview() {
                     className="happy week-review"
                     id="happy"
                     value="happy"
-                    checked
+                    checked={selectedOption === "happy"}
+                    onClick={() => setSelectedOption("happy")}
                   />
                   <svg
                     className="review-svg"
@@ -93,6 +99,8 @@ export default function WeeklyReview() {
                     className="neutral week-review"
                     id="neutral"
                     value="neutral"
+                    checked={selectedOption === "neutral"}
+                    onClick={() => setSelectedOption("neutral")}
                   />
                   <svg
                     className="review-svg"
@@ -113,6 +121,8 @@ export default function WeeklyReview() {
                     className="sad week-review"
                     id="sad"
                     value="sad"
+                    checked={selectedOption === "sad"}
+                    onClick={() => setSelectedOption("sad")}
                   />
                   <svg
                     className="review-svg"
@@ -133,6 +143,8 @@ export default function WeeklyReview() {
                     className="super-sad week-review"
                     id="super-sad"
                     value="super-sad"
+                    checked={selectedOption === "super-sad"}
+                    onClick={() => setSelectedOption("super-sad")}
                   />
                   <svg className="review-svg" viewBox="0 0 24 24">
                     <path d="M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M16.18,7.76L15.12,8.82L14.06,7.76L13,8.82L14.06,9.88L13,10.94L14.06,12L15.12,10.94L16.18,12L17.24,10.94L16.18,9.88L17.24,8.82L16.18,7.76M7.82,12L8.88,10.94L9.94,12L11,10.94L9.94,9.88L11,8.82L9.94,7.76L8.88,8.82L7.82,7.76L6.76,8.82L7.82,9.88L6.76,10.94L7.82,12M12,14C9.67,14 7.69,15.46 6.89,17.5H17.11C16.31,15.46 14.33,14 12,14Z" />

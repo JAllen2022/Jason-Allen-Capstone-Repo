@@ -57,7 +57,7 @@ function Navigation({ isLoaded }) {
                 <i className="fa-solid fa-book-open"></i>
               </NavLink>
               <div className="nav-popup">
-                <span>Weekly Review</span>
+                <span>Reflections</span>
               </div>
             </div>
           </div>
