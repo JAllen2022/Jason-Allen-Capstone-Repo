@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { authenticate } from "./store/session";
 import Navigation from "./components/ReusableComponents/Navigation";
-import Reflections from "./components/04-Reflections";
 import Tasks from "./components/02-DailyTasks";
 import Goals from "./components/03-Goals";
 import Planner from "./components/01-Planner";
 import SplashPage from "./components/00-SplashPage";
+import WeeklyReview from "./components/04-WeeklyReview";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function App() {
                   <Goals />
                 </Route>
                 <Route path="/reflections">
-                  <Reflections />
+                  <WeeklyReview />
                 </Route>
               </Switch>
             )}

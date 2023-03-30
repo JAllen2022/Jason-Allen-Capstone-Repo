@@ -1,0 +1,159 @@
+.weekly-review-left-page-container,
+.weekly-review-right-page-container {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+.weekly-review-right-page-container {
+  height: 98.5%;
+  margin-top: 0.265rem;
+}
+
+.weekly-review-title-container {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weekly-review-title {
+  color: #cead87;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.weekly-review-sub-title {
+  font-size: 14px;
+  margin-top: 0.25rem;
+}
+
+.weekly-review-left-page-question-container {
+  /* border: 1px solid red; */
+}
+
+.weekly-review-question-title {
+  color: #cead87;
+  font-size: 15.5px;
+}
+
+.weekly-review-question-sub-title {
+  font-size: 14px;
+}
+
+.weekly-review-question-input-area {
+  /* border: 1px solid green; */
+  width: 100%;
+  height: 5.5em;
+}
+
+.weekly-review-text-area {
+  background-attachment: local;
+  background-image: linear-gradient(
+      to right,
+      transparent 10px,
+      transparent 10px
+    ),
+    linear-gradient(to left, transparent 10px, transparent 10px),
+    repeating-linear-gradient(
+      transparent,
+      transparent 22px,
+      #ccc 2px,
+      #ccc 2px,
+      transparent 24px
+    );
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+
+  background-color: transparent;
+  line-height: 24px;
+  /* padding: 8px 10px; */
+}
+
+.card {
+  display: flex;
+  width: 100%;
+  /* border: 1px solid purple; */
+}
+
+.rating-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0.8rem;
+  width: fit-content;
+  /* border: 1px solid orange; */
+}
+
+.rating {
+  background-color: rgba(51, 51, 51);
+  padding: 0.4rem 0.4rem 0.1rem 0.4rem;
+  border-radius: 2.2rem;
+}
+
+.review-svg {
+  fill: rgb(224, 223, 223);
+  height: 1.6rem;
+  width: 1.6rem;
+  margin: 0.2rem;
+}
+
+.rating-form-2 .review-svg {
+  height: 3rem;
+  width: 3rem;
+  margin: 0.5rem;
+}
+
+#radios label {
+  position: relative;
+}
+
+input.week-review {
+  position: absolute;
+  display: none;
+}
+
+input[type="radio"] + .review-svg {
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+input.week-review + .review-svg {
+  cursor: pointer;
+}
+
+input.super-happy:hover + .review-svg,
+input.super-happy:checked + .review-svg,
+input.super-happy:focus + .review-svg {
+  fill: rgb(0, 109, 217);
+}
+
+input.happy:hover + .review-svg,
+input.happy:checked + .review-svg,
+input.happy:focus + .review-svg {
+  fill: rgb(0, 204, 79);
+}
+
+input.neutral:hover + .review-svg,
+input.neutral:checked + .review-svg,
+input.neutral:focus + .review-svg {
+  fill: rgb(232, 214, 0);
+}
+
+input.sad:hover + .review-svg,
+input.sad:checked + .review-svg,
+input.sad:focus + .review-svg {
+  fill: rgb(229, 132, 0);
+}
+
+input.super-sad:hover + .review-svg,
+input.super-sad:checked + .review-svg,
+input.super-sad:focus + .review-svg {
+  fill: rgb(239, 42, 16);
+}
