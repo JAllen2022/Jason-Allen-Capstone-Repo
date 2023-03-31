@@ -1,7 +1,7 @@
 from .db import db, add_prefix_for_prod, SCHEMA, environment
 
 class Reflection(db.Model):
-    __tablename__="reflection"
+    __tablename__="reflections"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}

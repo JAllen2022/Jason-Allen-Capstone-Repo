@@ -4,12 +4,14 @@ import session from "./session";
 import tasks from "./tasks";
 import goals from "./goals";
 import habits from "./habits";
+import reflections from "./reflections";
 
 const rootReducer = combineReducers({
   session,
   tasks,
   goals,
   habits,
+  reflections,
 });
 
 let enhancer;

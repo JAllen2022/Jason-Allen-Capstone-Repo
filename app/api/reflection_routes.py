@@ -16,10 +16,10 @@ def reflections():
 
     year = request.args.get("year")
     week = request.args.get("week")
-    reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).one()
+    reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).all()
 
     if not reflection:
-        return {"not-found":"No instance found"}
+        return {"not_found":"No instance found"}
 
     if not current_user.id == reflection.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
@@ -31,15 +31,16 @@ def reflections():
 @login_required
 def create_reflection():
 
-    year = request.args.get("year")
-    week = request.args.get("week")
-
-    reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).one()
 
     form = Reflection()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        year = form.data["year"]
+        week = form.data["week"]
+
+        reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).one()
+
         # Handles the POST request. Will create an instance if none exists
         if not reflection:
             reflection = Reflection(
