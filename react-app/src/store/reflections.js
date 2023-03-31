@@ -1,12 +1,17 @@
 const GET_REFLECTION = "reflections/GET_REFLECTION";
 const ADD_REFLECTION = "reflections/ADD_REFLECTION";
 const EDIT_REFLECTION = "reflections/EDIT_REFLECTION";
+const RESET_REFLECTION = "reflections/RESET_REFLECTION";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 const getReflection = (reflection) => ({
   type: GET_REFLECTION,
   payload: reflection,
+});
+
+const resetReflection = () => ({
+  type: RESET_REFLECTION,
 });
 
 const addReflection = (reflection) => ({
@@ -27,8 +32,8 @@ export const getReflectionThunk = (searchParams) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    if (data.not_found) return data;
-    dispatch(getReflection(data));
+    if (!data.id) dispatch(resetReflection());
+    else dispatch(getReflection(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -84,6 +89,8 @@ export default function reducer(state = initialState, action) {
         reflection: state.reflection,
         ...action.payload,
       };
+    case RESET_REFLECTION:
+      return initialState;
     default:
       return state;
   }

@@ -46,13 +46,14 @@ export default function WeeklyReview() {
       text_field7: textField7,
       week_rating: weekRating,
     };
+
+    if (!newReflection.year) newReflection.year = year;
+    if (!newReflection.month) newReflection.week = weekString;
+
     newReflection[fetchVariableName] = value;
 
-    const emptyStringCheck = value.split(" ").join("");
-    if (value.length && emptyStringCheck) {
-      if (reflection.id) dispatch(editReflectionThunk(newReflection));
-      else dispatch(addReflectionThunk(newReflection));
-    }
+    if (reflection.id) dispatch(editReflectionThunk(newReflection));
+    else dispatch(addReflectionThunk(newReflection));
   };
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ UseEffect ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,19 +64,17 @@ export default function WeeklyReview() {
 
   useEffect(() => {
     dispatch(getReflectionThunk({ year, week: weekString }));
-  }, [dispatch]);
+  }, [year, weekString]);
 
   useEffect(() => {
-    if (reflection.id) {
-      setTextField1(reflection.text_field1);
-      setTextField2(reflection.text_field2);
-      setTextField3(reflection.text_field3);
-      setTextField4(reflection.text_field4);
-      setTextField5(reflection.text_field5);
-      setTextField6(reflection.text_field6);
-      setTextField7(reflection.text_field7);
-      setWeekRating(reflection.week_rating);
-    }
+    setTextField1(reflection.text_field1 || "");
+    setTextField2(reflection.text_field2 || "");
+    setTextField3(reflection.text_field3 || "");
+    setTextField4(reflection.text_field4 || "");
+    setTextField5(reflection.text_field5 || "");
+    setTextField6(reflection.text_field6 || "");
+    setTextField7(reflection.text_field7 || "");
+    setWeekRating(reflection.week_rating || "neutral");
   }, [reflection]);
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declaring Left Page Contents ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,10 +99,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField1(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField1) {
-                setTextField1(e.target.value);
-                handleSubmit(e.target.value, "text_field1");
-              }
+              // if (e.target.value !== textField1) {
+              setTextField1(e.target.value);
+              handleSubmit(e.target.value, "text_field1");
+              // }
             }}
           ></textarea>
         </div>
@@ -122,10 +121,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField2(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField2) {
-                setTextField2(e.target.value);
-                handleSubmit(e.target.value, "text_field2");
-              }
+              // if (e.target.value !== textField2) {
+              setTextField2(e.target.value);
+              handleSubmit(e.target.value, "text_field2");
+              // }
             }}
           ></textarea>
         </div>
@@ -144,10 +143,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField3(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField3) {
-                setTextField3(e.target.value);
-                handleSubmit(e.target.value, "text_field3");
-              }
+              // if (e.target.value !== textField3) {
+              setTextField3(e.target.value);
+              handleSubmit(e.target.value, "text_field3");
+              // }
             }}
           ></textarea>
         </div>
@@ -158,9 +157,9 @@ export default function WeeklyReview() {
           How do you feel the week went overall?
         </div>
         <div className="weekly-review-question-input-area">
-          <div class="rating-container">
-            <div class="rating">
-              <form class="rating-form">
+          <div className="rating-container">
+            <div className="rating">
+              <form className="rating-form">
                 <label htmlFor="super-happy">
                   <input
                     type="radio"
@@ -303,10 +302,9 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField4(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField4) {
-                setTextField4(e.target.value);
-                handleSubmit(e.target.value, "text_field4");
-              }
+
+              setTextField4(e.target.value);
+              handleSubmit(e.target.value, "text_field4");
             }}
           ></textarea>
         </div>
@@ -326,10 +324,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField5(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField5) {
-                setTextField5(e.target.value);
-                handleSubmit(e.target.value, "text_field5");
-              }
+              // if (e.target.value !== textField5) {
+              setTextField5(e.target.value);
+              handleSubmit(e.target.value, "text_field5");
+              // }
             }}
           ></textarea>
         </div>
@@ -348,10 +346,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField6(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField6) {
-                setTextField6(e.target.value);
-                handleSubmit(e.target.value, "text_field6");
-              }
+              // if (e.target.value !== textField6) {
+              setTextField6(e.target.value);
+              handleSubmit(e.target.value, "text_field6");
+              // }
             }}
           ></textarea>
         </div>
@@ -368,10 +366,10 @@ export default function WeeklyReview() {
             onChange={(e) => setTextField7(e.target.value)}
             onBlur={(e) => {
               e.preventDefault();
-              if (e.target.value !== textField7) {
-                setTextField7(e.target.value);
-                handleSubmit(e.target.value, "text_field7");
-              }
+              // if (e.target.value !== textField7) {
+              setTextField7(e.target.value);
+              handleSubmit(e.target.value, "text_field7");
+              // }
             }}
           ></textarea>
         </div>

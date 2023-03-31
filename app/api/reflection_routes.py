@@ -21,28 +21,38 @@ def reflections():
     if not reflection:
         return {"not_found":"No instance found"}
 
-    if not current_user.id == reflection.user_id:
+    reflectionItem = reflection[0]
+
+    if not current_user.id == reflectionItem.user_id:
         return {"errors":"User cannot authorized to edit goal"}, 400
 
-    return {"reflection":reflection.to_dict()}
+    return reflectionItem.to_dict()
 
 
-@reflection_routes.route('', methods=["POST, PUT"])
+@reflection_routes.route('', methods=["POST", "PUT"])
 @login_required
 def create_reflection():
 
 
-    form = Reflection()
+    form = ReflectionForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print("we are here 1")
 
     if form.validate_on_submit():
+        print("we are here 2")
         year = form.data["year"]
         week = form.data["week"]
+        print("we are here 3", year, week)
 
-        reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).one()
+
+
+        reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).all()
+
 
         # Handles the POST request. Will create an instance if none exists
         if not reflection:
+            print("we are here 5")
+
             reflection = Reflection(
                  user_id=current_user.id,
                  week=week,
@@ -59,23 +69,27 @@ def create_reflection():
 
             db.session.add(reflection)
             db.session.commit()
-
+            print("we are here 6")
             return reflection.to_dict()
 
-        # Handles the PUT request. Will update the existing instance
-        reflection.text_field1= form.data["text_field1"]
-        reflection.text_field2= form.data["text_field2"]
-        reflection.text_field3= form.data["text_field3"]
-        reflection.text_field4= form.data["text_field4"]
-        reflection.text_field5= form.data["text_field5"]
-        reflection.text_field6= form.data["text_field6"]
-        reflection.text_field7= form.data["text_field7"]
-        reflection.week_rating= form.data["week_rating"]
+        print("we are here 7")
 
-        db.session.add(reflection)
+        reflectionItem = reflection[0]
+        print("we are here 4")
+        # Handles the PUT request. Will update the existing instance
+        reflectionItem.text_field1= form.data["text_field1"]
+        reflectionItem.text_field2= form.data["text_field2"]
+        reflectionItem.text_field3= form.data["text_field3"]
+        reflectionItem.text_field4= form.data["text_field4"]
+        reflectionItem.text_field5= form.data["text_field5"]
+        reflectionItem.text_field6= form.data["text_field6"]
+        reflectionItem.text_field7= form.data["text_field7"]
+        reflectionItem.week_rating= form.data["week_rating"]
+
+        db.session.add(reflectionItem)
         db.session.commit()
 
-        return reflection.to_dict()
+        return reflectionItem.to_dict()
     # Errors for form validations happen here
     else:
-        return {'errors': form.errors}
+        return {'errors': form.errors}, 400

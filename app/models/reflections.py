@@ -24,7 +24,6 @@ class Reflection(db.Model):
         return {
             "id":self.id,
             "year":self.year,
-            "month":self.month,
             "week":self.week,
             "text_field1":self.text_field1,
             "text_field2":self.text_field2,
@@ -34,5 +33,4 @@ class Reflection(db.Model):
             "text_field6":self.text_field6,
             "text_field7":self.text_field7,
             "week_rating":self.week_rating,
-
         }
