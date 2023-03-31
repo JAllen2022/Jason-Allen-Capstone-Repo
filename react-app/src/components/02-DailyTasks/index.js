@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getTasksThunk, setDisplayTime } from "../../store/tasks";
 import ListField from "../ReusableComponents/ListField";
-import RibbonBanner from "../../Assets/RibbonBanner";
-import Arrow from "../../Assets/Arrow";
+import RibbonBanner from "../../assets/RibbonBanner";
+import Arrow from "../../assets/Arrow.js";
 import Notebook from "../ReusableComponents/Notebook";
 import "./Tasks.css";
 

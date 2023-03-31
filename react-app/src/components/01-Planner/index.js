@@ -10,7 +10,7 @@ import {
 } from "../../store/tasks";
 import Notebook from "../ReusableComponents/Notebook";
 import ListField from "../ReusableComponents/ListField";
-import Arrow from "../../Assets/Arrow";
+import Arrow from "../../assets/Arrow";
 import { getHabitsThunk } from "../../store/habits";
 import WeeklyHabitTracker from "./WeeklyHabitTracker";
 import WeekDayList from "./WeekDayList";

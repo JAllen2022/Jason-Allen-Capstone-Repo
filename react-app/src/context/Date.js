@@ -28,20 +28,32 @@ export function getDisplayDates(date) {
 }
 
 export function getCurrentWeek(currentDate) {
-  const currentDayOfWeek = currentDate.getDay(); // Sunday = 0, Monday = 1, etc.
+  const currentDayOfWeek = moment(currentDate).day(); // Sunday = 0, Monday = 1, etc.
   const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
   const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
-  const monday = new Date(currentDate.getTime() - daysToMonday * 86400000); // 86400000 = 1 day in milliseconds
-  const sunday = new Date(currentDate.getTime() + daysFromSunday * 86400000);
-  const mondayString = monday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
-  const sundayString = sunday.toLocaleString("default", {
-    month: "long",
-    day: "numeric",
-  });
+  const monday = moment(currentDate).subtract(daysToMonday, "days");
+  const sunday = moment(currentDate).add(daysFromSunday, "days");
+  const mondayString = monday.format("MMMM D");
+  const sundayString = sunday.format("MMMM D");
   return `Weekly Goals: ${mondayString} - ${sundayString}`;
+}
+
+export function getCurrentAndNextWeek(currentDate) {
+  const currentDayOfWeek = moment(currentDate).day(); // Sunday = 0, Monday = 1, etc.
+  const daysToMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+  const daysFromSunday = currentDayOfWeek === 0 ? 0 : 7 - currentDayOfWeek;
+  const monday = moment(currentDate).subtract(daysToMonday, "days");
+  const sunday = moment(currentDate).add(daysFromSunday, "days");
+  const nextMonday = moment(monday).add(7, "days");
+  const nextSunday = moment(sunday).add(7, "days");
+  const currentMondayString = monday.format("MMMM D");
+  const currentSundayString = sunday.format("MMMM D");
+  const nextMondayString = nextMonday.format("MMMM D");
+  const nextSundayString = nextSunday.format("MMMM D");
+  return [
+    `Weekly Goals: ${currentMondayString} - ${currentSundayString}`,
+    `Weekly Goals: ${nextMondayString} - ${nextSundayString}`,
+  ];
 }
 
 export function getWeekStrings(year, weekString, numberOfWeeks) {
@@ -93,7 +105,7 @@ export function DateProvider({ children }) {
   const [fetchDates, displayDates] = getDisplayDates(date);
   const monthString = date.toLocaleString("default", { month: "long" });
   const monthDisp = `${monthString}, ${date.getFullYear()}`;
-  const weekString = getCurrentWeek(date);
+  const [weekString, nextWeekString] = getCurrentAndNextWeek(date);
 
   const addZero = (num) => (num < 10 ? "0" + num : num);
   const restrictedDay =
@@ -141,6 +153,7 @@ export function DateProvider({ children }) {
     monthDisp,
     monthString,
     weekString,
+    nextWeekString,
   };
 
   return (

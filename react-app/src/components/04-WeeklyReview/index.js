@@ -1,12 +1,14 @@
 import Notebook from "../ReusableComponents/Notebook";
 import { useDate } from "../../context/Date";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Arrow from "../../assets/Arrow.js";
 import "./WeeklyReview.css";
 
 export default function WeeklyReview() {
-  const { weekString } = useDate();
+  const { weekString, nextWeekString, day, setDay, setDate, year, month } =
+    useDate();
   const [selectedOption, setSelectedOption] = useState("neutral");
-  console.log("checking selected option", selectedOption);
+
   const leftPageContent = (
     <div className="weekly-review-left-page-container">
       <div className="weekly-review-title-container">
@@ -162,7 +164,7 @@ export default function WeeklyReview() {
       <div className="weekly-review-title-container">
         <div className="weekly-review-title">Weekly Planning</div>
         <div className="weekly-review-sub-title">
-          Week of {weekString.slice(14)}
+          Week of {nextWeekString.slice(14)}
         </div>
       </div>
       <div className="weekly-review-left-page-question-container">
@@ -211,12 +213,34 @@ export default function WeeklyReview() {
     </div>
   );
 
+  useEffect(() => {
+    setDate(new Date(year, month, day));
+  }, [month, day, year]);
+
+  const decreaseWeek = () => setDay(day - 7);
+  const increaseWeek = () => setDay(day + 7);
+
   return (
     <>
       <Notebook
         leftPageContent={leftPageContent}
         rightPageContent={rightPageContent}
       />
+      <div className="planner-arrow-container">
+        {" "}
+        <div className="planner-arrow-left-right">
+          <Arrow classString={"left-arrow"} onClick={decreaseWeek} />
+          <Arrow classString={"right-arrow"} onClick={increaseWeek} />
+        </div>
+        <div className="planner-arrow-descriptions">
+          <div className="planner-arrow-text" onClick={decreaseWeek}>
+            Previous Week
+          </div>
+          <div className="planner-arrow-text" onClick={increaseWeek}>
+            Next Week
+          </div>
+        </div>
+      </div>
     </>
   );
 }

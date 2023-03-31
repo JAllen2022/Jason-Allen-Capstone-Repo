@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import HomePageNotebook from "../../Assets/HomePageNotebook";
-import GoalImage from "../../Assets/GoalImage";
+import HomePageNotebook from "../../assets/HomePageNotebook";
+import GoalImage from "../../assets/GoalImage";
 
 import "./SplashPageSlider.css";
 

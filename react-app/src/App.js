@@ -8,6 +8,7 @@ import Goals from "./components/03-Goals";
 import Planner from "./components/01-Planner";
 import SplashPage from "./components/00-SplashPage";
 import WeeklyReview from "./components/04-WeeklyReview";
+import Journal from "./components/05-Journal";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ function App() {
                 </Route>
                 <Route path="/reflections">
                   <WeeklyReview />
+                </Route>
+                <Route path="/journal">
+                  <Journal />
                 </Route>
               </Switch>
             )}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import Arrow from "../../../assets/Arrow";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
@@ -58,6 +59,14 @@ function Navigation({ isLoaded }) {
               </NavLink>
               <div className="nav-popup">
                 <span>Reflections</span>
+              </div>
+            </div>
+            <div className="nav-item">
+              <NavLink className="nav-button" exact to="/journal">
+                <i class="fa-solid fa-book"></i>
+              </NavLink>
+              <div className="nav-popup">
+                <span>Journal</span>
               </div>
             </div>
           </div>

@@ -7,7 +7,6 @@ const ADD_SUB_TASK = "goals/ADD_SUB_TASK";
 const EDIT_SUB_TASK = "goals/EDIT_SUB_TASK";
 const DELETE_SUB_TASK = "goals/DELETE_SUB_TASK";
 const ADD_DISPLAY_TIME = "goals/ADD_DISPLAY_TIME";
-
 const EDIT_GOAL = "goals/EDIT_GOAL";
 const DELETE_GOAL = "goals/DELETE_GOAL";
 
