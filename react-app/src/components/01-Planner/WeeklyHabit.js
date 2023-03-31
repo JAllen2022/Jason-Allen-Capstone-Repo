@@ -73,7 +73,7 @@ export default function WeeklyHabit({ habit }) {
         onChange={(e) => {
           e.preventDefault();
           setGoal(e.target.value);
-          handleSubmit({ ...habit, goal: e.target.value });
+          handleSubmit({ ...habit, goal_to_complete: e.target.value });
         }}
       ></input>
       <input type="submit" style={{ position: "absolute", display: "none" }} />
