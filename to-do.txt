@@ -2,9 +2,8 @@ To-Do
 IMPORTANT:
 - Update DB-Diagram
 - Create Readme documentation
-- Finish splash page
-- Update log-in and sign up modals
 - CSS animation for modals
+- thoroughly test everything on render
 
 
 Semi-Important:
@@ -13,6 +12,7 @@ Semi-Important:
 - AutoSave
   - need auto save feature. Whenever clicking out or leaving the tab, saves, and then auto save periodically
 - Needs to re-size with modal - media query
+- finish
 
 
 
@@ -40,7 +40,7 @@ Drag and drop with
 https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
 - reset habit counter for a new year
 - rotating cog animation whenever clicked
-
+- improve splash page and sign-in and sign-up modals
 
 About links to link:
 -- Add this link to use the favicon icon

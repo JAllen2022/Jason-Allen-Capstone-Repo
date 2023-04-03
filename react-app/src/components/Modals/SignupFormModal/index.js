@@ -26,10 +26,14 @@ function SignupFormModal() {
       setErrors({ ...errors, password: "Passwords do not match." });
     }
   };
-  
+
   console.log("checking errors", errors);
   return (
     <div className="sign-up-modal-container">
+      <div className="x-marks-the-spot">
+        {" "}
+        <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
+      </div>
       <h1 className="log-in-header">Sign Up</h1>
       <form className="log-in-form" onSubmit={handleSubmit}>
         <label>

@@ -11,6 +11,8 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 0.2rem;
+  /* border: 1px solid red; */
+  width: 100%;
 }
 
 .x-close {

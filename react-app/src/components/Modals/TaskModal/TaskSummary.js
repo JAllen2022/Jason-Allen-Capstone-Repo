@@ -110,7 +110,7 @@ export default function TaskSummary() {
             <div className="summary-item-description">{priority}</div>
           </div>
         </div>
-        <div className="summary-item-container">
+        {/* <div className="summary-item-container">
           <div className="summary-item-title">Recurring [Weekly] Next:</div>
           <div className="summary-item-task">
             <div className="summary-item-description">
@@ -118,7 +118,7 @@ export default function TaskSummary() {
               {singleTask.due_date}
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="summary-item-container">
           <div className="summary-item-title">Estimated Task Duration</div>
           <div className="summary-item-task">

@@ -27,9 +27,17 @@ function LoginFormModal() {
   return (
     <>
       <div className="log-in-container">
+        <div className="x-marks-the-spot">
+          {" "}
+          <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
+        </div>
         <h1 className="log-in-header">Log In</h1>
-        {Object.values(errors) && (
-          <div style={{ color: "maroon" }}>Invalid email or password.</div>
+        {Object.values(errors).length ? (
+          <div style={{ color: "maroon", marginBottom: ".5rem" }}>
+            Invalid email or password.
+          </div>
+        ) : (
+          ""
         )}
         <form className="log-in-form" onSubmit={handleSubmit}>
           <div>

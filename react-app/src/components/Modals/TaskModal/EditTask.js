@@ -343,7 +343,7 @@ export default function EditGoal({ setEdit, setTab }) {
               {durationOptions}
             </select>
           </div>
-          <div className="edit-task-form-div-field">
+          {/* <div className="edit-task-form-div-field">
             <label
               htmlFor="recurring-frequency"
               className="edit-task-form-labels"
@@ -364,7 +364,7 @@ export default function EditGoal({ setEdit, setTab }) {
               <option value="weekdays">Every weekday (Monday to Friday)</option>
               <option value="custom">Custom...</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="edit-task-form-div-field">
             <label htmlFor="due-date" className="edit-task-form-labels">
