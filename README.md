@@ -2,7 +2,7 @@
 <p align='center'>
 - A virtual journaling app -
 </p>
-<p align='center'>- <a href='goal-e-thevirtualplanner.onrender.com' align='center'>Live Link</a> - </p>
+<p align='center'>- <a href='https://goal-e-thevirtualplanner.onrender.com' align='center'>Live Link</a> - </p>
 
 <a name="readme-top"></a>
 
