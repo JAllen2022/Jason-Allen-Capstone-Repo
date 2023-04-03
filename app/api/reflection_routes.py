@@ -14,9 +14,9 @@ def reflections():
     Qeury for reflection and return it in a dictionary. If none found, still return 200. Just an instance not found dictionary
     """
 
-    year = request.args.get("year")
+    year = str(request.args.get("year"))
     week = request.args.get("week")
-    reflection = Reflection.query.filter(Reflection.year == str(year),Reflection.week == week, Reflection.user_id == current_user.id).all()
+    reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).all()
 
     if not reflection:
         return {"not_found":"No instance found"}
@@ -40,7 +40,7 @@ def create_reflection():
 
     if form.validate_on_submit():
         print("we are here 2")
-        year = form.data["year"]
+        year = str(form.data["year"])
         week = form.data["week"]
         print("we are here 3", year, week)
 
