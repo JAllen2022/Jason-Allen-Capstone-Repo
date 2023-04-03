@@ -42,7 +42,7 @@ def create_reflection():
         print("we are here 2")
         year = str(form.data["year"])
         week = form.data["week"]
-        print("we are here 3", year, week)
+        print("we are here 3", year, type(year))
 
 
 

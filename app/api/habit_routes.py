@@ -31,6 +31,8 @@ def week_habits():
     for habit in habit_dict:
         total_goal += habit_dict[habit]["goal_to_complete"]
         total_accomplished += habit_dict[habit]["actually_completed"]
+        print("checking count",habit_dict[habit]["id"],habit_dict[habit]["actually_completed"])
+
 
     return {'habits':habit_dict,
             "total_accomplished": total_accomplished,

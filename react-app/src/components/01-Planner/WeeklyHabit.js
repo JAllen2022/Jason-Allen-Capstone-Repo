@@ -25,6 +25,18 @@ export default function WeeklyHabit({ habit }) {
 
   const handleSubmit = (newHabit) => {
     console.log("checking new habit", newHabit);
+
+    console.log(
+      "checking goalsum",
+      goalSum,
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday
+    );
     // const emptyStringCheck = name.split(" ").join("");
     // if (name.length && emptyStringCheck) {
     console.log("we in the planner");
@@ -103,7 +115,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setMonday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, monday: !monday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !monday ? goalSum + 1 : goalSum - 1,
+                monday: !monday,
+              });
             }}
           />
           <label htmlFor={`1-${habit.name}${habit.id}`} className="check-label">
@@ -121,7 +137,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setTuesday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, tuesday: !tuesday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !tuesday ? goalSum + 1 : goalSum - 1,
+                tuesday: !tuesday,
+              });
             }}
           />
           <label htmlFor={`2-${habit.name}${habit.id}`} className="check-label">
@@ -139,7 +159,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setWednesday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, wednesday: !wednesday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !wednesday ? goalSum + 1 : goalSum - 1,
+                wednesday: !wednesday,
+              });
             }}
           />
           <label htmlFor={`3-${habit.name}${habit.id}`} className="check-label">
@@ -157,7 +181,12 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setThursday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, thursday: !thursday });
+
+              handleSubmit({
+                ...habit,
+                actually_completed: !thursday ? goalSum + 1 : goalSum - 1,
+                thursday: !thursday,
+              });
             }}
           />
           <label htmlFor={`4-${habit.name}${habit.id}`} className="check-label">
@@ -175,7 +204,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setFriday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, friday: !friday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !friday ? goalSum + 1 : goalSum - 1,
+                friday: !friday,
+              });
             }}
           />
           <label htmlFor={`5-${habit.name}${habit.id}`} className="check-label">
@@ -193,7 +226,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setSaturday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, saturday: !saturday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !saturday ? goalSum + 1 : goalSum - 1,
+                saturday: !saturday,
+              });
             }}
           />
           <label htmlFor={`6-${habit.name}${habit.id}`} className="check-label">
@@ -211,7 +248,11 @@ export default function WeeklyHabit({ habit }) {
             onChange={(e) => {
               setSunday((prev) => !prev);
               e.preventDefault();
-              handleSubmit({ ...habit, sunday: !sunday });
+              handleSubmit({
+                ...habit,
+                actually_completed: !sunday ? goalSum + 1 : goalSum - 1,
+                sunday: !sunday,
+              });
             }}
           />
           <label htmlFor={`7-${habit.name}${habit.id}`} className="check-label">
