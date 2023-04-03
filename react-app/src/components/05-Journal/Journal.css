@@ -1,6 +1,6 @@
 .notebook-right-page-content-container,
 .notebook-left-page-content-container {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -8,11 +8,13 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0.5rem;
+  font-size: 14px;
 }
 
 .notebook-right-page-content-container {
   height: 98.5%;
   margin-top: 0.265rem;
+  /* border: 1px solid red; */
 }
 
 .notebook-date-container {
@@ -21,21 +23,145 @@
   position: relative;
 }
 
-.notebook-sun-icon {
+.notebook-sun-icon,
+.notebook-night-icon {
   position: absolute;
   left: 0;
   color: #cead87;
 }
 
+.notebook-night-icon {
+  top: -0.5rem;
+}
+
 .notebook-day-input-container {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
-  height: 55%;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.notebook-night-input-container::before {
+  content: "";
+  position: absolute;
+  /* border: 1px solid red; */
+  width: 109%;
+  height: 104.5%;
+  left: -0.94rem;
+  top: -0.75rem;
+  z-index: -2;
+  background-image: linear-gradient(
+    to left,
+    rgb(216, 216, 216, 0.6),
+    rgb(217, 217, 217, 0.6)
+  );
+}
+.notebook-night-input-container::after {
+  content: "";
+  position: absolute;
+  z-index: -3;
+  height: 2em;
+  width: 109%;
+  bottom: -22px;
+  left: -0.94rem;
+  background-image: linear-gradient(
+    to bottom left,
+    rgb(216, 216, 216, 0.6),
+    rgb(217, 217, 217, 0.6)
+  );
+  border-top-left-radius: 10%;
+
+  border-bottom-right-radius: 26%;
+  border-bottom-left-radius: 26%;
+
+  /* border: 1px solid red; */
+  transform: rotate(0.5deg);
 }
 
 .notebook-night-input-container {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
+  height: 35%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
 
-  height: 44%;
+.notebook-section-title,
+.notebook-quote-author,
+.notebook-daily-quote {
+  /* text-decoration; */
+  text-align: center;
+}
+
+.notebook-quote-author {
+  font-size: 12px;
+}
+
+.notebook-extra-thoughts-container {
+  /* border: 1px solid red; */
+  height: 40%;
+  margin-bottom: 1rem;
+}
+
+.notebook-pictures-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px solid red; */
+  height: 55%;
+}
+
+.notebook-inner-picture-container {
+  width: 100%;
+  /* border: 1px solid red; */
+  height: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.notebook-picture {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notebook-add-picture {
+  border: 1px dotted rgb(195, 194, 194);
+  width: 25%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #cead87;
+  transform: rotate(-1deg);
+  transition-property: background-color, border;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+
+.notebook-add-picture:hover {
+  background-color: lightgray;
+  border: 1px dotted rgb(161, 161, 161);
+}
+
+.notebook-picture {
+  border: 1px solid red;
+}
+
+.polaroid-container {
+  border: 1px solid red;
+  height: 90%;
+  width: 80%;
 }

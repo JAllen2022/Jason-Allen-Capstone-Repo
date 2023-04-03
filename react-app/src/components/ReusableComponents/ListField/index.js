@@ -288,7 +288,7 @@ export default function ListField({
             className="list-create-list-item-input-field"
             placeholder={taskBool ? "Add a task..." : "Add a goal..."}
             type="text"
-            maxLength="50"
+            minLength="1"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           ></input>

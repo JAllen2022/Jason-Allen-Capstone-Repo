@@ -1,224 +1,121 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import OpenModalButton from "../OpenModalButton";
-// import LoginFormModal from "../LoginFormModal";
-// import SignupFormModal from "../SignupFormModal";
-// import { useModal } from "../../context/Modal";
+import React, { useState, useEffect, useRef } from "react";
+import OpenModalButton from "../../Modals/OpenModalButton";
+import LoginFormModal from "../../Modals/LoginFormModal";
+import SignupFormModal from "../../Modals/SignupFormModal";
+import SplashSlider from "./SplashPageSlider";
+import Logo from "../../../assets/Logo";
+// import "./TestHomePage.css";
 
-// import "./SplashPage.css";
+export default function SplashPage() {
+  const [showMenu, setShowMenu] = useState(false);
 
-// let splashPageItemList = [
-//   {
-//     name: "Complete prep-work for bootcamp",
-//     completed: false,
-//   },
-//   {
-//     name: "Walk the dog",
-//     completed: false,
-//   },
-//   {
-//     name: "File my taxes",
-//     completed: false,
-//   },
-//   {
-//     name: "Study for Chemistry midterm on Friday",
-//     completed: false,
-//   },
-//   {
-//     name: "Practice the guitar",
-//     completed: false,
-//   },
-//   {
-//     name: "Complete Capstone project",
-//     completed: true,
-//   },
-//   {
-//     name: "Complete prep-work for bootcamp",
-//     completed: true,
-//   },
-// ];
+  const ulRef = useRef();
 
-// export default function SplashPage() {
-//   const [showMenu, setShowMenu] = useState(false);
-//   const [title, setTitle] = useState("");
-//   const [tab, setTab] = useState("all");
-//   const ulRef = useRef();
+  useEffect(() => {
+    if (!showMenu) return;
 
-//   useEffect(() => {
-//     if (!showMenu) return;
+    const closeMenu = (e) => {
+      if (!ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
 
-//     const closeMenu = (e) => {
-//       if (!ulRef.current.contains(e.target)) {
-//         setShowMenu(false);
-//       }
-//     };
+    document.addEventListener("click", closeMenu);
 
-//     document.addEventListener("click", closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
 
-//     return () => document.removeEventListener("click", closeMenu);
-//   }, [showMenu]);
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
 
-//   const closeMenu = () => {
-//     setShowMenu(false);
-//   };
+  return (
+    <>
+      <div className="home-page-container">
+        <div className="home-page-nav-bar-container">
+          <div className="home-page-nav-bar-left">
+            <Logo />
+            Goal-e, Your Virtual Planner
+          </div>
+          <div className="home-page-nav-bar-right">
+            <OpenModalButton
+              buttonText="Log In"
+              onItemClick={closeMenu}
+              className="log-in"
+              modalComponent={<LoginFormModal />}
+            />
 
-//   const handleSubmit = (e) => {
-//     e.prevendDefault();
-//   };
+            <OpenModalButton
+              buttonText="Sign Up"
+              onItemClick={closeMenu}
+              className="sign-up"
+              modalComponent={<SignupFormModal />}
+            />
+          </div>
+        </div>
 
-//   let displayList;
-//   let defaultListHeight = 20;
-//   console.log(displayList);
-//   displayList = splashPageItemList.map((item, index) => (
-//     <SplashPageListItem key={index} item={item} />
-//   ));
-//   console.log(displayList);
-
-//   if (displayList.length < defaultListHeight) {
-//     for (let i = displayList.length; i < defaultListHeight; i++) {
-//       displayList.push(<SplashPageListItem empty={true} />);
-//     }
-//   }
-//   console.log(displayList);
-
-//   return (
-//     <div className="splash-page-container">
-//       <div className="splash-page-notebook">
-//         <div className="splash-page-left-page">
-//           <div className="splash-title">
-//             <h1>To-Do</h1>
-//           </div>
-//           <div className="list-container-div">
-//             <div className="list-header-tab-organizer">
-//               <div
-//                 className={
-//                   tab === "all" ? "list-tab-heading-active" : "list-tab-heading"
-//                 }
-//                 onClick={() => (tab === "all" ? "" : setTab("all"))}
-//               >
-//                 All Tasks
-//               </div>
-//               <div
-//                 className={
-//                   tab === "incomplete"
-//                     ? "list-tab-heading-active"
-//                     : "list-tab-heading"
-//                 }
-//                 onClick={() =>
-//                   tab === "incomplete" ? "" : setTab("incomplete")
-//                 }
-//               >
-//                 Incomplete
-//               </div>
-//               <div
-//                 className={
-//                   tab === "complete"
-//                     ? "list-tab-heading-active"
-//                     : "list-tab-heading"
-//                 }
-//                 onClick={() => (tab === "complete" ? "" : setTab("complete"))}
-//               >
-//                 Completed
-//               </div>
-//               <div className="list-tab-cog">
-//                 <i className="fa-solid fa-gear"></i>
-//               </div>
-//             </div>
-//             <div className="list-input-field-container">
-//               <form className="list-form-container" onSubmit={handleSubmit}>
-//                 <input
-//                   className="list-create-list-item-input-field"
-//                   placeholder="Add a task..."
-//                   type="text"
-//                   maxLength="50"
-//                   value={title}
-//                   onChange={(e) => setTitle(e.target.value)}
-//                 ></input>
-//                 <input
-//                   type="submit"
-//                   style={{ position: "absolute", display: "none" }}
-//                 />
-//               </form>
-//             </div>
-//             <div className="list-view-section">{displayList}</div>
-//           </div>
-//         </div>
-//         <div className="splash-page-right-page">
-//           <div className="splash-page-left-content">
-//             <h1 className="splash-page-title">Welcome to Goal-e</h1>
-//             <h2 className="splash-page-title">Your virtual planner</h2>
-
-//             <OpenModalButton
-//               buttonText="Log In"
-//               onItemClick={closeMenu}
-//               className="log-in-button"
-//               modalComponent={<LoginFormModal />}
-//             />
-
-//             <OpenModalButton
-//               buttonText="Sign Up"
-//               onItemClick={closeMenu}
-//               className="log-in-button"
-//               modalComponent={<SignupFormModal />}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// function SplashPageListItem({ item, empty }) {
-//   const [list, setList] = useState("");
-//   const [completed, setCompleted] = useState(item?.completed || false);
-
-//   // Eventually - need to cut down on the re-renders here when checkbox is checked
-//   // Many re-renders occuring here if we console.log here
-//   // console.log("checking currtask", currTask);
-
-//   // Handle check box click on the right side of the container to mark something complete
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//   };
-
-//   // Modal functionality
-
-//   const deleteClick = () => {};
-
-//   let innerDiv;
-
-//   innerDiv = (
-//     <div className="inner-list-item-text-container tag-color">
-//       <div className="inner-list-item-text">{!empty && item.name} </div>
-//       <div className="inner-list-edit-buttons-container">
-//         <form
-//           onSubmit={handleSubmit}
-//           className="list-edit-button-checkbox-form"
-//         >
-//           {!empty && (
-//             <>
-//               <input
-//                 type="checkbox"
-//                 checked={completed}
-//                 className="edit"
-//                 id="list-edit-button-checkbox"
-//                 onChange={handleSubmit}
-//               ></input>
-//               <input
-//                 type="submit"
-//                 style={{ position: "absolute", display: "none" }}
-//               />
-//             </>
-//           )}
-//         </form>
-//         {!empty && (
-//           <i className="fa-solid fa-trash edit" onClick={deleteClick}></i>
-//         )}
-//       </div>
-//     </div>
-//   );
-
-//   let containerStyling = "list-item-container";
-//   if (!empty) containerStyling += " add-pointer";
-//   if (item?.completed) containerStyling += " list-item-strike-through";
-//   return <div className={containerStyling}>{innerDiv}</div>;
-// }
+        <div>
+          <SplashSlider />
+        </div>
+        <div className="home-page-task-list-example">
+          <div className="home-page-task-list-example-text">
+            <h4>Get more done</h4>
+            <h2>Add your tasks. </h2>
+            <h2>Organize your life.</h2>
+            <h2>Achieve more every day.</h2>
+            <p>
+              Add tasks like “Read work emails every day at 10am” to fill your
+              to-do list in seconds using Todoists powerful natural language
+              recognition and recurring dates.
+            </p>
+          </div>
+          <div className="home-page-task-list-example-image">Image here</div>
+        </div>
+        <div className="home-page-task-list-example">
+          <div className="home-page-task-list-example-image">Image here</div>
+          <div className="home-page-task-list-example-text">
+            <h4>Clear your mind</h4>
+            <h2>Reach that mental clarity you’ve been longing for. </h2>
+            <p>
+              Plan and structure your life around your goals. Get more done and
+              achieve more, by designing your tasks around your goals.
+            </p>
+          </div>
+        </div>
+        <div className="home-page-feature-container">
+          <h2 className="home-page-feature-title">Goal-e Features:</h2>
+          <div className="home-page-feature-grid">
+            <div className="grid-feature-container">Goal setting</div>
+            <div className="grid-feature-container">Task Lists</div>
+            <div className="grid-feature-container">
+              Weekly Reflections - Prompts are provided to help you reflect how
+              the previous week as gone, and how you can improve in the next.
+            </div>
+            <div className="grid-feature-container">Habbit Tracking</div>
+            <div className="grid-feature-container">
+              Image Uploading to Capture and log all of your proudest moments
+            </div>
+            <div className="grid-feature-container">Feature 6</div>
+          </div>
+        </div>
+        <div className="home-page-footer">
+          <div className="footer-dev-links">
+            <a href="https://github.com/JAllen2022" target="_blank">
+              <i className="fa-brands fa-github"></i>
+            </a>{" "}
+            <a
+              href="https://www.linkedin.com/in/jasonallen715/"
+              target="_blank"
+            >
+              <i className="fa-brands fa-linkedin"></i>
+            </a>
+          </div>
+          <div>
+            <i className="fa-regular fa-copyright footer-home-page-copyright"></i>{" "}
+            Jason Allen 2023
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,20 +1,59 @@
 To-Do
+IMPORTANT:
+- Update DB-Diagram
+- Create Readme documentation
+- Finish splash page
+- Update log-in and sign up modals
+- CSS animation for modals
 
 
-Drag and drop with
-https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
-
-- reset habit counter for a new year
+Semi-Important:
 - Notes -
 - Need to handle delete of images
 - AutoSave
   - need auto save feature. Whenever clicking out or leaving the tab, saves, and then auto save periodically
 - Needs to re-size with modal - media query
+
+
+
+Nice to haves:
+- Recurring tasks
+   - specify day, week, month, or year repeating. Then, indicate for how long. If days, specify how many days
+   - if Month, specify how many months, if years, specify number of years.
+   Default options -
+   daily,
+   weekly on friday,
+   monthly on the _____ weekday,
+   annually on March __,
+   every weekday (Monday to Friday)
+   custom
+   - then, how long after that?
+- In-place editing for ALL goal/task modals
+   - Bubble modal for description?
+- Hover effect to determine what each button is
+- Search feature for goals/tasks/habits
+- Calendar function for each day
+- extra page for credits
+- clean up all dates to use moment instead of javascript dates
+
+Drag and drop with
+https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
+- reset habit counter for a new year
 - rotating cog animation whenever clicked
 
 
+About links to link:
+-- Add this link to use the favicon icon
+- <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons/term/arrow-left/" target="_blank" title="Arrow Left Icons">Noun Project</a>
+https://codepen.io/nikkipantony/pen/wpPGZp
 
-- Update DB-Diagram
+
+
+
+
+Done:
+
 - Habits
   - Creating a habit - ONLY tracks for a week.
   - Click into habit to extend it longer by editing it
@@ -27,50 +66,7 @@ https://react-beautiful-dnd.netlify.app/?path=/story/single-vertical-list--basic
       - Associate it with a goal?
       - Associate it with a task? Completing the task marks it off for the day?
 
-- Recurring tasks
-   - specify day, week, month, or year repeating. Then, indicate for how long. If days, specify how many days
-   - if Month, specify how many months, if years, specify number of years.
-   Default options -
-   daily,
-   weekly on friday,
-   monthly on the _____ weekday,
-   annually on March __,
-   every weekday (Monday to Friday)
-   custom
-   - then, how long after that?
 
-- In-place editing for ALL goal/task modals
-   - Bubble modal for description?
-- Hover effect to determine what each button is
-
-- Finish splash page
-- Update log-in and sign up modals
-- CSS animation for modals
-- Search feature for goals/tasks/habits
-
-- Finish all the documentation required
-- How do we get the calendar to show for each day?
-- extra page for credits
-- clean up all dates to use moment instead of javascript dates
-
-Planner page - can plan by week/month/year
-- Yearly -
-- Monthly - decide what habits to track for the month
-- Weekly - habit tracker for the week
-
-
-Weekly/Monthly/Yearly Summary
-- Summarize what goals or tasks were accomplished
-
-
--- Add this link to use the favicon icon
-- <a target="_blank" href="https://icons8.com/icon/67346/journal">Journal</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-Arrow Left by Alex Muravev from <a href="https://thenounproject.com/browse/icons/term/arrow-left/" target="_blank" title="Arrow Left Icons">Noun Project</a>
-https://codepen.io/nikkipantony/pen/wpPGZp
-
-
-
-Done:
 - deleting a sub-task from the goal modal doesn't delete it from the week
 
 - fix habit functionality
