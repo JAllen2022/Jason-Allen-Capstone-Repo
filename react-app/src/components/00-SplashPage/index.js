@@ -3,7 +3,7 @@ import OpenModalButton from "../Modals/OpenModalButton";
 import LoginFormModal from "../Modals/LoginFormModal";
 import SignupFormModal from "../Modals/SignupFormModal";
 import { useModal } from "../../context/Modal";
-import GoalSVG from "../../assets/GoalSVG.js";
+import GoalSVG from "../../assets/GoalSVG";
 import TaskTrackerSVG from "../../assets/TaskTrackerSVG";
 import ReflectionSVG from "../../assets/ReflectionSVG";
 import HabitTrackSVG from "../../assets/HabitTrackSVG";
