@@ -7,10 +7,10 @@ import GoalSVG from "../../assets/GoalSVG.js";
 import TaskTrackerSVG from "../../assets/TaskTrackerSVG";
 import ReflectionSVG from "../../assets/ReflectionSVG";
 import HabitTrackSVG from "../../assets/HabitTrackSVG";
-
-import "./SplashPage.css";
 import ImageSVG from "../../assets/ImageSVG";
 import NotesSVG from "../../assets/NotesSVG";
+
+import "./SplashPage.css";
 // Links to images
 // https://appacademypictures.s3.us-west-2.amazonaws.com/goals-page.png
 // https://appacademypictures.s3.us-west-2.amazonaws.com/reflections.png
