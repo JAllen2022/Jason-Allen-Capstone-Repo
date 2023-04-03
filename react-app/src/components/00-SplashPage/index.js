@@ -3,12 +3,12 @@ import OpenModalButton from "../Modals/OpenModalButton";
 import LoginFormModal from "../Modals/LoginFormModal";
 import SignupFormModal from "../Modals/SignupFormModal";
 import { useModal } from "../../context/Modal";
-import GoalSVG from "../../assets/GoalSVG";
-import TaskTrackerSVG from "../../assets/TaskTrackerSVG";
-import ReflectionSVG from "../../assets/ReflectionSVG";
-import HabitTrackSVG from "../../assets/HabitTrackSVG";
-import ImageSVG from "../../assets/ImageSVG";
-import NotesSVG from "../../assets/NotesSVG";
+import GoalSVG from "../../Assets/GoalSVG";
+import TaskTrackerSVG from "../../Assets/TaskTrackerSVG";
+import ReflectionSVG from "../../Assets/ReflectionSVG";
+import HabitTrackSVG from "../../Assets/HabitTrackSVG";
+import ImageSVG from "../../Assets/ImageSVG";
+import NotesSVG from "../../Assets/NotesSVG";
 
 import "./SplashPage.css";
 // Links to images

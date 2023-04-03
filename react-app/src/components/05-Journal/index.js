@@ -1,7 +1,7 @@
 import Notebook from "../ReusableComponents/Notebook";
 import { useDate } from "../../context/Date";
 import { useState, useEffect } from "react";
-import Arrow from "../../assets/Arrow.js";
+import Arrow from "../../Assets/Arrow.js";
 import Notes from "../ReusableComponents/Notes";
 import "./Journal.css";
 

@@ -3,7 +3,7 @@ import OpenModalButton from "../../Modals/OpenModalButton";
 import LoginFormModal from "../../Modals/LoginFormModal";
 import SignupFormModal from "../../Modals/SignupFormModal";
 import SplashSlider from "./SplashPageSlider";
-import Logo from "../../../assets/Logo";
+import Logo from "../../../Assets/Logo";
 // import "./TestHomePage.css";
 
 export default function SplashPage() {

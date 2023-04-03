@@ -9,7 +9,7 @@ import {
 } from "../../store/tasks";
 import Notebook from "../ReusableComponents/Notebook";
 import ListField from "../ReusableComponents/ListField";
-import Arrow from "../../assets/Arrow.js";
+import Arrow from "../../Assets/Arrow.js";
 import { getHabitsThunk } from "../../store/habits";
 import WeeklyHabitTracker from "./WeeklyHabitTracker";
 import WeekDayList from "./WeekDayList";
