@@ -16,7 +16,7 @@ def reflections():
 
     year = request.args.get("year")
     week = request.args.get("week")
-    reflection = Reflection.query.filter(Reflection.year == year,Reflection.week == week, Reflection.user_id == current_user.id).all()
+    reflection = Reflection.query.filter(Reflection.year == str(year),Reflection.week == week, Reflection.user_id == current_user.id).all()
 
     if not reflection:
         return {"not_found":"No instance found"}

@@ -1,12 +1,10 @@
 To-Do
 IMPORTANT:
-- Update DB-Diagram
-- Create Readme documentation
-- CSS animation for modals
 - thoroughly test everything on render
 
 
 Semi-Important:
+- CSS animation for modals
 - Notes -
 - Need to handle delete of images
 - AutoSave
@@ -53,7 +51,8 @@ https://codepen.io/nikkipantony/pen/wpPGZp
 
 
 Done:
-
+- Update DB-Diagram
+- Create Readme documentation
 - Habits
   - Creating a habit - ONLY tracks for a week.
   - Click into habit to extend it longer by editing it
