@@ -33,6 +33,7 @@ def upload_image():
     new_image = Image(
             task_id = form_data["task_id"] if form_data.get("task_id") else None,
             goal_id = form_data["goal_id"] if form_data.get("goal_id") else None,
+            journal_id = form_data["journal_id"] if form_data.get("journal_id") else None,
             image_url = url_image,
         )
 

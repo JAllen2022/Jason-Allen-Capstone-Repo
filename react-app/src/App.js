@@ -40,9 +40,9 @@ function App() {
                 <Route path="/reflections">
                   <WeeklyReview />
                 </Route>
-                {/* <Route path="/journal">
+                <Route path="/journal">
                   <Journal />
-                </Route> */}
+                </Route>
               </Switch>
             )}
           </div>

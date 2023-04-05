@@ -128,11 +128,13 @@
   grid-template-rows: 1fr 1fr;
 }
 
-.notebook-picture {
+.add-notebook-picture {
   /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .notebook-add-picture {
@@ -156,12 +158,76 @@
   border: 1px dotted rgb(161, 161, 161);
 }
 
-.notebook-picture {
-  border: 1px solid red;
-}
-
 .polaroid-container {
-  border: 1px solid red;
   height: 90%;
   width: 80%;
+}
+
+/* Poloroid CSS */
+
+.notebook-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #f1f1f1;
+  transform: scale(0.8, 0.8) rotate(-5deg);
+  height: 100%;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  transition-property: transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+}
+
+.notebook-picture:nth-of-type(4n + 1) {
+  transform: scale(0.8, 0.8) rotate(5deg);
+  transition: all 0.35s;
+}
+
+.notebook-picture:nth-of-type(4n + 2) {
+  transform: scale(0.8, 0.8) rotate(-5deg);
+  transition: all 0.35s;
+}
+
+.notebook-picture:nth-of-type(4n + 3) {
+  transform: scale(0.8, 0.8) rotate(-2deg);
+  transition: all 0.35s;
+}
+
+.notebook-picture:hover {
+  transform: rotate(0deg);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+.notebook-picture:hover .poloroid-image {
+  filter: none;
+}
+
+.poloroid-image {
+  width: 100%;
+  height: 95%;
+  object-fit: cover;
+}
+
+.notebook-picture .poloroid-image {
+  filter: grayscale(100%);
+}
+
+.poloroid-modal {
+  height: 100%;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: transparent;
+  /* border: 1px solid red; */
+}
+
+.poloroid-modal .poloroid-image {
+  filter: none;
 }

@@ -10,6 +10,7 @@ class Image(db.Model):
     image_url = db.Column(db.String(255))
     goal_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("goals.id")))
     task_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
+    journal_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("journals.id")))
 
 
 

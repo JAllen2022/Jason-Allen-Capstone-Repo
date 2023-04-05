@@ -1,13 +1,17 @@
 import Notebook from "../ReusableComponents/Notebook";
 import { useDate } from "../../context/Date";
+import { useModal } from "../../context/Modal";
 import { useState, useEffect } from "react";
 import Arrow from "../../Assets/Arrow.js";
-import Notes from "../ReusableComponents/Notes";
 import "./Journal.css";
+import Poloroid from "./Poloroid";
+import { useDispatch } from "react-redux";
 
 export default function Journal() {
   const { weekString, nextWeekString, day, setDay, setDate, year, month } =
     useDate();
+  const { setModalContent } = useModal();
+  const dispatch = useDispatch();
   const [textField1, setTextField1] = useState("1.\n2.\n3.");
   const [textField2, setTextField2] = useState("1.\n2.\n3.");
   const [textField3, setTextField3] = useState("");
@@ -15,12 +19,19 @@ export default function Journal() {
   const [textField5, setTextField5] = useState("");
   const [textField6, setTextField6] = useState("");
 
-  const updateHeaderImage = (e) => {
+  const updateHeaderImage = async (e) => {
     const file = e.target.files[0];
 
     const data = new FormData();
 
-    data.append("header_picture", file);
+    data.append("image", file);
+
+    const res = await fetch("/api/images", {
+      method: "POST",
+      body: data,
+    });
+    const responseData = await res.json();
+    const url = responseData.image_url;
   };
 
   function handleChange1(event) {
@@ -164,15 +175,27 @@ export default function Journal() {
         </div>{" "}
         <div className="notebook-inner-picture-container">
           <div className="notebook-picture">
-            <div className="polaroid-container">
-              {" "}
-              <div className="polaroid-pic-container">
-                {" "}
-                <img src="../../assets/sunset.jpg"></img>
-              </div>
-            </div>
+            <Poloroid />
           </div>
           <div className="notebook-picture">
+            <Poloroid />
+          </div>
+          <div className="notebook-picture">
+            <Poloroid />
+          </div>
+          <div
+            className="notebook-picture"
+            onClick={() =>
+              setModalContent(
+                <div className="poloroid-modal">
+                  <Poloroid />
+                </div>
+              )
+            }
+          >
+            <Poloroid />
+          </div>
+          <div className="add-notebook-picture">
             <label className="notebook-add-picture" htmlFor="header-pic-file">
               <div className="">
                 <i class="fa-solid fa-plus"></i>

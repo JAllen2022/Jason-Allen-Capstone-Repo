@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getTasksThunk, setDisplayTime } from "../../store/tasks";
 import ListField from "../ReusableComponents/ListField";
 import RibbonBanner from "../../Assets/RibbonBanner";
-import Arrow from "../../Assets/Arrow.js";
+import Arrow from "../../Assets/Arrow";
 import Notebook from "../ReusableComponents/Notebook";
 import "./Tasks.css";
 

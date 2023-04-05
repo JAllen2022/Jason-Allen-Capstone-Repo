@@ -60,14 +60,14 @@ function Navigation({ isLoaded }) {
                 <span>Reflections</span>
               </div>
             </div>
-            {/* <div className="nav-item">
+            <div className="nav-item">
               <NavLink className="nav-button" exact to="/journal">
                 <i class="fa-solid fa-book"></i>
               </NavLink>
               <div className="nav-popup">
                 <span>Journal</span>
               </div>
-            </div> */}
+            </div>
           </div>
           <div className="developer-info-nav-bottom ">
             <div className="nav-item">
