@@ -214,7 +214,7 @@ export default function HabitModal({ habitId, habit }) {
       </div>
       <div className="habit-modal-title-container">
         <div className="habit-modal-title-icon-left">
-          <i class="fa-regular fa-star"></i>
+          <i className="fa-regular fa-star"></i>
         </div>
         <div className="habit-modal-title-container-right">
           <form
@@ -313,7 +313,7 @@ export default function HabitModal({ habitId, habit }) {
         <div className="habit-modal-body-left">
           <div className="habit-week-container">
             <div className="habit-week-icon-container">
-              <i class="fa-solid fa-calendar-week"></i>
+              <i className="fa-solid fa-calendar-week"></i>
             </div>
             <div className="habit-week-container-right">
               <h3 className="habit-modal-sub-headings">
@@ -330,7 +330,7 @@ export default function HabitModal({ habitId, habit }) {
                   <div className="planner-habit-tracker-headings">S</div>
                   <div className="planner-habit-tracker-headings">S</div>
                   <div className="planner-habit-tracker-headings">
-                    <i class="fa-regular fa-square-check"></i>
+                    <i className="fa-regular fa-square-check"></i>
                   </div>
                   <div className="planner-habit-tracker-headings">Goal</div>
                 </div>
@@ -469,7 +469,7 @@ export default function HabitModal({ habitId, habit }) {
           </div>
           <div className="habit-modal-year-calendar">
             <div className="habit-modoal-year-icon-left">
-              <i class="fa-regular fa-calendar"></i>
+              <i className="fa-regular fa-calendar"></i>
             </div>
             <div className="habit-modal-year-calendar-right">
               <h3 className="habit-modal-sub-headings">
@@ -484,21 +484,21 @@ export default function HabitModal({ habitId, habit }) {
             <div className="habit-stat-button">
               <div>Total Habit Goal:</div>
               <div className="habit-stat-details">
-                <i class="fa-solid fa-bullseye habit-icon"></i>
+                <i className="fa-solid fa-bullseye habit-icon"></i>
                 <span> {singleHabit.total_habit_goal}</span>
               </div>
             </div>
             <div className="habit-stat-button">
               <div>Total habit acheived:</div>
               <div className="habit-stat-details">
-                <i class="fa-solid fa-bars-progress habit-icon"></i>
+                <i className="fa-solid fa-bars-progress habit-icon"></i>
                 <span> {singleHabit.total_habit_completed}</span>
               </div>
             </div>
             <div className="habit-stat-button">
               <div>Total weeks tracked:</div>
               <div className="habit-stat-details ">
-                <i class="fa-solid fa-flag habit-icon"></i>
+                <i className="fa-solid fa-flag habit-icon"></i>
                 <span>{singleHabit.weeks_tracked}</span>
               </div>
             </div>
@@ -506,7 +506,7 @@ export default function HabitModal({ habitId, habit }) {
               {" "}
               <div>Additional weeks tracked:</div>
               <div className="habit-stat-details">
-                <i class="fa-solid fa-calendar-days habit-icon"></i>
+                <i className="fa-solid fa-calendar-days habit-icon"></i>
                 <span>{numberOfFutureHabits}</span>
               </div>
             </div>
@@ -519,7 +519,7 @@ export default function HabitModal({ habitId, habit }) {
               onClick={() => setShowAddWeek((prev) => !prev)}
             >
               {" "}
-              <i class="fa-solid fa-calendar-plus habit-button-icon"></i>
+              <i className="fa-solid fa-calendar-plus habit-button-icon"></i>
               Add weeks
             </div>
             {showAddWeek && (

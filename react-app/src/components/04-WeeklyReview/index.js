@@ -33,7 +33,7 @@ export default function WeeklyReview() {
   const decreaseWeek = () => setDay(day - 7);
   const increaseWeek = () => setDay(day + 7);
 
-  // HandleSubmits
+  // HandleSubmit
   const handleSubmit = (value, fetchVariableName) => {
     const newReflection = {
       ...reflection,

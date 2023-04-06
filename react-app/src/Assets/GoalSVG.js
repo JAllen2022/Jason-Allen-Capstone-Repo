@@ -18,9 +18,9 @@ export default function GoalSVG() {
           gradientTransform="matrix(-1, 0, 0, 1, 1184, 0)"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="gray" stop-opacity="0.25" />
-          <stop offset="0.54" stop-color="gray" stop-opacity="0.12" />
-          <stop offset="1" stop-color="gray" stop-opacity="0.1" />
+          <stop offset="0" stopColor="gray" stopOpacity="0.25" />
+          <stop offset="0.54" stopColor="gray" stopOpacity="0.12" />
+          <stop offset="1" stopColor="gray" stopOpacity="0.1" />
         </linearGradient>
         <linearGradient
           id="e032e4db-4b5a-4772-82a4-e151341a8119-197"
@@ -66,7 +66,7 @@ export default function GoalSVG() {
         points="993.9 76.97 993.9 464.96 973.9 451.96 973.9 76.97 961.9 76.97 956.9 438.96 937.9 424.96 950.9 71.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1018.91"
@@ -75,7 +75,7 @@ export default function GoalSVG() {
         y2="109.47"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -84,7 +84,7 @@ export default function GoalSVG() {
         y2="127.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -93,7 +93,7 @@ export default function GoalSVG() {
         y2="150.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -102,7 +102,7 @@ export default function GoalSVG() {
         y2="173.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -111,7 +111,7 @@ export default function GoalSVG() {
         y2="195.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -120,7 +120,7 @@ export default function GoalSVG() {
         y2="217.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -129,7 +129,7 @@ export default function GoalSVG() {
         y2="239.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1013.91"
@@ -138,7 +138,7 @@ export default function GoalSVG() {
         y2="262.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1015.91"
@@ -147,7 +147,7 @@ export default function GoalSVG() {
         y2="282.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1015.91"
@@ -156,7 +156,7 @@ export default function GoalSVG() {
         y2="302.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1015.91"
@@ -165,7 +165,7 @@ export default function GoalSVG() {
         y2="328.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1015.91"
@@ -174,7 +174,7 @@ export default function GoalSVG() {
         y2="351.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1017.91"
@@ -183,7 +183,7 @@ export default function GoalSVG() {
         y2="374.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="1017.91"
@@ -192,19 +192,19 @@ export default function GoalSVG() {
         y2="396.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polyline
         points="915.9 75.97 899.9 416.96 878.9 416.96 891.9 75.97 868.9 75.97 853.9 416.96 830.9 416.96 843.9 75.97 815.9 75.97 805.9 416.96 780.9 416.96 791.9 78.97 765.9 78.97 759.9 416.96 736.9 416.96 743.9 75.97 720.9 75.97 715.9 416.96 693.9 416.96 698.9 75.97 672.9 75.97 672.9 416.96 646.9 416.96 646.9 75.97 622.9 75.97 626.9 416.96 605.9 416.96 599.9 75.97 575.9 75.97 583.9 416.96 562.9 416.96 552.9 75.97 531.9 75.97 539.9 416.96 520.9 416.96 505.9 75.97 485.9 75.97 501.9 416.96 481.9 416.96 459.9 75.97 435.9 75.97 463.9 416.96 444.9 416.96 417.9 75.97 398.9 75.97 426.9 416.96 405.9 416.96 378.9 71.97 359.9 71.97 390.9 416.96 370.9 416.96 338.9 71.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polyline
         points="293.9 76.97 323.9 422.96 308.9 434.96 285.9 76.97 269.9 76.97 285.9 447.96 262.9 462.96 253.91 71.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -213,7 +213,7 @@ export default function GoalSVG() {
         y2="115.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -222,7 +222,7 @@ export default function GoalSVG() {
         y2="140.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -231,7 +231,7 @@ export default function GoalSVG() {
         y2="165.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -240,7 +240,7 @@ export default function GoalSVG() {
         y2="187.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -249,7 +249,7 @@ export default function GoalSVG() {
         y2="215.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -258,7 +258,7 @@ export default function GoalSVG() {
         y2="243.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -267,7 +267,7 @@ export default function GoalSVG() {
         y2="266.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -276,7 +276,7 @@ export default function GoalSVG() {
         y2="284.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -285,7 +285,7 @@ export default function GoalSVG() {
         y2="301.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="231.91"
@@ -294,7 +294,7 @@ export default function GoalSVG() {
         y2="325.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="228.91"
@@ -303,7 +303,7 @@ export default function GoalSVG() {
         y2="350.52"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="228.91"
@@ -312,7 +312,7 @@ export default function GoalSVG() {
         y2="371.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="228.91"
@@ -321,7 +321,7 @@ export default function GoalSVG() {
         y2="393.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="937.91"
@@ -330,7 +330,7 @@ export default function GoalSVG() {
         y2="109.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="937.41"
@@ -339,7 +339,7 @@ export default function GoalSVG() {
         y2="127.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="936.91"
@@ -348,7 +348,7 @@ export default function GoalSVG() {
         y2="145.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="936.41"
@@ -357,7 +357,7 @@ export default function GoalSVG() {
         y2="163.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="935.91"
@@ -366,7 +366,7 @@ export default function GoalSVG() {
         y2="181.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="935.41"
@@ -375,7 +375,7 @@ export default function GoalSVG() {
         y2="199.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="934.91"
@@ -384,7 +384,7 @@ export default function GoalSVG() {
         y2="217.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="934.41"
@@ -393,7 +393,7 @@ export default function GoalSVG() {
         y2="235.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="933.91"
@@ -402,7 +402,7 @@ export default function GoalSVG() {
         y2="253.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="933.41"
@@ -411,7 +411,7 @@ export default function GoalSVG() {
         y2="271.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="932.91"
@@ -420,7 +420,7 @@ export default function GoalSVG() {
         y2="289.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="932.41"
@@ -429,7 +429,7 @@ export default function GoalSVG() {
         y2="307.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="931.91"
@@ -438,7 +438,7 @@ export default function GoalSVG() {
         y2="325.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="931.41"
@@ -447,7 +447,7 @@ export default function GoalSVG() {
         y2="343.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="930.91"
@@ -456,7 +456,7 @@ export default function GoalSVG() {
         y2="361.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="930.41"
@@ -465,7 +465,7 @@ export default function GoalSVG() {
         y2="379.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="929.91"
@@ -474,22 +474,22 @@ export default function GoalSVG() {
         y2="397.97"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polyline
         points="1017.9 481.96 926.9 416.96 335.9 416.96 231.91 481.96"
         fill="none"
         stroke="#e0e0e0"
-        stroke-miterlimit="10"
-        stroke-width="3"
+        strokeMiterlimit="10"
+        strokeWidth="3"
       />
       <path
         d="M1051.35,462.18s2.31-68.26,39.23-106.81a103.48,103.48,0,0,0,28.38-59,174,174,0,0,0,.87-31.81"
         transform="translate(-27.8 -50.55)"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
       />
       <path
         d="M1142.95,240.13c-2.53,7.62-23.65,25.14-23.65,25.14s-6.47-26.68-3.94-34.3a14.54,14.54,0,0,1,27.6,9.15Z"
@@ -531,8 +531,8 @@ export default function GoalSVG() {
         transform="translate(-27.8 -50.55)"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
       />
       <path
         d="M1157.95,301.13c-2.53,7.62-23.65,25.14-23.65,25.14s-6.47-26.68-3.94-34.3a14.54,14.54,0,0,1,27.6,9.15Z"
@@ -579,8 +579,8 @@ export default function GoalSVG() {
         transform="translate(-27.8 -50.55)"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
-        stroke-width="2"
+        strokeMiterlimit="10"
+        strokeWidth="2"
       />
       <path
         d="M289.95,362.46c-1.39,6.07-16.41,21.15-16.41,21.15s-7-20.12-5.57-26.18a11.27,11.27,0,1,1,22,5Z"
@@ -848,7 +848,7 @@ export default function GoalSVG() {
         y2="178.23"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="644.44"
@@ -857,7 +857,7 @@ export default function GoalSVG() {
         y2="186.64"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="629.81"
@@ -866,7 +866,7 @@ export default function GoalSVG() {
         y2="162.66"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="658.46"
@@ -875,7 +875,7 @@ export default function GoalSVG() {
         y2="201.27"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="646.94"
@@ -884,7 +884,7 @@ export default function GoalSVG() {
         y2="198.16"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="617.66"
@@ -893,7 +893,7 @@ export default function GoalSVG() {
         y2="211.89"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="610.5"
@@ -902,7 +902,7 @@ export default function GoalSVG() {
         y2="186.64"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="657.52"
@@ -911,7 +911,7 @@ export default function GoalSVG() {
         y2="151.22"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="663.13"
@@ -920,7 +920,7 @@ export default function GoalSVG() {
         y2="176.23"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polygon
         points="665.93 173.25 657.84 159.23 644.45 161.41 644.45 176.98 658.77 184.46 665.93 173.25"
@@ -957,7 +957,7 @@ export default function GoalSVG() {
         y2="444.43"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="145.44"
@@ -966,7 +966,7 @@ export default function GoalSVG() {
         y2="451.48"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="133.16"
@@ -975,7 +975,7 @@ export default function GoalSVG() {
         y2="431.37"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="157.19"
@@ -984,7 +984,7 @@ export default function GoalSVG() {
         y2="463.76"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="147.53"
@@ -993,7 +993,7 @@ export default function GoalSVG() {
         y2="461.14"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="122.98"
@@ -1002,7 +1002,7 @@ export default function GoalSVG() {
         y2="472.66"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="116.97"
@@ -1011,7 +1011,7 @@ export default function GoalSVG() {
         y2="451.48"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="156.41"
@@ -1020,7 +1020,7 @@ export default function GoalSVG() {
         y2="421.78"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="161.11"
@@ -1029,7 +1029,7 @@ export default function GoalSVG() {
         y2="442.75"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polygon
         points="163.46 440.25 156.67 428.5 145.44 430.32 145.44 443.38 157.45 449.65 163.46 440.25"
@@ -1066,7 +1066,7 @@ export default function GoalSVG() {
         y2="482.23"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="122.34"
@@ -1075,7 +1075,7 @@ export default function GoalSVG() {
         y2="489.29"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="110.07"
@@ -1084,7 +1084,7 @@ export default function GoalSVG() {
         y2="469.18"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="134.09"
@@ -1093,7 +1093,7 @@ export default function GoalSVG() {
         y2="501.56"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="124.43"
@@ -1102,7 +1102,7 @@ export default function GoalSVG() {
         y2="498.95"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="99.88"
@@ -1111,7 +1111,7 @@ export default function GoalSVG() {
         y2="510.47"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="93.87"
@@ -1120,7 +1120,7 @@ export default function GoalSVG() {
         y2="489.29"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="133.31"
@@ -1129,7 +1129,7 @@ export default function GoalSVG() {
         y2="459.59"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <line
         x1="138.01"
@@ -1138,7 +1138,7 @@ export default function GoalSVG() {
         y2="480.56"
         fill="none"
         stroke="#535461"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
       />
       <polygon
         points="140.36 478.06 133.57 466.3 122.34 468.13 122.34 481.19 134.36 487.46 140.36 478.06"

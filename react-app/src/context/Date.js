@@ -107,6 +107,8 @@ export function DateProvider({ children }) {
   const monthDisp = `${monthString}, ${date.getFullYear()}`;
   const [weekString, nextWeekString] = getCurrentAndNextWeek(date);
 
+  const journalDateString = moment(date).format("M/D/YYYY");
+
   const addZero = (num) => (num < 10 ? "0" + num : num);
   const restrictedDay =
     today.getFullYear() +
@@ -154,6 +156,7 @@ export function DateProvider({ children }) {
     monthString,
     weekString,
     nextWeekString,
+    journalDateString,
   };
 
   return (

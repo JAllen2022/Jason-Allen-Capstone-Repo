@@ -102,7 +102,7 @@ export default function WeeklyHabitTracker() {
           <div className="planner-habit-tracker-headings">S</div>
           <div className="planner-habit-tracker-headings">S</div>
           <div className="planner-habit-tracker-headings">
-            <i class="fa-regular fa-square-check"></i>
+            <i className="fa-regular fa-square-check"></i>
           </div>
           <div className="planner-habit-tracker-headings">Goal</div>
         </div>

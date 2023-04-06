@@ -5,6 +5,7 @@ import tasks from "./tasks";
 import goals from "./goals";
 import habits from "./habits";
 import reflections from "./reflections";
+import journals from "./journal";
 
 const rootReducer = combineReducers({
   session,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   goals,
   habits,
   reflections,
+  journals,
 });
 
 let enhancer;
