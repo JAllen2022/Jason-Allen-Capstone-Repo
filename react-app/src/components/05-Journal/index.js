@@ -6,7 +6,11 @@ import Arrow from "../../Assets/Arrow.js";
 import "./Journal.css";
 import Poloroid from "./Poloroid";
 import { useDispatch, useSelector } from "react-redux";
-import { editJournalThunk, addJournalThunk } from "../../store/journal";
+import {
+  editJournalThunk,
+  addJournalThunk,
+  getJournalThunk,
+} from "../../store/journal";
 
 export default function Journal() {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declaring Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +99,10 @@ export default function Journal() {
   useEffect(() => {
     setDate(new Date(year, month, day));
   }, [month, day, year]);
+
+  useEffect(() => {
+    dispatch(getJournalThunk({ year, date: journalDateString }));
+  }, [year, journalDateString]);
 
   useEffect(() => {
     setTextField1(journal.text_field1 || "1.\n2.\n3.");
