@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 75890d45a55f
+Revision ID: 39d5e674c63a
 Revises: 
-Create Date: 2023-03-30 23:52:25.148187
+Create Date: 2023-04-06 15:36:44.969566
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '75890d45a55f'
+revision = '39d5e674c63a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,6 +60,20 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
     sa.Column('notes', sa.Text(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('journals',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('year', sa.String(length=50), nullable=False),
+    sa.Column('date', sa.String(length=50), nullable=False),
+    sa.Column('text_field1', sa.Text(), nullable=True),
+    sa.Column('text_field2', sa.Text(), nullable=True),
+    sa.Column('text_field3', sa.Text(), nullable=True),
+    sa.Column('text_field4', sa.Text(), nullable=True),
+    sa.Column('text_field5', sa.Text(), nullable=True),
+    sa.Column('text_field6', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -126,7 +140,9 @@ def upgrade():
     sa.Column('image_url', sa.String(length=255), nullable=True),
     sa.Column('goal_id', sa.Integer(), nullable=True),
     sa.Column('task_id', sa.Integer(), nullable=True),
+    sa.Column('journal_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['goal_id'], ['goals.id'], ),
+    sa.ForeignKeyConstraint(['journal_id'], ['journals.id'], ),
     sa.ForeignKeyConstraint(['task_id'], ['tasks.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -168,6 +184,7 @@ def downgrade():
     op.drop_table('goal_tasks')
     op.drop_table('tasks')
     op.drop_table('reflections')
+    op.drop_table('journals')
     op.drop_table('habits')
     op.drop_table('goals')
     op.drop_table('users')
