@@ -11,4 +11,5 @@ from .habit_instances import HabitInstance
 from .habits import Habit
 from .task_instances import TaskInstance
 from .reflections import Reflection
+from .journals import Journal
 from .db import environment, SCHEMA

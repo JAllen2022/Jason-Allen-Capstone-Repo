@@ -16,9 +16,7 @@ from .api.goals_routes import goal_routes
 from .api.image_routes import image_routes
 from .api.habit_routes import habit_routes
 from .api.reflection_routes import reflection_routes
-
-
-
+from .api.journal_routes import journal_routes
 
 
 from .seeds import seed_commands

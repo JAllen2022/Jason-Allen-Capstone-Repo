@@ -12,7 +12,7 @@ class Image(db.Model):
     task_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
     journal_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("journals.id")))
 
-
+    journal = db.relationship("Journal", back_populates="images")
 
     def to_dict(self):
         return {
