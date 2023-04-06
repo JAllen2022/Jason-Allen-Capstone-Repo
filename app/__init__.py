@@ -45,9 +45,7 @@ app.register_blueprint(goal_routes, url_prefix='/api/goals')
 app.register_blueprint(image_routes, url_prefix='/api/images')
 app.register_blueprint(habit_routes, url_prefix='/api/habits')
 app.register_blueprint(reflection_routes, url_prefix='/api/reflections')
-
-
-
+app.register_blueprint(journal_routes, url_prefix='/api/journals')
 
 
 db.init_app(app)
