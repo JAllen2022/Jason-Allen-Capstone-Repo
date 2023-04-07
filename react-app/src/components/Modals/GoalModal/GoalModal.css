@@ -19,6 +19,14 @@
   cursor: pointer;
 }
 
+.x-close:hover {
+  font-weight: 900;
+}
+
+.x-close:active {
+  transform: translateY(2px);
+}
+
 .edit-task-form-body-container {
   display: flex;
   justify-content: center;

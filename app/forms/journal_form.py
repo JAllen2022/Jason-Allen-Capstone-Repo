@@ -11,3 +11,5 @@ class JournalForm(FlaskForm):
     text_field4=StringField("Text field 4")
     text_field5=StringField("Text field 5")
     text_field6=StringField("Text field 6")
+    author=StringField("Text field 6")
+    quote=StringField("Text field 6")

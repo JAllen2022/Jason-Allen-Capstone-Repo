@@ -110,6 +110,10 @@
   margin-bottom: 1rem;
 }
 
+.notebook-extra-thoughts-container .notebook-section-title {
+  margin-bottom: 0.45rem;
+}
+
 .notebook-pictures-container {
   width: 100%;
   display: flex;
@@ -158,6 +162,10 @@
   border: 1px dotted rgb(161, 161, 161);
 }
 
+.notebook-add-picture:active {
+  transform: translateY(2px);
+}
+
 .polaroid-container {
   height: 90%;
   width: 80%;
@@ -171,10 +179,12 @@
   align-items: center;
   box-sizing: border-box;
   background-color: #f1f1f1;
-  transform: scale(0.8, 0.8) rotate(-5deg);
+  transform: scale(0.8, 0.8) rotate(-1deg);
   height: 100%;
   width: 100%;
-  padding: 1rem 0.5rem;
+  padding: 0 0.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
   transition-property: transform, box-shadow;
   transition-duration: 200ms;
   transition-timing-function: ease;
@@ -183,12 +193,12 @@
 }
 
 .notebook-picture:nth-of-type(4n + 1) {
-  transform: scale(0.8, 0.8) rotate(5deg);
+  transform: scale(0.8, 0.8) rotate(2deg);
   transition: all 0.35s;
 }
 
 .notebook-picture:nth-of-type(4n + 2) {
-  transform: scale(0.8, 0.8) rotate(-5deg);
+  transform: scale(0.8, 0.8) rotate(-3deg);
   transition: all 0.35s;
 }
 
@@ -210,6 +220,8 @@
   width: 100%;
   height: 95%;
   object-fit: cover;
+  box-shadow: 0 0 2px 0.1rem rgba(0, 0, 0, 0.8);
+  transition: opacity ease 200ms;
 }
 
 .notebook-picture .poloroid-image {
@@ -219,15 +231,73 @@
 .poloroid-modal {
   height: 100%;
   width: 100%;
+  max-width: 45rem;
+  max-height: 45rem;
+
   padding: 1rem 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   box-sizing: border-box;
   background-color: transparent;
-  /* border: 1px solid red; */
+  position: relative;
 }
 
 .poloroid-modal .poloroid-image {
   filter: none;
+}
+
+.poloroid-delete {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 4rem;
+  width: 7rem;
+  height: 2.5rem;
+  color: rgb(224, 223, 223);
+  margin-top: 1rem;
+  background: linear-gradient(
+    to right,
+    rgb(51, 51, 51) 50%,
+    rgb(71, 71, 71) 50%
+  );
+  background-size: 200% 100%;
+  background-position: left bottom;
+  transition: background-position 0.1s ease-out;
+}
+
+.poloroid-delete:hover {
+  background-position: right bottom;
+}
+
+.poloroid-opacity {
+  opacity: 0.5;
+}
+
+.poloroid-delete:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.image-confirmation-container {
+  position: absolute;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-confirmation {
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+}
+
+.remove-image {
+  width: 9rem;
+  font-size: 16px;
 }

@@ -17,6 +17,8 @@ class Journal(db.Model):
     text_field4 = db.Column(db.Text)
     text_field5 = db.Column(db.Text)
     text_field6 = db.Column(db.Text)
+    quote = db.Column(db.Text)
+    author = db.Column(db.Text)
 
     images = db.relationship("Image", back_populates="journal")
 
@@ -31,11 +33,12 @@ class Journal(db.Model):
                 "text_field3":self.text_field3,
                 "text_field4":self.text_field4,
                 "text_field5":self.text_field5,
-                "text_field6":self.text_field6
+                "text_field6":self.text_field6,
+                "text":self.quote,
+                "author":self.author
             },
             "images":{
                 image.id:image.to_dict() for image in self.images
             }
 
         }
-

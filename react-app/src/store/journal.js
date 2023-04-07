@@ -100,8 +100,8 @@ export const addImageThunk = (data) => async (dispatch) => {
   }
 };
 
-export const removeImageThunk = (id) => async (dispatch) => {
-  const res = await fetch(`/api/journals/images/${id}`, {
+export const deleteImageThunk = (id) => async (dispatch) => {
+  const res = await fetch(`/api/images/${id}`, {
     method: "DELETE",
   });
 
@@ -146,7 +146,7 @@ export default function reducer(state = initialState, action) {
         images: { ...state.images, [action.payload.id]: action.payload },
       };
     case REMOVE_IMAGE:
-      const newState = { ...state, ...state.images };
+      const newState = { ...state, images: { ...state.images } };
       delete newState.images[action.payload];
       return newState;
     default:

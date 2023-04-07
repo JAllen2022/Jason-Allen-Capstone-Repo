@@ -12,6 +12,15 @@ import {
   getJournalThunk,
   addImageThunk,
 } from "../../store/journal";
+import PoloroidModal from "./PoloridModal";
+import quotes from "../../additionalAssets/quotes.js";
+
+function getRandomQuote() {
+  const min = 0;
+  const max = 1642;
+  const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  return quotes[randomNumber];
+}
 
 export default function Journal() {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declaring Variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,6 +28,7 @@ export default function Journal() {
   const dispatch = useDispatch();
   const journal = useSelector((state) => state.journals.journal);
   const images = useSelector((state) => state.journals.images);
+  const randomQuote = getRandomQuote();
 
   // UseStates
   const [textField1, setTextField1] = useState("1.\n2.\n3.");
@@ -27,6 +37,8 @@ export default function Journal() {
   const [textField4, setTextField4] = useState("1.\n2.\n3.");
   const [textField5, setTextField5] = useState("");
   const [textField6, setTextField6] = useState("");
+  const [author, setAuthor] = useState(randomQuote.author);
+  const [quote, setQuote] = useState(randomQuote.text);
 
   // Date context and date changing functionality
   const {
@@ -57,6 +69,8 @@ export default function Journal() {
           text_field6: textField6,
           date: journalDateString,
           year,
+          text: quote,
+          author,
         })
       );
       console.log("we are here waiting", tempJorn);
@@ -76,28 +90,18 @@ export default function Journal() {
 
   // Creating images
 
-  let dispImages = [];
-  console.log("checking images", images);
-  dispImages.push(
-    Object.values(images).map((ele, index) => (
-      <>
-        <div
-          className="notebook-picture"
-          ket={index}
-          onClick={() =>
-            setModalContent(
-              <div className="poloroid-modal">
-                <Poloroid image={ele} />
-              </div>
-            )
-          }
-        >
-          <Poloroid image={ele} />
-        </div>
-      </>
-    ))
-  );
-
+  const dispImages = Object.values(images).map((ele, index) => (
+    <>
+      <div
+        className="notebook-picture"
+        ket={index}
+        onClick={() => setModalContent(<PoloroidModal image={ele} />)}
+      >
+        <Poloroid image={ele} />
+      </div>
+    </>
+  ));
+  console.log("checking dispImages", dispImages);
   if (dispImages.length < 6) {
     dispImages.push(
       <div className="add-notebook-picture">
@@ -122,6 +126,8 @@ export default function Journal() {
   const handleSubmit = (value, fetchVariableName) => {
     const newJournal = {
       ...journal,
+      quote,
+      author,
       text_field1: textField1,
       text_field2: textField2,
       text_field3: textField3,
@@ -147,9 +153,17 @@ export default function Journal() {
 
   useEffect(() => {
     dispatch(getJournalThunk({ year, date: journalDateString }));
+    if (!journal.id) {
+      const randomQuote = getRandomQuote();
+      setQuote(randomQuote.text);
+      setAuthor(randomQuote.author);
+      console.log("checking random quote");
+    }
   }, [year, journalDateString]);
 
   useEffect(() => {
+    setQuote(journal.text || randomQuote.text);
+    setAuthor(journal.author || randomQuote.author);
     setTextField1(journal.text_field1 || "1.\n2.\n3.");
     setTextField2(journal.text_field2 || "1.\n2.\n3.");
     setTextField3(journal.text_field3 || "");
@@ -172,9 +186,9 @@ export default function Journal() {
         <div className="notebook-daily-quote-container">
           <div className="notebook-daily-quote">
             {" "}
-            <em>If you see something beautiful in someone, speak it.</em>
+            <em>{quote}</em>
           </div>
-          <div className="notebook-quote-author"> Ruthie Lindsay</div>
+          <div className="notebook-quote-author"> {author}</div>
         </div>
 
         <div className="notebook-night-three-line-container">

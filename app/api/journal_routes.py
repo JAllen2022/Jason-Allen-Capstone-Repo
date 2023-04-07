@@ -62,6 +62,8 @@ def create_journal():
                  text_field4=form.data["text_field4"],
                  text_field5=form.data["text_field5"],
                  text_field6=form.data["text_field6"],
+                 author = form.data["author"],
+                 quote = form.data["quote"]
             )
 
             db.session.add(journal)
