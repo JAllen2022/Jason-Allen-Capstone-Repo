@@ -29,6 +29,7 @@ def upload_image():
 
 
     form_data = request.form.to_dict()
+    print("checking form data", form_data)
 
     new_image = Image(
             task_id = form_data["task_id"] if form_data.get("task_id") else None,

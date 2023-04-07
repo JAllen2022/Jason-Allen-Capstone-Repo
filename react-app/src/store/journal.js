@@ -7,18 +7,18 @@ const REMOVE_IMAGE = "journals/REMOVE_IMAGE";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-const getJournal = (journal, images) => ({
+const getJournal = (data) => ({
   type: GET_JOURNAL,
-  payload: { journal, images },
+  payload: data,
 });
 
 const resetJournal = () => ({
   type: RESET_JOURNAL,
 });
 
-const addJournal = (journal, images) => ({
+const addJournal = (data) => ({
   type: ADD_JOURNAL,
-  payload: { journal, images },
+  payload: data,
 });
 
 const editJournal = (journal) => ({
@@ -44,7 +44,7 @@ export const getJournalThunk = (searchParams) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    if (!data.id) dispatch(resetJournal());
+    if (!data.journal) dispatch(resetJournal());
     else dispatch(getJournal(data));
   } else {
     const data = await res.json();
@@ -62,6 +62,7 @@ export const addJournalThunk = (data) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(addJournal(data));
+    return data;
   } else {
     const data = await res.json();
     if (data.errors) return res;
@@ -85,15 +86,14 @@ export const editJournalThunk = (data) => async (dispatch) => {
 };
 
 export const addImageThunk = (data) => async (dispatch) => {
-  const res = await fetch(`/api/journals`, {
+  const res = await fetch(`/api/images`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: data,
   });
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(editJournal(data));
+    dispatch(addImage(data));
   } else {
     const data = await res.json();
     if (data.errors) return res;

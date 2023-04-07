@@ -10,6 +10,7 @@ import {
   editJournalThunk,
   addJournalThunk,
   getJournalThunk,
+  addImageThunk,
 } from "../../store/journal";
 
 export default function Journal() {
@@ -43,34 +44,78 @@ export default function Journal() {
   const increaseDay = () => setDay(day + 1);
 
   // Helper functions:
-  const updateHeaderImage = async (e) => {
+  const addImage = async (e) => {
+    let journalId = journal.id;
+    if (!journal.id) {
+      const tempJorn = await dispatch(
+        addJournalThunk({
+          text_field1: textField1,
+          text_field2: textField2,
+          text_field3: textField3,
+          text_field4: textField4,
+          text_field5: textField5,
+          text_field6: textField6,
+          date: journalDateString,
+          year,
+        })
+      );
+      console.log("we are here waiting", tempJorn);
+      journalId = tempJorn.journal.id;
+    }
     const file = e.target.files[0];
 
     const data = new FormData();
 
     data.append("image", file);
+    data.append("journal_id", journalId);
 
-    const res = await fetch("/api/images", {
-      method: "POST",
-      body: data,
-    });
-    const responseData = await res.json();
-    const url = responseData.image_url;
+    console.log("Checking data object", data);
+
+    dispatch(addImageThunk(data));
   };
 
-  function handleChange(event, changeFunction) {
-    const lines = event.target.value.split("\n");
-    if (lines.length > 3) {
-      changeFunction(lines.slice(0, 3).join("\n"));
-      return;
-    }
-    const numberedLines = lines.map((line, index) => {
-      if (!line.match(/^\d+\.\s/)) {
-        line = `${index + 1}. ${line}`;
-      }
-      return line;
-    });
-    changeFunction(numberedLines.join("\n"));
+  // Creating images
+
+  let dispImages = [];
+  console.log("checking images", images);
+  dispImages.push(
+    Object.values(images).map((ele, index) => (
+      <>
+        <div
+          className="notebook-picture"
+          ket={index}
+          onClick={() =>
+            setModalContent(
+              <div className="poloroid-modal">
+                <Poloroid image={ele} />
+              </div>
+            )
+          }
+        >
+          <Poloroid image={ele} />
+        </div>
+      </>
+    ))
+  );
+
+  if (dispImages.length < 6) {
+    dispImages.push(
+      <div className="add-notebook-picture">
+        <label className="notebook-add-picture" htmlFor="header-pic-file">
+          <div className="">
+            <i className="fa-solid fa-plus"></i>
+          </div>
+        </label>
+        <input
+          style={{ display: "none" }}
+          id="header-pic-file"
+          name="header-pic-file"
+          type="file"
+          accept="image/*"
+          onChange={addImage}
+        />
+      </div>
+    );
   }
 
   // HandleSubmit
@@ -141,7 +186,7 @@ export default function Journal() {
               className="weekly-review-text-area"
               rows="3"
               value={textField1}
-              onChange={(e) => handleChange(e, setTextField1)}
+              onChange={(e) => setTextField1(e.target.value)}
               onBlur={(e) => {
                 e.preventDefault();
                 // if (e.target.value !== textField1) {
@@ -161,7 +206,7 @@ export default function Journal() {
               className="weekly-review-text-area"
               rows="3"
               value={textField2}
-              onChange={(e) => handleChange(e, setTextField2)}
+              onChange={(e) => setTextField2(e.target.value)}
               onBlur={(e) => {
                 e.preventDefault();
                 // if (e.target.value !== textField1) {
@@ -206,7 +251,7 @@ export default function Journal() {
               className="weekly-review-text-area"
               rows="3"
               value={textField4}
-              onChange={(e) => handleChange(e, setTextField4)}
+              onChange={(e) => setTextField4(e.target.value)}
               onBlur={(e) => {
                 e.preventDefault();
                 // if (e.target.value !== textField1) {
@@ -249,44 +294,7 @@ export default function Journal() {
         <div className="notebook-section-title">
           <em>Picture Gallery</em>
         </div>{" "}
-        <div className="notebook-inner-picture-container">
-          <div className="notebook-picture">
-            <Poloroid />
-          </div>
-          <div className="notebook-picture">
-            <Poloroid />
-          </div>
-          <div className="notebook-picture">
-            <Poloroid />
-          </div>
-          <div
-            className="notebook-picture"
-            onClick={() =>
-              setModalContent(
-                <div className="poloroid-modal">
-                  <Poloroid />
-                </div>
-              )
-            }
-          >
-            <Poloroid />
-          </div>
-          <div className="add-notebook-picture">
-            <label className="notebook-add-picture" htmlFor="header-pic-file">
-              <div className="">
-                <i className="fa-solid fa-plus"></i>
-              </div>
-            </label>
-            <input
-              style={{ display: "none" }}
-              id="header-pic-file"
-              name="header-pic-file"
-              type="file"
-              accept="image/*"
-              onChange={updateHeaderImage}
-            />
-          </div>
-        </div>
+        <div className="notebook-inner-picture-container">{dispImages}</div>
       </div>
       <div className="notebook-extra-thoughts-container">
         <div className="notebook-section-title">

@@ -22,13 +22,20 @@ class Journal(db.Model):
 
     def to_dict(self):
         return {
-            "id":self.id,
-            "year":self.year,
-            "week":self.date,
-            "text_field1":self.text_field1,
-            "text_field2":self.text_field2,
-            "text_field3":self.text_field3,
-            "text_field4":self.text_field4,
-            "text_field5":self.text_field5,
-            "text_field6":self.text_field6,
+            "journal":{
+                "id":self.id,
+                "year":self.year,
+                "week":self.date,
+                "text_field1":self.text_field1,
+                "text_field2":self.text_field2,
+                "text_field3":self.text_field3,
+                "text_field4":self.text_field4,
+                "text_field5":self.text_field5,
+                "text_field6":self.text_field6
+            },
+            "images":{
+                image.id:image.to_dict() for image in self.images
+            }
+
         }
+

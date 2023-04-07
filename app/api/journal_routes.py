@@ -38,13 +38,11 @@ def create_journal():
 
     form = JournalForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print("we are here 1")
+
 
     if form.validate_on_submit():
-        print("we are here 2")
         year = str(form.data["year"])
         date = form.data["date"]
-        print("we are here 3", year, type(year))
 
 
 
@@ -53,7 +51,6 @@ def create_journal():
 
         # Handles the POST request. Will create an instance if none exists
         if not journal:
-            print("we are here 5")
 
             journal = Journal(
                  user_id=current_user.id,
@@ -69,13 +66,10 @@ def create_journal():
 
             db.session.add(journal)
             db.session.commit()
-            print("we are here 6")
             return journal.to_dict()
 
-        print("we are here 7")
 
         journalItem = journal[0]
-        print("we are here 4")
         # Handles the PUT request. Will update the existing instance
         journalItem.text_field1= form.data["text_field1"]
         journalItem.text_field2= form.data["text_field2"]
