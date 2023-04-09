@@ -5,6 +5,8 @@ import { useModal } from "../../../context/Modal";
 import { useHistory } from "react-router-dom";
 import "./LoginForm.css";
 
+// Need to change this
+
 function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
