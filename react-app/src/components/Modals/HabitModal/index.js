@@ -214,7 +214,7 @@ export default function HabitModal({ habitId, habit }) {
       </div>
       <div className="habit-modal-title-container">
         <div className="habit-modal-title-icon-left">
-          <i className="fa-regular fa-star"></i>
+          <i id="habit-star-icon" className="fa-regular fa-star"></i>
         </div>
         <div className="habit-modal-title-container-right">
           <form
@@ -263,9 +263,14 @@ export default function HabitModal({ habitId, habit }) {
       <div className="edit-goal-form-nav-container">
         <div className="edit-goal-left-nav">
           <div
-            className={
-              tab === "summary" ? "goal-tab-heading-active" : "goal-tab-heading"
-            }
+            id="habit-modal-nav-summary"
+            className={`journal-modal-nav-div
+              ${
+                tab === "summary"
+                  ? "goal-tab-heading-active"
+                  : "goal-tab-heading"
+              }
+            `}
             onClick={() => {
               setTab("summary");
             }}
@@ -275,9 +280,10 @@ export default function HabitModal({ habitId, habit }) {
           </div>
 
           <div
-            className={
+            className={`journal-modal-nav-div ${
               tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
             }
+            `}
             onClick={() => {
               setTab("notes");
             }}
@@ -468,9 +474,10 @@ export default function HabitModal({ habitId, habit }) {
             </div>
           </div>
           <div className="habit-modal-year-calendar">
-            <div className="habit-modoal-year-icon-left">
+            <div className="habit-modal-year-icon">
               <i className="fa-regular fa-calendar"></i>
             </div>
+
             <div className="habit-modal-year-calendar-right">
               <h3 className="habit-modal-sub-headings">
                 Progress for the year:

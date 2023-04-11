@@ -218,6 +218,10 @@
   align-items: center;
 }
 
+.habit-goal-field:hover {
+  border: 1px solid #719ece;
+}
+
 .habit-goal-field:focus {
   outline: none;
 }

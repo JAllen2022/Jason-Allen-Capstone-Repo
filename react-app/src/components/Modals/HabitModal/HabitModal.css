@@ -19,20 +19,22 @@
   margin-bottom: 2rem;
 }
 
+#habit-star-icon {
+  padding-top: 0.5rem;
+}
+
 .habit-modal-title-icon-left,
 .habit-week-icon-container,
-.habit-modoal-year-icon-left {
-  padding-top: 0.5rem;
-  padding-right: 0.5rem;
+.habit-modal-year-icon {
+  width: 25px;
 }
 
 .habit-modal-sub-headings {
   padding: 0;
   margin: 0;
-  padding-top: 0.37rem;
   margin-bottom: 1rem;
   font-weight: 500;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .habit-modal-title-container-right {
@@ -67,12 +69,25 @@
 
 .habit-modal-year-calendar {
   margin-top: 1rem;
+  /* border: 1px solid red; */
+}
+
+.habit-modal-year-calendar-right {
+  box-sizing: border-box;
+  width: 96%;
 }
 
 .habit-modal-single-week {
   width: 75%;
   border: 1px dotted lightgray;
   font-size: 14px;
+}
+
+#habit-modal-nav-summary {
+  margin-left: 25px;
+  text-align: left;
+  /* border: 1px solid red; */
+  padding: 0;
 }
 
 .habit-modal-single-week-container-title {
@@ -89,7 +104,7 @@
 .habit-modal-single-week-inputs-container {
   display: grid;
   grid-template-columns: repeat(7, 1fr) 2.5rem 3.15rem;
-  grid-template-rows: 2rem;
+  grid-template-rows: 1.75rem;
 }
 
 .habit-modal-body-right {
@@ -126,22 +141,26 @@
   margin: 0;
   padding-left: 0.5rem;
   text-decoration: underline;
+  font-size: 16px;
 }
 
 .month-grid {
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-right: 1rem;
   flex-wrap: wrap;
+  /* border: 1px solid purple; */
+  padding-right: 2rem;
 }
 
 .month-container {
-  margin: 5px;
+  box-sizing: border-box;
+  margin: 5px 0;
   padding: 1px;
   border: 1px dotted lightgray;
   border-radius: 0.5rem;
   width: 15rem;
-  padding: 0 0.45rem;
 }
 
 .current-month {
@@ -165,7 +184,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
+  height: 30px;
   border-radius: 50%;
   background-color: transparent;
   font-size: 14px;
@@ -189,6 +208,10 @@ input.single-check:checked + label.single-check-label svg path {
 }
 input.single-check:focus + label.single-check-label {
   transform: scale(1.03);
+}
+
+label.single-check-label:hover {
+  border: 1px solid #719ece;
 }
 
 .single-check + .single-check-label {
