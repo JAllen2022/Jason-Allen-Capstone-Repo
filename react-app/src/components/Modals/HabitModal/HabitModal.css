@@ -5,6 +5,13 @@
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
+  padding: 1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 224, 211, 0.4),
+    rgba(226, 224, 211, 1),
+    rgba(226, 224, 211, 0.4)
+  );
 }
 
 .habit-modal-title-container {
