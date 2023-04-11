@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { login } from "../../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { useHistory } from "react-router-dom";
+import SignupFormModal from "../SignupFormModal";
 import "./LoginForm.css";
 
 // Need to change this
@@ -12,7 +13,7 @@ function LoginFormModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
@@ -33,9 +34,17 @@ function LoginFormModal() {
           {" "}
           <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
         </div>
-        <h1 className="log-in-header">Log In</h1>
+        <img
+          id="splash-page-nav-icon"
+          src="https://appacademypictures.s3.us-west-2.amazonaws.com/icons8-open-book-64.png"
+          alt="book icon logo"
+        />
+        <h1 className="log-in-header">Welcome back</h1>
+        <div className="log-in-sub-header">
+          Please enter your details to sign in.
+        </div>
         {Object.values(errors).length ? (
-          <div style={{ color: "maroon", marginBottom: ".5rem" }}>
+          <div style={{ color: "#c23a22", marginBottom: ".5rem" }}>
             Invalid email or password.
           </div>
         ) : (
@@ -43,7 +52,7 @@ function LoginFormModal() {
         )}
         <form className="log-in-form" onSubmit={handleSubmit}>
           <div>
-            <label> Email</label>
+            <label className="log-in-form-label"> Email</label>
           </div>
           <input
             type="text"
@@ -52,8 +61,8 @@ function LoginFormModal() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <div>
-            <label>Password</label>
+          <div id="log-in-password-label">
+            <label className="log-in-form-label">Password</label>
           </div>
           <input
             className="log-in-input"
@@ -65,6 +74,15 @@ function LoginFormModal() {
           <button className="log-in-button-modal" type="submit">
             Log In
           </button>
+          <div className="demo-user-text">
+            Don't have an account?{" "}
+            <span
+              className="demo-user"
+              onClick={() => setModalContent(<SignupFormModal />)}
+            >
+              Create account
+            </span>
+          </div>
           <div className="demo-user-text">
             {" "}
             Try Goal-e!{" "}

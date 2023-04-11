@@ -9,6 +9,7 @@ export function ModalProvider({ children }) {
   const [modalContent, setModalContent] = useState(null);
   // callback function that will be called when modal is closing
   const [onModalClose, setOnModalClose] = useState(null);
+  const [modalStyle, setModalStyle] = useState("splashpage");
 
   const closeModal = () => {
     setModalContent(null); // clear the modal contents
@@ -33,6 +34,8 @@ export function ModalProvider({ children }) {
   }, [closeModal]);
 
   const contextValue = {
+    modalStyle,
+    setModalStyle,
     modalRef, // reference to modal div
     modalContent, // React component to render inside modal
     setModalContent, // function to set the React component to render inside modal
@@ -51,7 +54,8 @@ export function ModalProvider({ children }) {
 }
 
 export function Modal() {
-  const { modalRef, modalContent, closeModal } = useContext(ModalContext);
+  const { modalRef, modalContent, closeModal, modalStyle } =
+    useContext(ModalContext);
   // If there is no div referenced by the modalRef or modalContent is not a
   // truthy value, render nothing:
   if (!modalRef || !modalRef.current || !modalContent) return null;
@@ -60,7 +64,9 @@ export function Modal() {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={closeModal} />
-      <div id="modal-content">{modalContent}</div>
+      <div id="modal-content" className={`${modalStyle}`}>
+        {modalContent}
+      </div>
     </div>,
     modalRef.current
   );
