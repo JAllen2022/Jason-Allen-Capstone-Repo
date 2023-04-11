@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { signUp } from "../../../store/session";
+import { login } from "../../../store/session";
+import { useHistory } from "react-router-dom";
+import LoginFormModal from "../LoginFormModal";
 import "./SignupForm.css";
 
 function SignupFormModal() {
@@ -11,7 +14,8 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  const history = useHistory();
+  const { closeModal, setModalContent } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,9 +38,17 @@ function SignupFormModal() {
         {" "}
         <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
       </div>
-      <h1 className="log-in-header">Sign Up</h1>
+      <img
+        id="splash-page-nav-icon"
+        src="https://appacademypictures.s3.us-west-2.amazonaws.com/icons8-open-book-64.png"
+        alt="book icon logo"
+      />
+      <h1 className="log-in-header">Create an account</h1>
+      <div className="log-in-sub-header">
+        Enter your details to create your Goal-e account.
+      </div>
       <form className="log-in-form" onSubmit={handleSubmit}>
-        <label>
+        <label className="sign-up-label">
           Email
           <input
             className="log-in-input"
@@ -48,7 +60,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.email && <div style={{ color: "maroon" }}>{errors.email}</div>}
-        <label>
+        <label className="sign-up-label">
           Username
           <input
             className="log-in-input"
@@ -60,7 +72,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        <label>
+        <label className="sign-up-label">
           Password
           <input
             className="log-in-input"
@@ -72,7 +84,7 @@ function SignupFormModal() {
           />
         </label>
 
-        <label>
+        <label className="sign-up-label">
           Confirm Password
           <input
             className="log-in-input"
@@ -84,12 +96,37 @@ function SignupFormModal() {
           />
         </label>
         {errors.password && (
-          <div style={{ color: "maroon" }}>{errors.password}</div>
+          <div style={{ color: "maroon", fontSize: "14px" }}>
+            {errors.password}
+          </div>
         )}
         <button className="log-in-button-modal" type="submit">
           Sign Up
         </button>
       </form>
+      <div className="demo-user-text">
+        Already have an account?{" "}
+        <span
+          className="demo-user"
+          onClick={() => setModalContent(<LoginFormModal />)}
+        >
+          Log in
+        </span>
+      </div>
+      <div className="demo-user-text">
+        {" "}
+        Try Goal-e!{" "}
+        <span
+          onClick={() => {
+            dispatch(login("demo@aa.io", "password"));
+            history.push("/");
+            closeModal();
+          }}
+          className="demo-user"
+        >
+          Demo user
+        </span>
+      </div>
     </div>
   );
 }
