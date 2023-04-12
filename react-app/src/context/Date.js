@@ -21,9 +21,9 @@ export function getDisplayDates(date) {
       startOfWeek.clone().add(i, "day").format("ddd, MMMM D, YY")
     );
   }
+
   // Example return for displayDates ['Mon 3/13', 'Tues 3/14', ...etc to Sunday]
   // Example return for fetchDates ['Mon, March 13, 23', ... etc to Sunday]
-
   return [fetchDates, displayDates];
 }
 

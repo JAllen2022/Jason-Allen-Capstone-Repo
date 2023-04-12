@@ -219,11 +219,11 @@
 }
 
 .habit-goal-field:hover {
-  border: 1px solid #719ece;
+  outline: 1.5px solid #719ece;
 }
 
 .habit-goal-field:focus {
-  outline: none;
+  outline: 1.5px solid #719ece;
 }
 
 .week-day-list-title {
@@ -253,6 +253,10 @@ input.check:checked + label.check-label svg path {
 }
 input.check:focus + label.check-label {
   transform: scale(1.03);
+}
+
+label.check-label:hover {
+  border: 1.5px solid #719ece;
 }
 
 .check + .check-label {

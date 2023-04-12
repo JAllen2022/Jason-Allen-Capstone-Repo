@@ -131,8 +131,16 @@
   height: fit-content;
   overflow: hidden;
   height: auto;
-  width: 99%;
+  width: 95%;
   resize: none;
+}
+
+.modal-title-input:hover {
+  outline: 1.5px solid #719ece;
+}
+
+.modal-title-input:focus {
+  outline: 1.5px solid #719ece;
 }
 
 .month-container-title {
@@ -211,7 +219,7 @@ input.single-check:focus + label.single-check-label {
 }
 
 label.single-check-label:hover {
-  border: 1px solid #719ece;
+  border: 1.5px solid #719ece;
 }
 
 .single-check + .single-check-label {
