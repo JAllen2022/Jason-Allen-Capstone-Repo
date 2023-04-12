@@ -23,4 +23,6 @@
   position: absolute;
   background-color: #f2f2f2;
   border-radius: 5px;
+  max-width: 100%;
+  overflow-x: auto;
 }

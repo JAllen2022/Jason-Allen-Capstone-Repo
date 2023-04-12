@@ -54,8 +54,7 @@
 .habit-modal-body-left {
   height: fit-content;
   width: 75%;
-  margin-top: 1rem;
-  border-right: 1px dotted lightgray;
+  margin-top: 0.5rem;
 }
 
 .habit-week-container-right {
@@ -68,7 +67,7 @@
 }
 
 .habit-modal-year-calendar {
-  margin-top: 1rem;
+  margin-top: 2rem;
   /* border: 1px solid red; */
 }
 
@@ -108,10 +107,19 @@
 }
 
 .habit-modal-body-right {
-  margin-top: 1rem;
   width: 25%;
   padding-left: 0.5rem;
   height: 100%;
+
+  color: rgb(23, 43, 77);
+}
+
+.habit-modal-display-button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.habit-modal-display-button {
 }
 
 .modal-container-title {
@@ -159,7 +167,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   /* border: 1px solid purple; */
-  padding-right: 2rem;
+  padding-right: 2.5rem;
 }
 
 .month-container {
@@ -263,14 +271,30 @@ label.single-check-label:hover {
 }
 
 .habit-stat-button {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 4px;
+  margin-bottom: 0.25rem;
+  padding: 0.25rem;
+  /* border-radius: 4px; */
+  /* border: 1px solid lightgray; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* background-color: rgb(221, 221, 221); */
+}
+
+#habit-modal-stats-title {
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .habit-stats-container {
   font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
+
 .habit-icon {
   color: #cead87;
   margin-right: 0.5rem;
@@ -287,22 +311,25 @@ label.single-check-label:hover {
   color: aliceblue;
 }
 
-.habit-modal-action-title {
-  font-size: 14px;
+.habit-modal-right-title {
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .habit-modal-action-options {
   position: relative;
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .habit-modal-action-button {
-  background-color: rgb(221, 221, 221);
+  background-color: rgb(193, 199, 201);
   display: flex;
   align-items: center;
   padding: 0.5rem;
   font-size: 14px;
-  margin: 0.5rem 0;
+  margin: 0.25rem 0;
   border-radius: 5px;
   cursor: pointer;
   transition-property: background-color;
@@ -311,9 +338,17 @@ label.single-check-label:hover {
   text-overflow: ellipsis;
   position: relative;
 }
-
 .habit-modal-action-button:hover {
-  background-color: rgb(215, 215, 215);
+  background-color: rgb(204, 211, 213);
+}
+
+.habit-display-tab {
+  background-color: rgb(51, 51, 51);
+  color: rgb(224, 223, 223);
+}
+
+.habit-display-tab:hover {
+  background-color: rgb(65, 65, 65);
 }
 
 .habit-modal-action-menu {
@@ -329,6 +364,7 @@ label.single-check-label:hover {
   border-radius: 2px;
   box-shadow: 0.5px 0.5px 1px 0.75px rgb(201, 201, 201, 0.5);
   padding: 5px;
+  z-index: 10;
 }
 
 .habit-modal-action-title-container {

@@ -260,61 +260,6 @@ export default function HabitModal({ habitId, habit }) {
         </div>
       </div>
 
-      <div className="edit-goal-form-nav-container">
-        <div className="edit-goal-left-nav">
-          <div
-            id="habit-modal-nav-summary"
-            className={`journal-modal-nav-div
-              ${
-                tab === "summary"
-                  ? "goal-tab-heading-active"
-                  : "goal-tab-heading"
-              }
-            `}
-            onClick={() => {
-              setTab("summary");
-            }}
-          >
-            {" "}
-            Summary{" "}
-          </div>
-
-          <div
-            className={`journal-modal-nav-div ${
-              tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
-            }
-            `}
-            onClick={() => {
-              setTab("notes");
-            }}
-          >
-            {" "}
-            Notes{" "}
-          </div>
-        </div>
-
-        <div className={"edit-goal-button-square"}>
-          <span>
-            <OpenModalButton
-              buttonText={
-                <i
-                  className="fa-solid fa-trash"
-                  // onClick={deleteClick}
-                ></i>
-              }
-              onItemClick={closeMenu}
-              className="goal-delete"
-              modalComponent={
-                <DeleteConfirmation
-                  item={singleHabit}
-                  instanceId={habit.id}
-                  habitBool={true}
-                />
-              }
-            />
-          </span>
-        </div>
-      </div>
       <div className="habit-modal-body-container">
         <div className="habit-modal-body-left">
           <div className="habit-week-container">
@@ -487,40 +432,58 @@ export default function HabitModal({ habitId, habit }) {
           </div>
         </div>
         <div className="habit-modal-body-right">
-          <div className="habit-stats-container">
-            <div className="habit-stat-button">
-              <div>Total Habit Goal:</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-bullseye habit-icon"></i>
-                <span> {singleHabit.total_habit_goal}</span>
-              </div>
-            </div>
-            <div className="habit-stat-button">
-              <div>Total habit acheived:</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-bars-progress habit-icon"></i>
-                <span> {singleHabit.total_habit_completed}</span>
-              </div>
-            </div>
-            <div className="habit-stat-button">
-              <div>Total weeks tracked:</div>
-              <div className="habit-stat-details ">
-                <i className="fa-solid fa-flag habit-icon"></i>
-                <span>{singleHabit.weeks_tracked}</span>
-              </div>
-            </div>
-            <div className="habit-stat-button">
-              {" "}
-              <div>Additional weeks tracked:</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-calendar-days habit-icon"></i>
-                <span>{numberOfFutureHabits}</span>
-              </div>
-            </div>
-          </div>
+          <div className="habit-modal-display-button-container">
+            <div className="habit-modal-right-title">Display:</div>
 
+            <div
+              className={`habit-modal-action-button
+              ${tab === "summary" ? "habit-display-tab" : ""}
+            `}
+              onClick={() => {
+                setTab("summary");
+              }}
+            >
+              {" "}
+              <i class="fa-regular fa-newspaper habit-button-icon"></i> Summary{" "}
+            </div>
+
+            <div
+              className={`habit-modal-action-button ${
+                tab === "notes" ? "habit-display-tab" : ""
+              }
+            `}
+              onClick={() => {
+                setTab("notes");
+              }}
+            >
+              {" "}
+              <i class="fa-regular fa-note-sticky habit-button-icon"></i> Notes{" "}
+            </div>
+
+            {/* <div className={"edit-goal-button-square"}>
+              <span>
+                <OpenModalButton
+                  buttonText={
+                    <i
+                      className="fa-solid fa-trash"
+                      // onClick={deleteClick}
+                    ></i>
+                  }
+                  onItemClick={closeMenu}
+                  className="goal-delete"
+                  modalComponent={
+                    <DeleteConfirmation
+                      item={singleHabit}
+                      instanceId={habit.id}
+                      habitBool={true}
+                    />
+                  }
+                />
+              </span>
+            </div> */}
+          </div>
           <div className="habit-modal-action-options">
-            <div className="habit-modal-action-title">Actions:</div>
+            <div className="habit-modal-right-title">Actions:</div>
             <div
               className="habit-modal-action-button"
               onClick={() => setShowAddWeek((prev) => !prev)}
@@ -584,6 +547,56 @@ export default function HabitModal({ habitId, habit }) {
                 </form>
               </div>
             )}
+            <div
+              className="habit-modal-action-button"
+              onClick={() =>
+                setModalContent(
+                  <DeleteConfirmation
+                    item={singleHabit}
+                    instanceId={habit.id}
+                    habitBool={true}
+                  />
+                )
+              }
+            >
+              {" "}
+              <i className="fa-solid fa-trash habit-button-icon"></i>
+              Delete
+            </div>
+          </div>
+          <div id="habit-modal-stats-title" className="habit-modal-right-title">
+            Stats:
+          </div>
+          <div className="habit-stats-container">
+            <div className="habit-stat-button">
+              <div>Total Goal</div>
+              <div className="habit-stat-details">
+                <i className="fa-solid fa-bullseye habit-icon"></i>
+                <span> {singleHabit.total_habit_goal}</span>
+              </div>
+            </div>
+            <div className="habit-stat-button">
+              <div>Habit count</div>
+              <div className="habit-stat-details">
+                <i className="fa-solid fa-bars-progress habit-icon"></i>
+                <span> {singleHabit.total_habit_completed}</span>
+              </div>
+            </div>
+            <div className="habit-stat-button">
+              <div>Weeks tracked</div>
+              <div className="habit-stat-details ">
+                <i className="fa-solid fa-flag habit-icon"></i>
+                <span>{singleHabit.weeks_tracked}</span>
+              </div>
+            </div>
+            <div className="habit-stat-button">
+              {" "}
+              <div>Future Weeks</div>
+              <div className="habit-stat-details">
+                <i className="fa-solid fa-calendar-days habit-icon"></i>
+                <span>{numberOfFutureHabits}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

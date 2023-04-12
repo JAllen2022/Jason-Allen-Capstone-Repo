@@ -1,6 +1,6 @@
 .edit-goal-form-container {
-  width: 60vw;
-  height: 28rem;
+  width: 50rem;
+  height: 40rem;
   border-radius: 5px;
   /* border: 1px solid red; */
   display: flex;
@@ -52,13 +52,6 @@
   display: flex;
   border-bottom: 1px solid lightgray;
   justify-content: space-between;
-}
-
-.journal-modal-nav-div {
-  /* border: 1px solid red; */
-  box-sizing: border-box;
-  width: 6rem;
-  /* text-align: center; */
 }
 
 .edit-goal-left-nav {

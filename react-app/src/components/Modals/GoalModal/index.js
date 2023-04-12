@@ -2,7 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 import DeleteConfirmation from "../DeleteConfirmation";
 import { useDispatch, useSelector } from "react-redux";
-import { getGoalThunk, deleteGoalThunk } from "../../../store/goals";
+import {
+  getGoalThunk,
+  deleteGoalThunk,
+  editGoalThunk,
+} from "../../../store/goals";
 import { useModal } from "../../../context/Modal";
 import CreateSubGoal from "./CreateSubGoal";
 import GoalSummary from "./GoalSummary";
@@ -19,6 +23,16 @@ export default function GoalModal({ itemId }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [name, setName] = useState("");
+  const textAreaRef = useRef(null);
+
+  const handleNameSubmit = (object) => {
+    const emptyStringCheck = object.name.split(" ").join("");
+    if (object.name.length && emptyStringCheck) {
+      dispatch(editGoalThunk(object, itemId));
+    }
+  };
 
   const cancelClick = () => {
     closeModal();
@@ -66,8 +80,35 @@ export default function GoalModal({ itemId }) {
         {" "}
         <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
       </div>
+
       <h1 className="edit-goal-form-container-title">
-        Goal: {singleGoal.name}
+        <i className="fa-solid fa-bullseye"></i>
+        <textarea
+          ref={textAreaRef}
+          className="modal-title-input"
+          placeholder={"Add a task..."}
+          type="text"
+          minLength="1"
+          value={name || singleGoal?.name}
+          rows={1}
+          onChange={(e) => {
+            setName(e.target.value);
+            if (e.target.value.trim().length === 0) {
+              setNameError("Name must not be empty or only spaces.");
+            } else {
+              setNameError("");
+            }
+          }}
+          onBlur={(e) => {
+            e.preventDefault();
+            if (nameError) {
+              e.preventDefault();
+            } else {
+              setName(e.target.value);
+              handleNameSubmit({ ...singleGoal, name: e.target.value });
+            }
+          }}
+        ></textarea>
       </h1>
       <div className="edit-goal-form-nav-container">
         <div className="edit-goal-left-nav">
