@@ -409,3 +409,19 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.modal-body-section-container {
+  display: flex;
+  border: 1px solid red;
+}
+
+.description-input {
+  background-color: transparent;
+  border: none;
+  font-size: 14px;
+  height: fit-content;
+  overflow: hidden;
+  height: auto;
+  width: 95%;
+  resize: none;
+}

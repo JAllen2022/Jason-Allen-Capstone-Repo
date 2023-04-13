@@ -1,11 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getGoalThunk } from "../../../store/goals";
+import { useEffect, useState, useRef } from "react";
+
+import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import "./GoalModal.css";
 
-export default function GoalSummary() {
+export default function GoalSummary({ tab, setTab }) {
   const singleGoal = useSelector((state) => state.goals.singleGoal);
+  const [description, setDescription] = useState("");
+  const descriptionAreaRef = useRef(null);
 
   const dispatch = useDispatch();
+
+  const handleDescriptionSubmit = (object) => {
+    dispatch(editGoalThunk(object, singleGoal.id));
+  };
 
   // Calculating number of completed
   const completedSubGoals =
@@ -67,17 +75,35 @@ export default function GoalSummary() {
     );
 
   return (
-    <div className="summary-page-container">
-      <div className="summary-body-container-left">
-        <div className="description-container">
-          {singleGoal.description ? (
-            singleGoal.description
-          ) : (
-            <span>
-              <i className="fa-solid fa-bars-staggered summary-icon"></i>
-              Description
-            </span>
-          )}
+    <div className="habit-modal-body-container">
+      <div className="habit-modal-body-left">
+        <div className="modal-body-section-container ">
+          <div className="habit-week-icon-container">
+            <i className="fa-solid fa-bars-staggered"></i>
+          </div>
+          <div className="habit-week-container-right">
+            <h3 className="habit-modal-sub-headings">Description</h3>
+            <textarea
+              ref={descriptionAreaRef}
+              className="description-input"
+              placeholder={"Add a more detailed description..."}
+              type="text"
+              minLength="1"
+              value={description || singleGoal?.description}
+              rows={4}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              onBlur={(e) => {
+                e.preventDefault();
+                setDescription(e.target.value);
+                handleDescriptionSubmit({
+                  ...singleGoal,
+                  description: e.target.value,
+                });
+              }}
+            ></textarea>
+          </div>
         </div>
         {singleGoal.parent_id && (
           <div className="parent-goal">
@@ -88,7 +114,35 @@ export default function GoalSummary() {
           </div>
         )}
       </div>
-      <div className="summary-body-container-right">
+      <div className="habit-modal-body-right">
+        <div className="habit-modal-display-button-container">
+          <div className="habit-modal-right-title">Display:</div>
+
+          <div
+            className={`habit-modal-action-button
+              ${tab === "summary" ? "habit-display-tab" : ""}
+            `}
+            onClick={() => {
+              setTab("summary");
+            }}
+          >
+            {" "}
+            <i class="fa-regular fa-newspaper habit-button-icon"></i> Summary{" "}
+          </div>
+
+          <div
+            className={`habit-modal-action-button ${
+              tab === "notes" ? "habit-display-tab" : ""
+            }
+            `}
+            onClick={() => {
+              setTab("notes");
+            }}
+          >
+            {" "}
+            <i class="fa-regular fa-note-sticky habit-button-icon"></i> Notes{" "}
+          </div>
+        </div>
         <div className="summary-item-container">
           <div className="summary-item-title">Due Date</div>
           <div className="summary-item-description">
