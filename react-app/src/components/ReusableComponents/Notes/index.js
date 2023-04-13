@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useDispatch } from "react-redux";
 import { editGoalThunk } from "../../../store/goals";
+import { editHabitThunk } from "../../../store/habits";
 import { editTaskThunk } from "../../../store/tasks";
 import "./Notes.css";
 
@@ -39,6 +40,7 @@ const modules = {
           const file = input.files[0];
           const data = new FormData();
           data.append("image", file);
+
           const res = await fetch("/api/images", {
             method: "POST",
             body: data,
@@ -96,29 +98,55 @@ const formats = [
   "formula",
 ];
 
-export default function Notes({ taskBool, item }) {
+export default function Notes({ taskBool, item, week }) {
   const [value, setValue] = useState(item?.notes || "");
+  const [showNotification, setShowNotification] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    console.log("checking OG item", item);
+  const handleSave = () => {
     const newItem = {
       ...item,
       notes: value,
       completed: item.completed ? true : false,
     };
-    console.log("checking new item", newItem);
+
+    if (week) delete newItem.completed;
 
     if (taskBool) {
       dispatch(editTaskThunk(newItem, newItem.id));
+    } else if (week) {
+      dispatch(editHabitThunk(newItem, week));
     } else {
       dispatch(editGoalThunk(newItem, newItem.id));
     }
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 2000);
   };
+
+  // useEffect(() => {
+  //   const ele = document.querySelector("#save-button");
+  //   ele.addEventListener("click", () => {
+  //     handleSave()
+  //     console.log("we're here 1")
+  //   });
+  //   return ele.removeEventListener("click", () => {
+  //     handleSave();
+  //     console.log("we're here");
+  //   });
+  // }, []);
 
   return (
     <div className="note-page-container">
+      {/* <button className="note-section-save-button" onClick={handleSave}>
+        Save
+      </button> */}
+      {showNotification && (
+        <div className="notification">
+          <p>Your progress has been saved.</p>
+        </div>
+      )}
       <ReactQuill
         ref={quillRef}
         theme="snow"
@@ -128,10 +156,8 @@ export default function Notes({ taskBool, item }) {
         formats={formats}
         className={"react-quil"}
         placeholder={"Write a note here..."}
+        onBlur={handleSave}
       />
-      <button className="note-section-save-button" onClick={handleSave}>
-        Save
-      </button>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import MonthGrid from "./MonthGrid";
 import { useDate, getWeekStrings } from "../../../context/Date";
 
 import "./HabitModal.css";
+import Notes from "../../ReusableComponents/Notes";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Helper Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function renderOptions(numberOfFutureHabits) {
@@ -115,7 +116,6 @@ export default function HabitModal({ habitId, habit }) {
 
     const newHabit = {
       ...habit,
-      goal_to_complete: goal,
       monday,
       tuesday,
       wednesday,
@@ -123,6 +123,7 @@ export default function HabitModal({ habitId, habit }) {
       friday,
       saturday,
       sunday,
+      goal_to_complete: goal,
       actually_completed: goalSum,
     };
 
@@ -262,174 +263,190 @@ export default function HabitModal({ habitId, habit }) {
 
       <div className="habit-modal-body-container">
         <div className="habit-modal-body-left">
-          <div className="habit-week-container">
-            <div className="habit-week-icon-container">
-              <i className="fa-solid fa-calendar-week"></i>
-            </div>
-            <div className="habit-week-container-right">
-              <h3 className="habit-modal-sub-headings">
-                Progress for the week:
-              </h3>
-
-              <div className="habit-modal-single-week">
-                <div className="habit-modal-single-week-container-title">
-                  <div className="planner-habit-tracker-headings">M</div>
-                  <div className="planner-habit-tracker-headings">T</div>
-                  <div className="planner-habit-tracker-headings">W</div>
-                  <div className="planner-habit-tracker-headings">T</div>
-                  <div className="planner-habit-tracker-headings">F</div>
-                  <div className="planner-habit-tracker-headings">S</div>
-                  <div className="planner-habit-tracker-headings">S</div>
-                  <div className="planner-habit-tracker-headings">
-                    <i className="fa-regular fa-square-check"></i>
-                  </div>
-                  <div className="planner-habit-tracker-headings">Goal</div>
+          {tab === "summary" ? (
+            <>
+              <div className="habit-week-container">
+                <div className="habit-week-icon-container">
+                  <i className="fa-solid fa-calendar-week"></i>
                 </div>
-                <div className="habit-modal-single-week-inputs-container">
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`1-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={monday}
-                      onChange={() => setMonday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`1-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`2-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={tuesday}
-                      onChange={() => setTuesday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`2-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`3-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={wednesday}
-                      onChange={() => setWednesday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`3-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`4-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={thursday}
-                      onChange={(e) => setThursday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`4-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`5-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={friday}
-                      onChange={() => setFriday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`5-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg style={{ height: "100%" }} viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`6-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={saturday}
-                      onChange={() => setSaturday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`6-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div className="planner-single-habit-tracker-check">
-                    <input
-                      type="checkbox"
-                      id={`7-single-${habit.name}${habit.id}`}
-                      className="single-check"
-                      checked={sunday}
-                      onChange={() => setSunday((prev) => !prev)}
-                    />
-                    <label
-                      htmlFor={`7-single-${habit.name}${habit.id}`}
-                      className="single-check-label"
-                    >
-                      <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                      </svg>
-                    </label>
-                  </div>
-                  <div
-                    id="habit-modal-goal-sum"
-                    className="planner-single-habit-tracker-count"
-                  >
-                    {goalSum ? goalSum : "0"}
-                  </div>
-                  <div className="planner-single-habit-tracker-count">
-                    {goalInput}
+                <div className="habit-week-container-right">
+                  <h3 className="habit-modal-sub-headings">
+                    Progress for the week:
+                  </h3>
+
+                  <div className="habit-modal-single-week">
+                    <div className="habit-modal-single-week-container-title">
+                      <div className="planner-habit-tracker-headings">M</div>
+                      <div className="planner-habit-tracker-headings">T</div>
+                      <div className="planner-habit-tracker-headings">W</div>
+                      <div className="planner-habit-tracker-headings">T</div>
+                      <div className="planner-habit-tracker-headings">F</div>
+                      <div className="planner-habit-tracker-headings">S</div>
+                      <div className="planner-habit-tracker-headings">S</div>
+                      <div className="planner-habit-tracker-headings">
+                        <i className="fa-regular fa-square-check"></i>
+                      </div>
+                      <div className="planner-habit-tracker-headings">Goal</div>
+                    </div>
+                    <div className="habit-modal-single-week-inputs-container">
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`1-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={monday}
+                          onChange={() => setMonday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`1-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`2-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={tuesday}
+                          onChange={() => setTuesday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`2-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`3-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={wednesday}
+                          onChange={() => setWednesday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`3-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`4-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={thursday}
+                          onChange={(e) => setThursday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`4-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`5-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={friday}
+                          onChange={() => setFriday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`5-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg style={{ height: "100%" }} viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`6-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={saturday}
+                          onChange={() => setSaturday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`6-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div className="planner-single-habit-tracker-check">
+                        <input
+                          type="checkbox"
+                          id={`7-single-${habit.name}${habit.id}`}
+                          className="single-check"
+                          checked={sunday}
+                          onChange={() => setSunday((prev) => !prev)}
+                        />
+                        <label
+                          htmlFor={`7-single-${habit.name}${habit.id}`}
+                          className="single-check-label"
+                        >
+                          <svg viewBox="0,0,50,50">
+                            <path d="M5 30 L 20 45 L 45 5"></path>
+                          </svg>
+                        </label>
+                      </div>
+                      <div
+                        id="habit-modal-goal-sum"
+                        className="planner-single-habit-tracker-count"
+                      >
+                        {goalSum ? goalSum : "0"}
+                      </div>
+                      <div className="planner-single-habit-tracker-count">
+                        {goalInput}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="habit-modal-year-calendar">
-            <div className="habit-modal-year-icon">
-              <i className="fa-regular fa-calendar"></i>
-            </div>
+              <div className="habit-modal-year-calendar">
+                <div className="habit-modal-year-icon">
+                  <i className="fa-regular fa-calendar"></i>
+                </div>
 
-            <div className="habit-modal-year-calendar-right">
-              <h3 className="habit-modal-sub-headings">
-                Progress for the year:
-              </h3>
-              <MonthGrid />
+                <div className="habit-modal-year-calendar-right">
+                  <h3 className="habit-modal-sub-headings">
+                    Progress for the year:
+                  </h3>
+                  <MonthGrid />
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="habit-modal-notes-container">
+              <Notes
+                item={{
+                  ...habit,
+                  goal_to_complete: goal,
+                  actually_completed: goalSum,
+                  notes: singleHabit.notes,
+                }}
+                week={weekString}
+              />
             </div>
-          </div>
+          )}
         </div>
         <div className="habit-modal-body-right">
           <div className="habit-modal-display-button-container">
@@ -483,121 +500,134 @@ export default function HabitModal({ habitId, habit }) {
             </div> */}
           </div>
           <div className="habit-modal-action-options">
-            <div className="habit-modal-right-title">Actions:</div>
-            <div
-              className="habit-modal-action-button"
-              onClick={() => setShowAddWeek((prev) => !prev)}
-            >
-              {" "}
-              <i className="fa-solid fa-calendar-plus habit-button-icon"></i>
-              Add weeks
-            </div>
-            {showAddWeek && (
-              <div className="habit-modal-action-menu" ref={ulRef}>
-                <div className="habit-modal-action-title-container">
-                  Add weeks:{" "}
-                  <span
-                    className="habit-modal-action-x-spot"
-                    onClick={() => setShowAddWeek((prev) => !prev)}
-                  >
-                    X
-                  </span>
-                </div>
-                <form
-                  className="habit-modal-action-form"
-                  onSubmit={handleInstanceAdd}
-                  type="submit"
+            {tab === "summary" ? (
+              <>
+                <div className="habit-modal-right-title">Actions:</div>
+
+                <div
+                  className="habit-modal-action-button"
+                  onClick={() => setShowAddWeek((prev) => !prev)}
                 >
-                  <label
-                    htmlFor="priority"
-                    className="habit-modal-action-label"
-                  >
-                    Track this habbit for an additional:
-                  </label>
-                  <select
-                    className="habit-modal-action-select"
-                    name="priority"
-                    value={repeatOption}
-                    onChange={(e) => setRepeatOption(e.target.value)}
-                  >
-                    <option value="">None</option>
-                    {/* <option value="1">1 week</option>
-                    <option value="2">2 weeks</option>
-                    <option value="3">3 weeks</option>
-                    <option value="4">1 month</option>
-                    <option value="8">2 months</option>
-                    <option value="12">3 months</option>
-                    <option value="16">4 months</option>
-                    <option value="20">5 months</option>
-                    <option value="24">6 months</option>
-                    <option value="28">7 months</option>
-                    <option value="32">8 months</option>
-                    <option value="36">9 months</option>
-                    <option value="40">10 months</option>
-                    <option value="44">11 months</option>
-                    <option value="52">1 year</option> */}
-                    {futureAddOptions}
-                  </select>
-                  <button
-                    type="submit"
-                    className="habit-modal-submit-action-button"
-                  >
-                    Add
-                  </button>
-                </form>
-              </div>
+                  {" "}
+                  <i className="fa-solid fa-calendar-plus habit-button-icon"></i>
+                  Add weeks
+                </div>
+                {showAddWeek && (
+                  <div className="habit-modal-action-menu" ref={ulRef}>
+                    <div className="habit-modal-action-title-container">
+                      Add weeks:{" "}
+                      <span
+                        className="habit-modal-action-x-spot"
+                        onClick={() => setShowAddWeek((prev) => !prev)}
+                      >
+                        X
+                      </span>
+                    </div>
+                    <form
+                      className="habit-modal-action-form"
+                      onSubmit={handleInstanceAdd}
+                      type="submit"
+                    >
+                      <label
+                        htmlFor="priority"
+                        className="habit-modal-action-label"
+                      >
+                        Track this habbit for an additional:
+                      </label>
+                      <select
+                        className="habit-modal-action-select"
+                        name="priority"
+                        value={repeatOption}
+                        onChange={(e) => setRepeatOption(e.target.value)}
+                      >
+                        <option value="">None</option>
+
+                        {futureAddOptions}
+                      </select>
+                      <button
+                        type="submit"
+                        className="habit-modal-submit-action-button"
+                      >
+                        Add
+                      </button>
+                    </form>
+                  </div>
+                )}
+                <div
+                  className="habit-modal-action-button"
+                  onClick={() =>
+                    setModalContent(
+                      <DeleteConfirmation
+                        item={singleHabit}
+                        instanceId={habit.id}
+                        habitBool={true}
+                      />
+                    )
+                  }
+                >
+                  {" "}
+                  <i className="fa-solid fa-trash habit-button-icon"></i>
+                  Delete
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="habit-modal-right-title">
+                  Save your progress:
+                </div>
+                <div className="habit-modal-save-note">
+                  The changes you make in the text area will be automatically
+                  saved when you click outside of it.
+                </div>
+              </>
+              // <div id="save-button" className="habit-modal-action-button">
+              //   {" "}
+              //   <i class="fa-regular fa-floppy-disk habit-button-icon"></i>
+              //   Save Note
+              // </div>""
             )}
-            <div
-              className="habit-modal-action-button"
-              onClick={() =>
-                setModalContent(
-                  <DeleteConfirmation
-                    item={singleHabit}
-                    instanceId={habit.id}
-                    habitBool={true}
-                  />
-                )
-              }
-            >
-              {" "}
-              <i className="fa-solid fa-trash habit-button-icon"></i>
-              Delete
-            </div>
           </div>
-          <div id="habit-modal-stats-title" className="habit-modal-right-title">
-            Stats:
-          </div>
-          <div className="habit-stats-container">
-            <div className="habit-stat-button">
-              <div>Total Goal</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-bullseye habit-icon"></i>
-                <span> {singleHabit.total_habit_goal}</span>
+          {tab === "summary" && (
+            <>
+              <div
+                id="habit-modal-stats-title"
+                className="habit-modal-right-title"
+              >
+                Stats:
               </div>
-            </div>
-            <div className="habit-stat-button">
-              <div>Habit count</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-bars-progress habit-icon"></i>
-                <span> {singleHabit.total_habit_completed}</span>
+              <div className="habit-stats-container">
+                <div className="habit-stat-button">
+                  <div>Total Goal</div>
+                  <div className="habit-stat-details">
+                    <i className="fa-solid fa-bullseye habit-icon"></i>
+                    <span> {singleHabit.total_habit_goal}</span>
+                  </div>
+                </div>
+                <div className="habit-stat-button">
+                  <div>Habit count</div>
+                  <div className="habit-stat-details">
+                    <i className="fa-solid fa-bars-progress habit-icon"></i>
+                    <span> {singleHabit.total_habit_completed}</span>
+                  </div>
+                </div>
+                <div className="habit-stat-button">
+                  <div>Weeks tracked</div>
+                  <div className="habit-stat-details ">
+                    <i className="fa-solid fa-flag habit-icon"></i>
+                    <span>{singleHabit.weeks_tracked}</span>
+                  </div>
+                </div>
+                <div className="habit-stat-button">
+                  {" "}
+                  <div>Future Weeks</div>
+                  <div className="habit-stat-details">
+                    <i className="fa-solid fa-calendar-days habit-icon"></i>
+                    <span>{numberOfFutureHabits}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="habit-stat-button">
-              <div>Weeks tracked</div>
-              <div className="habit-stat-details ">
-                <i className="fa-solid fa-flag habit-icon"></i>
-                <span>{singleHabit.weeks_tracked}</span>
-              </div>
-            </div>
-            <div className="habit-stat-button">
-              {" "}
-              <div>Future Weeks</div>
-              <div className="habit-stat-details">
-                <i className="fa-solid fa-calendar-days habit-icon"></i>
-                <span>{numberOfFutureHabits}</span>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
     </div>

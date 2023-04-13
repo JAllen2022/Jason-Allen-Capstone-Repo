@@ -119,9 +119,6 @@
   flex-direction: column;
 }
 
-.habit-modal-display-button {
-}
-
 .modal-container-title {
   color: #cead87;
   margin: 0;
@@ -411,4 +408,9 @@ label.single-check-label:hover {
   width: 100%;
   font-size: 14px;
   border-radius: 3px;
+}
+
+.habit-modal-notes-container {
+  width: 97.5%;
+  height: 40rem;
 }

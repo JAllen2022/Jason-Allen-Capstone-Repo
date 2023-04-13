@@ -45,7 +45,8 @@ class Habit(db.Model):
             "total_habit_goal":self.total_habit_goal,
             "total_habit_completed":self.total_habit_completed,
             "habit_instances":{habit_instance.id:habit_instance.to_dict_for_habit() for habit_instance in self.habit_instances},
-            "weeks_tracked":len(self.habit_instances)
+            "weeks_tracked":len(self.habit_instances),
+            "notes":self.notes
         }
 
     def to_dict_for_instance(self):
@@ -54,5 +55,6 @@ class Habit(db.Model):
             "user_id": self.user_id,
             "name": self.name,
             "total_habit_goal":self.total_habit_goal,
-            "total_habit_completed":self.total_habit_completed
+            "total_habit_completed":self.total_habit_completed,
+            "notes":self.notes
         }

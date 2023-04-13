@@ -180,9 +180,13 @@ def edit_habit(id):
 
     if form.validate_on_submit():
         habit.name = form.data["name"]
+        habit.notes=form.data["notes"]
 
-        goal_difference = int(habit_instance.goal_to_complete)-int(form.data["goal_to_complete"])
-        accomplished_difference  = habit_instance.actually_completed-form.data["actually_completed"]
+
+        g_diff = form.data["goal_to_complete"] if form.data["goal_to_complete"] else 0
+        a_diff = form.data["actually_completed"] if form.data["actually_completed"] else 0
+        goal_difference = int(habit_instance.goal_to_complete)-g_diff
+        accomplished_difference  = habit_instance.actually_completed-a_diff
 
         habit_instance.year= form.data["year"]
         habit_instance.month=form.data["month"]
@@ -196,6 +200,7 @@ def edit_habit(id):
         habit_instance.friday=form.data["friday"]
         habit_instance.saturday=form.data["saturday"]
         habit_instance.sunday=form.data["sunday"]
+
 
         db.session.add(habit)
         db.session.add(habit_instance)
