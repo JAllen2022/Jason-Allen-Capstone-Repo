@@ -80,7 +80,6 @@ export default function GoalSummary({}) {
       newGoal.year = date;
     }
 
-
     dispatch(editGoalThunk(newGoal, singleGoal.id));
   };
 
@@ -383,23 +382,21 @@ export default function GoalSummary({}) {
           )}
         </div>
         <div className="habit-modal-action-options">
-          <div className="habit-modal-right-title">
-            Actions:
-            <div
-              className="habit-modal-action-button"
-              onClick={() =>
-                setModalContent(
-                  <DeleteConfirmation
-                    item={singleGoal}
-                    instanceId={singleGoal.id}
-                  />
-                )
-              }
-            >
-              {" "}
-              <i className="fa-solid fa-trash habit-button-icon"></i>
-              Delete
-            </div>
+          <div className="habit-modal-right-title">Actions:</div>
+          <div
+            className="habit-modal-action-button"
+            onClick={() =>
+              setModalContent(
+                <DeleteConfirmation
+                  item={singleGoal}
+                  instanceId={singleGoal.id}
+                />
+              )
+            }
+          >
+            {" "}
+            <i className="fa-solid fa-trash habit-button-icon"></i>
+            Delete
           </div>
         </div>
         {/* <div className="summary-item-container">
