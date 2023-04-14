@@ -313,9 +313,6 @@
   cursor: pointer;
 }
 
-.submit-sub-task:hover {
-}
-
 .submit-sub-task:active {
   transform: translateY(2px);
 }

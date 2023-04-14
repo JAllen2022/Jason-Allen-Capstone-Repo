@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTaskThunk } from "../../../store/tasks";
+import { editTaskThunk, getTaskThunk } from "../../../store/tasks";
 import { useModal } from "../../../context/Modal";
 import CreateSubTask from "./CreateSubTask";
 import TaskSummary from "./TaskSummary";
@@ -12,6 +12,9 @@ import Notes from "../../ReusableComponents/Notes";
 
 export default function EditListField({ itemId }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [name, setName] = useState("");
+  const textAreaRef = useRef(null);
 
   const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
@@ -20,6 +23,20 @@ export default function EditListField({ itemId }) {
   const singleTask = useSelector((state) => state.tasks.singleTask);
 
   const ulRef = useRef();
+
+  const handleNameSubmit = (object) => {
+    const emptyStringCheck = object.name.split(" ").join("");
+    if (object.name.length && emptyStringCheck) {
+      dispatch(editTaskThunk(object, itemId));
+    }
+  };
+
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  }, [name]);
 
   // Formatting time constraints for google doc form
   const now = new Date();
@@ -47,12 +64,6 @@ export default function EditListField({ itemId }) {
 
   let display = "";
 
-  if (tab === "summary") display = <TaskSummary />;
-  if (edit === true) display = <EditTask setEdit={setEdit} setTab={setTab} />;
-  if (tab === "sub-tasks")
-    display = <CreateSubTask parentId={itemId} setTab={setTab} />;
-  if (tab === "notes") display = <Notes taskBool={true} item={singleTask} />;
-
   useEffect(() => {
     if (!showMenu) return;
 
@@ -77,53 +88,83 @@ export default function EditListField({ itemId }) {
         {" "}
         <i onClick={closeModal} className="fa-solid fa-x x-close"></i>
       </div>
-      <h1 className="edit-goal-form-container-title">
-        Task: {singleTask.name}
-      </h1>
-      <div className="edit-goal-form-nav-container">
-        <div className="edit-goal-left-nav">
-          <div
-            className={
-              tab === "summary" ? "goal-tab-heading-active" : "goal-tab-heading"
-            }
-            onClick={() => {
-              setTab("summary");
-              setEdit(false);
-            }}
-          >
-            {" "}
-            Summary{" "}
-          </div>
+      <div className="habit-modal-title-container">
+        <div className="habit-modal-title-icon-left">
+          <i id="habit-star-icon" className="fa-solid fa-bullseye"></i>
+        </div>
+        <div className="habit-modal-title-container-right">
+          <form className="modal-title-form-container" type="submit">
+            <textarea
+              ref={textAreaRef}
+              className="modal-title-input"
+              placeholder={"Add a task..."}
+              type="text"
+              minLength="1"
+              value={name || singleTask?.name}
+              rows={1}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (e.target.value.trim().length === 0) {
+                  setNameError("Name must not be empty or only spaces.");
+                } else {
+                  setNameError("");
+                }
+              }}
+              onBlur={(e) => {
+                e.preventDefault();
+                if (nameError) {
+                  e.preventDefault();
+                } else {
+                  setName(e.target.value);
+                  handleNameSubmit({ ...singleTask, name: e.target.value });
+                }
+              }}
+            ></textarea>
+            {nameError && <div style={{ color: "maroon" }}>**{nameError}</div>}
+            <input
+              type="submit"
+              style={{ position: "absolute", display: "none" }}
+            />
+          </form>
 
-          <div
-            className={
-              tab === "sub-tasks"
-                ? "goal-tab-heading-active"
-                : "goal-tab-heading"
-            }
-            onClick={() => {
-              setTab("sub-tasks");
-              setEdit(false);
-            }}
-          >
-            {" "}
-            Sub-Tasks{" "}
-          </div>
-          <div
-            className={
-              tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
-            }
-            onClick={() => {
-              setTab("notes");
-              setEdit(false);
-            }}
-          >
-            {" "}
-            Notes{" "}
+          <div className="habit-under-title-div">
+            in Tasks for {singleTask.due_date}
           </div>
         </div>
+      </div>
+      <TaskSummary />
+    </div>
+    // <h1 className="edit-goal-form-container-title">
+    //   Task: {singleTask.name}
+    // </h1>
+    // <div className="edit-goal-form-nav-container">
+    //   <div className="edit-goal-left-nav">
+    //     <div
+    //       className={
+    //         tab === "summary" ? "goal-tab-heading-active" : "goal-tab-heading"
+    //       }
+    //       onClick={() => {
+    //         setTab("summary");
+    //       }}
+    //     >
+    //       {" "}
+    //       Summary{" "}
+    //     </div>
 
-        <div
+    //     <div
+    //       className={
+    //         tab === "notes" ? "goal-tab-heading-active" : "goal-tab-heading"
+    //       }
+    //       onClick={() => {
+    //         setTab("notes");
+    //       }}
+    //     >
+    //       {" "}
+    //       Notes{" "}
+    //     </div>
+    //   </div>
+
+    /* <div
           className={
             edit ? "goal-tab-heading-square" : "edit-goal-button-square"
           }
@@ -150,10 +191,10 @@ export default function EditListField({ itemId }) {
               }
             />
           </span>
-        </div>
-      </div>
-      {display}
-    </div>
+        </div> */
+    // </div>
+    //   {display}
+    // </div>
   );
   //   <div className="edit-task-form-container">
   //     <div className="x-marks-the-spot">

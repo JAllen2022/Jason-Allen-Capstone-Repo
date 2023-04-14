@@ -74,6 +74,17 @@ export default function GoalModal({ itemId }) {
     setShowMenu(false);
   };
 
+  let titleDescription = "";
+  if (singleGoal.time_frame === "year")
+    titleDescription = `in Goals for the ${singleGoal.time_frame} of
+            ${singleGoal.year}`;
+  else if (singleGoal.time_frame === "month")
+    titleDescription = `in Goals for the ${singleGoal.time_frame} of
+            ${singleGoal.month}`;
+  else
+    titleDescription = `in Goals for the ${singleGoal.time_frame} of
+            ${singleGoal.week?.slice(14)}`;
+
   return (
     <div className="edit-goal-form-container">
       <div className="x-marks-the-spot">
@@ -119,9 +130,7 @@ export default function GoalModal({ itemId }) {
             />
           </form>
 
-          <div className="habit-under-title-div">
-            in Goals for the week of {singleGoal?.week?.slice(14)}
-          </div>
+          <div className="habit-under-title-div">{titleDescription}</div>
         </div>
       </div>
       <GoalSummary />
