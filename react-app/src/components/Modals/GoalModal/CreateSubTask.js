@@ -17,21 +17,6 @@ export default function CreateSubTask({ showAdd, setShowAdd }) {
     month: "long",
     day: "numeric",
   };
-  console.log(
-    "checking date",
-    date,
-    date.slice(0, 4),
-    parseInt(date.slice(5, 7)) - 1,
-    date.slice(8)
-  );
-  console.log(
-    "checking date",
-    new Date(
-      date.slice(0, 4),
-      parseInt(date.slice(5, 7)) - 1,
-      date.slice(8)
-    ).toLocaleDateString("en-US", dateOptions)
-  );
 
   const dispatch = useDispatch();
 

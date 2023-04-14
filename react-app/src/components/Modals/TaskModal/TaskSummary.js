@@ -1,18 +1,42 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { editTaskThunk, getTaskThunk } from "../../../store/tasks";
+import {
+  editTaskThunk,
+  getTaskThunk,
+  getAllTasksThunk,
+} from "../../../store/tasks";
+import { getAllGoalsThunk } from "../../../store/goals";
 import GoalModal from "../GoalModal";
 import CreateSubTask from "./CreateSubTask";
 import Notes from "../../ReusableComponents/Notes";
+import { useDate } from "../../../context/Date";
+
+function getDayName(date) {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const dayIndex = date.getDay();
+  return days[dayIndex];
+}
 
 export default function TaskSummary() {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declare Constants ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   const singleTask = useSelector((state) => state.tasks.singleTask);
+  const allTasks = useSelector((state) => state.tasks.allTasks);
+  const allGoals = useSelector((state) => state.goals.allGoals);
+  const { fetchDates } = useDate();
+
   // useStates
   const [tab, setTab] = useState("summary");
   const [priority, setPriority] = useState("");
-  const [date, setDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [taskDuration, setTaskDuration] = useState("");
+  const [parentOptions, setParentOptions] = useState("");
+  const [parentId, setParentId] = useState("");
+  const [relatedGoal, setRelatedGoal] = useState([]);
+  const [goalOptions, setGoalOptions] = useState("");
+  const [existingGoals, setExistingGoals] = useState([]);
+  const [showGoals, setShowGoals] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const [description, setDescription] = useState(singleTask.description);
   const [addSubTask, setAddSubTask] = useState(false);
 
@@ -20,7 +44,7 @@ export default function TaskSummary() {
   const descriptionAreaRef = useRef(null);
 
   const relatedGoals =
-    singleTask.goals && Object.values(singleTask.goals).length
+    singleTask.goals && Object?.values(singleTask.goals).length
       ? Object.values(singleTask.goals).map((goal) => <GoalSpan goal={goal} />)
       : "";
 
@@ -36,6 +60,66 @@ export default function TaskSummary() {
 
   const handleGeneralSubmit = (object) => {
     dispatch(editTaskThunk(object, singleTask.id));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Changing due date back to time in database
+    const newDate = new Date(
+      dueDate.slice(0, 4),
+      parseInt(dueDate.slice(5, 7)) - 1,
+      dueDate.slice(8)
+    );
+    const day = newDate.getDate();
+    const month = newDate.toLocaleString("default", { month: "long" });
+    const year = newDate.getFullYear().toString().slice(-2);
+    const newTimeStr = `${getDayName(newDate)}, ${month} ${day}, ${year}`;
+
+    // Combining both arrays for the edit
+
+    const goal_ids = [...existingGoals.map((ele) => ele.id), ...relatedGoal];
+
+    let editItem = {
+      ...singleTask,
+      description,
+      priority,
+      parent_id: parentId,
+      task_duration: taskDuration,
+      //   assign_date: assignDate,
+      due_date: newTimeStr,
+      goals: goal_ids,
+      //   recurring_frequency: recurringFrequency,
+      //   recurring_date: recurringDate,
+      completed: completed ? true : false,
+    };
+
+    if (fetchDates.includes(newTimeStr)) {
+      if (
+        newTimeStr !== singleTask.due_date &&
+        fetchDates.includes(singleTask.due_date)
+      ) {
+        const deleteFromWeek = true;
+        dispatch(
+          editTaskThunk(
+            editItem,
+            singleTask.id,
+            newTimeStr.slice(0, 3).toLowerCase(),
+            deleteFromWeek
+          )
+        );
+      } else {
+        dispatch(
+          editTaskThunk(
+            editItem,
+            singleTask.id,
+            newTimeStr.slice(0, 3).toLowerCase()
+          )
+        );
+      }
+    } else {
+      dispatch(editTaskThunk(editItem, singleTask.id));
+    }
   };
 
   // let priority;
@@ -79,6 +163,113 @@ export default function TaskSummary() {
   //       <span>Priority 4</span>
   //     </>
   //   );
+
+  let displayGoals = "";
+  if (existingGoals.length) {
+    displayGoals = existingGoals.map((ele) => (
+      <div
+        key={`${ele.name}${ele.id}`}
+        value={ele.id}
+        className="existing-goal-divs"
+      >
+        <span
+          className="delete-existing-goal"
+          onClick={() => {
+            const newExistingGoals = existingGoals.filter(
+              (goal) => goal.id !== ele.id
+            );
+            setExistingGoals(newExistingGoals); // remove the item from the array
+          }}
+        >
+          X
+        </span>{" "}
+        {ele.name}
+      </div>
+    ));
+  }
+
+  useEffect(() => {
+    if (singleTask.id) {
+      setDescription(singleTask.description);
+      setPriority(singleTask.priority);
+      setTaskDuration(singleTask.task_duration);
+      setParentId(singleTask.parent_id);
+      //   setRecurringFrequency(singleTask.recurring_frequency);
+      //   setRecurringDate(singleTask.recurring_date);
+      //   setAssignDate(singleTask.assign_date);
+      setCompleted(singleTask.completed);
+
+      // Changing due_date to format for input date
+      const date = new Date(singleTask.due_date);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      const newTimeStr = `${year}-${month}-${day}`;
+
+      setDueDate(newTimeStr);
+    }
+
+    // Filter out the current task, as well as any children tasks. These should not be options
+    // to assign as a parent task
+    const allTaskArray = Object.values(allTasks).filter((ele) => {
+      if (ele.id === singleTask.id || ele.parent_id === singleTask.id) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    if (allTaskArray.length) {
+      //First find the options for tasks that we are able to set as parent tasks
+      const parentArray = allTaskArray.sort((x, y) => {
+        if (x.name < y.name) {
+          return -1;
+        }
+        if (x.name > y.name) {
+          return 1;
+        }
+        return 0;
+      });
+      const diplayParentOptions = parentArray.map((ele) => (
+        <option key={`${ele.name}${ele.id}`} value={ele.id}>
+          {ele.name} | Due date: {ele.due_date}
+        </option>
+      ));
+      setParentOptions(diplayParentOptions);
+      //Find all goals that we are able to set as parents
+    }
+
+    let relatedGoals = Object.values(singleTask.goals);
+    let relatedGoalIds = Object.values(singleTask.goals).map((ele) => ele.id);
+    if (singleTask.goals) {
+      relatedGoals = Object.values(singleTask.goals);
+      relatedGoalIds = Object.values(singleTask.goals).map((ele) => ele.id);
+      setExistingGoals(relatedGoals);
+    }
+    let allGoalArray;
+    if (allGoals)
+      allGoalArray = Object.values(allGoals).filter((ele) => {
+        if (relatedGoalIds.includes(ele.id)) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+    if (allGoalArray.length) {
+      const displayGoalOptions = allGoalArray.map((ele) => (
+        <option key={`${ele.name}${ele.id}`} value={ele.id}>
+          {ele.name} | Due date: {ele.due_date}
+        </option>
+      ));
+
+      setGoalOptions(displayGoalOptions);
+    }
+  }, [singleTask, allTasks, allGoals]);
+
+  useEffect(() => {
+    dispatch(getAllTasksThunk());
+    dispatch(getAllGoalsThunk());
+  }, [dispatch]);
 
   return (
     <div className="habit-modal-body-container">
@@ -144,7 +335,7 @@ export default function TaskSummary() {
             )}
           </>
         ) : (
-          <Notes item={singleTask} />
+          <Notes item={singleTask} taskBool={true} />
         )}
 
         <div className="parent-goal">
@@ -199,9 +390,31 @@ export default function TaskSummary() {
             Notes{" "}
           </div>
         </div>
-        {tab === "summary" ? (
-          <>
-            {/* <div className="summary-item-container">
+        <div className="habit-modal-action-options">
+          {tab === "summary" ? (
+            <>
+              <div className="habit-modal-right-title">Details:</div>
+              <label htmlFor="priority" className="habit-modal-action-button">
+                <i className="fa-solid fa-fire habit-button-icon"></i>
+                <select
+                  className="priority-change-input"
+                  name="priority"
+                  value={priority}
+                  onChange={(e) => {
+                    setPriority(e.target.value);
+                    handleGeneralSubmit({
+                      ...singleTask,
+                      priority: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="1">🟥 Priority 1</option>
+                  <option value="2">🟧 Priority 2</option>
+                  <option value="3">🟦 Priority 3</option>
+                  <option value="4">⬜️ No priority</option>
+                </select>
+              </label>
+              {/* <div className="summary-item-container">
               <div className="summary-item-title">Due Date</div>
               <div className="summary-item-description">
                 <i className="fa-regular fa-calendar summary-icon"></i>
@@ -214,7 +427,7 @@ export default function TaskSummary() {
                 <div className="summary-item-description">{priority}</div>
               </div>
             </div> */}
-            {/* <div className="summary-item-container">
+              {/* <div className="summary-item-container">
           <div className="summary-item-title">Recurring [Weekly] Next:</div>
           <div className="summary-item-task">
             <div className="summary-item-description">
@@ -223,7 +436,7 @@ export default function TaskSummary() {
             </div>
           </div>
         </div> */}
-            {/* <div className="summary-item-container">
+              {/* <div className="summary-item-container">
               <div className="summary-item-title">Estimated Task Duration</div>
               <div className="summary-item-task">
                 <div className="summary-item-description">
@@ -247,16 +460,17 @@ export default function TaskSummary() {
                 </div>
               </div>
             </div> */}
-          </>
-        ) : (
-          <>
-            <div className="habit-modal-right-title">Save your progress:</div>
-            <div className="habit-modal-save-note">
-              The changes you make in the text area will be automatically saved
-              when you click outside of it.
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="habit-modal-right-title">Save your progress:</div>
+              <div className="habit-modal-save-note">
+                The changes you make in the text area will be automatically
+                saved when you click outside of it.
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

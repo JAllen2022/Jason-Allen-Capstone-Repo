@@ -146,10 +146,10 @@ export default function ListItem({
                 handleSubmit(e);
               }}
             ></input>
-            <input
+            {/* <input
               type="submit"
               style={{ position: "absolute", display: "none" }}
-            />
+            /> */}
           </form>
           <i className="fa-solid fa-trash edit" onClick={deleteClick}></i>
         </div>

@@ -170,6 +170,8 @@ def edit_task(id):
     db.session.commit()
 
     task_dict=task.to_dict()
+    task_dict["sub_tasks"] = {task.id:task.to_dict() for task in task.children}
+
 
     parentId = task.parent_id
     if parentId is not None:
