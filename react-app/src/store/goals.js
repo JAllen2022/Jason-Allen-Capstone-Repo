@@ -239,7 +239,8 @@ export default function reducer(state = initialState, action) {
       // Here, we are checking to see if the CURRENT Goal, i.e. the single goal state, is changing it's current date
       if (
         state.singleGoal.time_frame !== editedGoal.time_frame ||
-        state.singleGoal.due_date !== editedGoal.due_date
+        state.singleGoal.due_date !== editedGoal.due_date ||
+        state.singleGoal.week !== editedGoal.week
       ) {
         //find the time frame it's in and delete it
         if (state.year[id]) {
