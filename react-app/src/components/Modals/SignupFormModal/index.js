@@ -31,7 +31,6 @@ function SignupFormModal() {
     }
   };
 
-  console.log("checking errors", errors);
   return (
     <div className="sign-up-modal-container">
       <div className="x-marks-the-spot">

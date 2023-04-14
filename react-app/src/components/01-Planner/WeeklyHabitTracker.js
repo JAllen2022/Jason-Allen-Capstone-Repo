@@ -26,7 +26,6 @@ export default function WeeklyHabitTracker() {
       month: monthDisp,
       week: weekString,
     };
-    console.log("checking new habit", newHabit);
 
     const emptyStringCheck = name.split(" ").join("");
     if (name.length && emptyStringCheck) {

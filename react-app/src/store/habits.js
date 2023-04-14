@@ -179,13 +179,10 @@ export default function reducer(state = initialState, action) {
       return newState;
     case DELETE_HABIT:
       const id = action.payload;
-      console.log("checking what this is ", action.payload);
-      console.log("this", state.habits[id]);
       if (state.habits[id]) {
         newState.habits = { ...state.habits };
         delete newState.habits[id];
       }
-      console.log("what is new state", newState);
 
       newState.habit = {};
 

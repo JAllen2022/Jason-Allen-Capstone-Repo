@@ -129,11 +129,9 @@ export default function Notes({ taskBool, item, week }) {
   //   const ele = document.querySelector("#save-button");
   //   ele.addEventListener("click", () => {
   //     handleSave()
-  //     console.log("we're here 1")
   //   });
   //   return ele.removeEventListener("click", () => {
   //     handleSave();
-  //     console.log("we're here");
   //   });
   // }, []);
 

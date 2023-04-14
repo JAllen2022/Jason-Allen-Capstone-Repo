@@ -122,7 +122,6 @@ export const addGoalThunk = (goal) => async (dispatch) => {
 };
 
 export const editGoalThunk = (goal, goalId) => async (dispatch) => {
-  console.log("we checking it here", JSON.stringify(goal));
   const res = await fetch(`/api/goals/${goalId}`, {
     method: "PUT",
     headers: {
@@ -133,7 +132,6 @@ export const editGoalThunk = (goal, goalId) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    console.log("we checking it after", data);
 
     dispatch(editGoal(data));
   } else {

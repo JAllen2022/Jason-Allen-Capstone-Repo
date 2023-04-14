@@ -79,13 +79,11 @@ export default function CreateSubGoal({ setShowAdd, showAdd }) {
       newListItem.week = getCurrentWeek(startDate);
       newListItem.due_date = newListItem.week.slice(14);
     }
-    console.log("checking newListItem", newListItem);
 
     // Validation to check that a task isn't a character of just spaces
     const emptyStringCheck = name.split(" ").join("");
     if (name.length && emptyStringCheck) {
       const res = dispatch(addGoalThunk(newListItem));
-      if (res) console.log("checking response", res);
     }
 
     setName("");
@@ -236,7 +234,6 @@ export default function CreateSubGoal({ setShowAdd, showAdd }) {
                     required={true}
                     value={date}
                     onChange={(e) => {
-                      console.log("checking week ", e.target.value);
                       setDate(e.target.value);
                     }}
                   />

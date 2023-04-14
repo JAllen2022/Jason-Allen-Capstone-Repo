@@ -41,7 +41,6 @@ export default function TaskSummary() {
   const [completed, setCompleted] = useState(false);
   const [description, setDescription] = useState(singleTask.description);
   const [addSubTask, setAddSubTask] = useState(false);
-  console.log("checking task duration ~~~~~~~~", taskDuration);
 
   const dispatch = useDispatch();
   const descriptionAreaRef = useRef(null);
@@ -62,7 +61,19 @@ export default function TaskSummary() {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Handle Submits ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   const handleGeneralSubmit = (object) => {
-    dispatch(editTaskThunk(object, singleTask.id));
+    if (fetchDates.includes(singleTask.due_date)) {
+      if (fetchDates.includes(singleTask.due_date)) {
+        dispatch(
+          editTaskThunk(
+            object,
+            singleTask.id,
+            singleTask.due_date.slice(0, 3).toLowerCase()
+          )
+        );
+      }
+    } else {
+      dispatch(editTaskThunk(object, singleTask.id));
+    }
   };
 
   const handleSubmit = async (e) => {

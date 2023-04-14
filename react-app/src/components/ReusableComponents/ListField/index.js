@@ -248,7 +248,6 @@ export default function ListField({
               <div
                 className="list-tab-filter-ele"
                 onClick={() => {
-                  console.log("doing things");
                   if (filter != "priorty") {
                     setFilter("priority");
                     const newUser = { ...user };

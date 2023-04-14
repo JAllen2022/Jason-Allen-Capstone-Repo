@@ -99,7 +99,6 @@ export default function HabitModal({ habitId, habit }) {
     const startDate = getStartAddDate(singleHabit);
     const weeks = getWeekStrings(...startDate, repeatOption);
 
-    console.log("checking weeks", weeks);
 
     const data = {};
     data["dates"] = weeks;
@@ -141,7 +140,6 @@ export default function HabitModal({ habitId, habit }) {
   // ~~~~~~~~~~~~~~~~~~~~ UseEffect Functions ~~~~~~~~~~~~~~~~~~~~~~~~~
 
   useEffect(() => {
-    console.log("what is show add week", showAddWeek);
     if (!showAddWeek && !ulRef.current) return;
 
     let isMenuOpened = false;

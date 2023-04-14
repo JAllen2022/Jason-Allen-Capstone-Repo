@@ -104,13 +104,9 @@ export default function EditGoal({ setEdit, setTab }) {
   };
 
   const handleRemoveExistingGoal = (ele) => {
-    // console.log("checking the goal id", ele.id);
     // const newExistingGoals = [...existingGoals];
     // const index = newExistingGoalsIds.indexOf(ele.id); // find the index of the item to remove
-    // console.log("we got this index", index);
-    // console.log("checking existing goals ids", existingGoalsIds);
     // newExistingGoalsIds.splice(index, 1);
-    // console.log("checking new existing goals", newExistingGoalsIds);
     // setExistingGoals(newExistingGoals); // remove the item from the array
   };
 

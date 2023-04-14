@@ -146,10 +146,8 @@ export const editTaskThunk =
       body: JSON.stringify(task),
     });
 
-    console.log("we here 12345 ", deleteFromWeek);
 
     if (res.ok) {
-      console.log("we here 12346 ");
 
       const data = await res.json();
       dispatch(editTask(data, weekday, deleteFromWeek));
@@ -271,14 +269,11 @@ export default function reducer(state = initialState, action) {
         newState[weekday] = {
           ...state[weekday],
         };
-        console.log("are we doing anything", weekday);
         newState[weekday][editedTask.id] = editedTask;
-        console.log("what is the new newState", newState[weekday]);
         if (deleteFromWeek) {
           const oldWeekDay = state.singleTask.due_date
             .slice(0, 3)
             .toLowerCase();
-          console.log("checking old week day", oldWeekDay);
           newState[oldWeekDay] = { ...state[oldWeekDay] };
           delete newState[oldWeekDay][editedTask.id];
         }

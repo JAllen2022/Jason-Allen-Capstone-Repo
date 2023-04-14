@@ -24,22 +24,9 @@ export default function WeeklyHabit({ habit }) {
     monday + tuesday + wednesday + thursday + friday + saturday + sunday;
 
   const handleSubmit = (newHabit) => {
-    console.log("checking new habit", newHabit);
 
-    console.log(
-      "checking goalsum",
-      goalSum,
-      monday,
-      tuesday,
-      wednesday,
-      thursday,
-      friday,
-      saturday,
-      sunday
-    );
     // const emptyStringCheck = name.split(" ").join("");
     // if (name.length && emptyStringCheck) {
-    console.log("we in the planner");
     dispatch(editHabitThunk(newHabit, weekString));
     // }
   };
@@ -67,7 +54,6 @@ export default function WeeklyHabit({ habit }) {
     setSunday(habit?.sunday);
   }, [habit]);
 
-  console.log("checking re-render amount");
 
   const goalInput = (
     <form

@@ -31,9 +31,8 @@ export default function ListItem({
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked
   // Many re-renders occuring here if we console.log here
-  // console.log("checking currtask", currTask);
 
-  // console.log("we are changing completed for", item?.name, completed);
+
   // useEffect(() => {
   //   if (item && currTask.id === item.id) {
   //     if (currTask.completed !== completed) {
@@ -43,14 +42,12 @@ export default function ListItem({
   //   if (item && singleGoal.id === item.id) {
   //     if (singleGoal.completed !== completed) {
   //       setCompleted(singleGoal.completed);
-  //       console.log("we are in here", singleGoal);
   //     }
   //   }
   // }, [currTask, singleGoal]);
 
   useEffect(() => {
     setCompleted(item?.completed);
-    console.log("we are in here", singleGoal);
   }, [item]);
 
   if (item?.priority == "1") {
@@ -138,7 +135,7 @@ export default function ListItem({
           <form className="list-edit-button-checkbox-form">
             <input
               type="checkbox"
-              checked={completed}
+              checked={completed || false}
               className="edit"
               id="list-edit-button-checkbox"
               onChange={(e) => {

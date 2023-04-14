@@ -73,7 +73,6 @@ export default function Journal() {
           author,
         })
       );
-      console.log("we are here waiting", tempJorn);
       journalId = tempJorn.journal.id;
     }
     const file = e.target.files[0];
@@ -83,7 +82,6 @@ export default function Journal() {
     data.append("image", file);
     data.append("journal_id", journalId);
 
-    console.log("Checking data object", data);
 
     dispatch(addImageThunk(data));
   };
@@ -101,7 +99,6 @@ export default function Journal() {
       </div>
     </>
   ));
-  console.log("checking dispImages", dispImages);
   if (dispImages.length < 6) {
     dispImages.push(
       <div className="add-notebook-picture">
@@ -157,7 +154,6 @@ export default function Journal() {
       const randomQuote = getRandomQuote();
       setQuote(randomQuote.text);
       setAuthor(randomQuote.author);
-      console.log("checking random quote");
     }
   }, [year, journalDateString]);
 

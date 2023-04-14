@@ -177,7 +177,6 @@ export default function EditGoal({ setEdit, setTab }) {
       // Convert week input value to date range representing the week
       const [year, weekNumber] = date.split("-W");
       const startDate = getWeekStartDate(year, weekNumber);
-      console.log("checking updated date", date);
 
       editItem.week = getCurrentWeek(startDate);
       editItem.due_date = editItem.week.slice(14);
@@ -363,7 +362,6 @@ export default function EditGoal({ setEdit, setTab }) {
                 required={true}
                 value={date}
                 onChange={(e) => {
-                  console.log("checking week ", e.target.value);
                   setDate(e.target.value);
                 }}
               />

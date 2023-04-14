@@ -50,7 +50,6 @@ export default function GoalSummary({}) {
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Handle Submits ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   const handleGeneralSubmit = (object) => {
-    console.log("checking the object", object);
     dispatch(editGoalThunk(object, singleGoal.id));
   };
 
@@ -81,7 +80,6 @@ export default function GoalSummary({}) {
       newGoal.year = date;
     }
 
-    console.log("checking newGoal", newGoal);
 
     dispatch(editGoalThunk(newGoal, singleGoal.id));
   };

@@ -7,6 +7,7 @@ import TaskSummary from "./TaskSummary";
 import EditTask from "./EditTask";
 import OpenModalButton from "../OpenModalButton";
 import DeleteConfirmation from "../DeleteConfirmation";
+import { useDate } from "../../../context/Date";
 import "./EditListField.css";
 import Notes from "../../ReusableComponents/Notes";
 
@@ -14,6 +15,7 @@ export default function EditListField({ itemId }) {
   const [showMenu, setShowMenu] = useState(false);
   const [nameError, setNameError] = useState("");
   const [name, setName] = useState("");
+  const { fetchDates } = useDate();
   const textAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -25,7 +27,19 @@ export default function EditListField({ itemId }) {
   const handleNameSubmit = (object) => {
     const emptyStringCheck = object.name.split(" ").join("");
     if (object.name.length && emptyStringCheck) {
-      dispatch(editTaskThunk(object, itemId));
+      if (fetchDates.includes(singleTask.due_date)) {
+        if (fetchDates.includes(singleTask.due_date)) {
+          dispatch(
+            editTaskThunk(
+              object,
+              singleTask.id,
+              singleTask.due_date.slice(0, 3).toLowerCase()
+            )
+          );
+        }
+      } else {
+        dispatch(editTaskThunk(object, singleTask.id));
+      }
     }
   };
 
