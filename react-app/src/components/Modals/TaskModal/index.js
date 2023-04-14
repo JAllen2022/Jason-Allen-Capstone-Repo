@@ -16,8 +16,6 @@ export default function EditListField({ itemId }) {
   const [name, setName] = useState("");
   const textAreaRef = useRef(null);
 
-  const [tab, setTab] = useState("summary");
-  const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const singleTask = useSelector((state) => state.tasks.singleTask);
