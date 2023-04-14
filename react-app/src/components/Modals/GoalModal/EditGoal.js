@@ -22,8 +22,6 @@ export default function EditGoal({ setEdit, setTab }) {
   const [parentOptions, setParentOptions] = useState("");
   const [parentId, setParentId] = useState("");
   const { restrictedDay } = useDate();
-  // const [childChoices, setChildChoices] = useState("");
-  // const [showChildGoals, setShowChildGoals] = useState(false);
 
   const { closeModal } = useModal();
 

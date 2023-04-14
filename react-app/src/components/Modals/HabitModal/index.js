@@ -461,7 +461,8 @@ export default function HabitModal({ habitId, habit }) {
               }}
             >
               {" "}
-              <i class="fa-regular fa-newspaper habit-button-icon"></i> Summary{" "}
+              <i className="fa-regular fa-newspaper habit-button-icon"></i>{" "}
+              Summary{" "}
             </div>
 
             <div
@@ -474,7 +475,8 @@ export default function HabitModal({ habitId, habit }) {
               }}
             >
               {" "}
-              <i class="fa-regular fa-note-sticky habit-button-icon"></i> Notes{" "}
+              <i className="fa-regular fa-note-sticky habit-button-icon"></i>{" "}
+              Notes{" "}
             </div>
 
             {/* <div className={"edit-goal-button-square"}>

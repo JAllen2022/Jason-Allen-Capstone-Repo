@@ -141,6 +141,7 @@ export default function ListField({
       name: title,
       due_date: dueDate,
       priority: "4",
+      completed: false,
     };
 
     // Validation to check that a task isn't a character of just spaces

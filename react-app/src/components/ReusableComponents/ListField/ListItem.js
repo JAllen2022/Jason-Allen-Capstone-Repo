@@ -24,20 +24,35 @@ export default function ListItem({
   const { fetchDates } = useDate();
 
   const currTask = useSelector((state) => state.tasks.singleTask);
-  let completed = item?.completed;
+  const singleGoal = useSelector((state) => state.tasks.singleTask);
+
+  const [completed, setCompleted] = useState(item?.completed);
   const { setModalContent } = useModal();
   let tagColor = {};
 
   // Eventually - need to cut down on the re-renders here when checkbox is checked
   // Many re-renders occuring here if we console.log here
   // console.log("checking currtask", currTask);
+
+  // console.log("we are changing completed for", item?.name, completed);
+  // useEffect(() => {
+  //   if (item && currTask.id === item.id) {
+  //     if (currTask.completed !== completed) {
+  //       setCompleted(currTask.completed);
+  //     }
+  //   }
+  //   if (item && singleGoal.id === item.id) {
+  //     if (singleGoal.completed !== completed) {
+  //       setCompleted(singleGoal.completed);
+  //       console.log("we are in here", singleGoal);
+  //     }
+  //   }
+  // }, [currTask, singleGoal]);
+
   useEffect(() => {
-    if (item && currTask.id === item.id) {
-      if (currTask.completed !== completed) {
-        completed = currTask.completed;
-      }
-    }
-  }, [currTask]);
+    setCompleted(item?.completed);
+    console.log("we are in here", singleGoal);
+  }, [item]);
 
   if (item?.priority == "1") {
     tagColor.borderLeft = `2px solid #d1453a`;
@@ -59,7 +74,9 @@ export default function ListItem({
       ...item,
       completed: !completed,
     };
-    completed = !completed;
+
+    if (!taskBool && !completed) updatedItem.status = "Completed";
+    else if (!taskBool && completed) updatedItem.status = "Not started";
 
     if (taskBool) {
       if (fetchDates.includes(item.due_date)) {
@@ -69,11 +86,6 @@ export default function ListItem({
             item.id,
             item.due_date.slice(0, 3).toLowerCase()
           )
-        );
-        console.log(
-          "checking due date",
-          item.due_date,
-          fetchDates.includes(item.due_date)
         );
       }
 
@@ -132,7 +144,10 @@ export default function ListItem({
               checked={completed}
               className="edit"
               id="list-edit-button-checkbox"
-              onChange={handleSubmit}
+              onChange={(e) => {
+                setCompleted((prev) => !prev);
+                handleSubmit(e);
+              }}
             ></input>
             <input
               type="submit"

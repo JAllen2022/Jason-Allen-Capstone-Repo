@@ -49,10 +49,11 @@
   overflow-y: scroll;
   display: flex;
   height: fit-content;
+  height: 100%;
 }
 
 .habit-modal-body-left {
-  height: fit-content;
+  height: 100%;
   width: 75%;
   margin-top: 0.5rem;
 }
@@ -138,12 +139,10 @@
   height: auto;
   width: 95%;
   resize: none;
+  border-radius: 3px;
 }
 
-.modal-title-input:hover {
-  outline: 1.5px solid #719ece;
-}
-
+.modal-title-input:hover,
 .modal-title-input:focus {
   outline: 1.5px solid #719ece;
 }

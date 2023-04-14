@@ -412,7 +412,6 @@ input:checked + .slider:before {
 
 .modal-body-section-container {
   display: flex;
-  border: 1px solid red;
 }
 
 .description-input {
@@ -424,4 +423,36 @@ input:checked + .slider:before {
   height: auto;
   width: 95%;
   resize: none;
+  border-radius: 3px;
+}
+
+.description-input:hover,
+.description-input:focus {
+  outline: 1.5px solid #719ece;
+}
+
+.priority-change-input {
+  border: 1px solid transparent;
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: Times, serif;
+}
+
+input[type="week"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  /* display: none; */
+  position: absolute;
+  opacity: 0;
+  border: 1px solid red;
+  width: 96%;
+  left: 0;
+  height: 90%;
+  cursor: pointer;
 }

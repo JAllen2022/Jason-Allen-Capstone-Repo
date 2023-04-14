@@ -21,7 +21,6 @@ export default function GoalModal({ itemId }) {
   const dispatch = useDispatch();
   const { closeModal, setModalContent } = useModal();
   const singleGoal = useSelector((state) => state.goals.singleGoal);
-  const [tab, setTab] = useState("summary");
   const [edit, setEdit] = useState(false);
   const [nameError, setNameError] = useState("");
   const [name, setName] = useState("");
@@ -44,12 +43,6 @@ export default function GoalModal({ itemId }) {
 
   let display = "";
 
-  if (tab === "summary") display = <GoalSummary tab={tab} setTab={setTab} />;
-  if (edit === true) display = <EditGoal setEdit={setEdit} setTab={setTab} />;
-  if (tab === "sub-goal")
-    display = <CreateSubGoal parentId={itemId} setTab={setTab} />;
-  if (tab === "sub-tasks") display = <CreateSubTask parentId={itemId} />;
-  if (tab === "notes") display = <Notes item={singleGoal} />;
   // else display= <Reflections />
   const deleteClick = () => {
     dispatch(deleteGoalThunk(itemId));
@@ -124,8 +117,7 @@ export default function GoalModal({ itemId }) {
           </div>
         </div>
       </div>
-
-      {display}
+      <GoalSummary />
     </div>
   );
 }
