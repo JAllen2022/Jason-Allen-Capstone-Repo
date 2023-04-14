@@ -10,6 +10,7 @@ import { getAllGoalsThunk } from "../../../store/goals";
 import GoalModal from "../GoalModal";
 import CreateSubTask from "./CreateSubTask";
 import Notes from "../../ReusableComponents/Notes";
+import DeleteConfirmation from "../DeleteConfirmation";
 import { useDate } from "../../../context/Date";
 
 function getDayName(date) {
@@ -20,6 +21,7 @@ function getDayName(date) {
 
 export default function TaskSummary() {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declare Constants ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  const { closeModal, setModalContent } = useModal();
   const singleTask = useSelector((state) => state.tasks.singleTask);
   const allTasks = useSelector((state) => state.tasks.allTasks);
   const allGoals = useSelector((state) => state.goals.allGoals);
@@ -556,6 +558,27 @@ export default function TaskSummary() {
               </div>
             </>
           )}
+        </div>
+        <div className="habit-modal-action-options">
+          <div className="habit-modal-right-title">
+            Actions:
+            <div
+              className="habit-modal-action-button"
+              onClick={() =>
+                setModalContent(
+                  <DeleteConfirmation
+                    item={singleTask}
+                    instanceId={singleTask.id}
+                    taskBool={true}
+                  />
+                )
+              }
+            >
+              {" "}
+              <i className="fa-solid fa-trash habit-button-icon"></i>
+              Delete
+            </div>
+          </div>
         </div>
       </div>
     </div>

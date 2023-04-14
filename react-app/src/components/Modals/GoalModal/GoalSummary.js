@@ -3,10 +3,12 @@ import { useEffect, useState, useRef } from "react";
 import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import Notes from "../../ReusableComponents/Notes";
 import { getCurrentWeek, useDate } from "../../../context/Date";
-import "./GoalModal.css";
 import CreateSubTask from "./CreateSubTask";
 import CreateSubGoal from "./CreateSubGoal";
+import DeleteConfirmation from "../DeleteConfirmation";
+import { useModal } from "../../../context/Modal";
 
+import "./GoalModal.css";
 // Helper functions
 const getWeekStartDate = (year, weekNumber) => {
   const simple = new Date(year, 0, 2 + (weekNumber - 1) * 7);
@@ -23,6 +25,7 @@ const dateOptions = {
 
 export default function GoalSummary({}) {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Declare Constants ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  const { closeModal, setModalContent } = useModal();
 
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [description, setDescription] = useState(singleGoal.description);
@@ -380,6 +383,26 @@ export default function GoalSummary({}) {
               </div>
             </>
           )}
+        </div>
+        <div className="habit-modal-action-options">
+          <div className="habit-modal-right-title">
+            Actions:
+            <div
+              className="habit-modal-action-button"
+              onClick={() =>
+                setModalContent(
+                  <DeleteConfirmation
+                    item={singleGoal}
+                    instanceId={singleGoal.id}
+                  />
+                )
+              }
+            >
+              {" "}
+              <i className="fa-solid fa-trash habit-button-icon"></i>
+              Delete
+            </div>
+          </div>
         </div>
         {/* <div className="summary-item-container">
           <div className="summary-item-title">Sub-Goals</div>
