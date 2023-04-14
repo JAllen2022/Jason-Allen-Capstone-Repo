@@ -5,7 +5,7 @@ import { addSubTask } from "../../../store/goals";
 import { useDate } from "../../../context/Date";
 import { addTaskThunk } from "../../../store/tasks";
 
-export default function CreateSubTask({ parentId }) {
+export default function CreateSubTask({ showAdd, setShowAdd }) {
   const [name, setName] = useState("");
   const singleGoal = useSelector((state) => state.goals.singleGoal);
   const [date, setDate] = useState("");
@@ -59,11 +59,12 @@ export default function CreateSubTask({ parentId }) {
     else response = await dispatch(addTaskThunk(newListItem, dueDate));
 
     dispatch(addSubTask(response));
-
+    setShowAdd(false);
+    setDate("");
     setName("");
   };
 
-  const defaultListHeight = 10;
+  const defaultListHeight = 7;
   let displayList = [];
   if (singleGoal.sub_tasks) {
     const array = Object.values(singleGoal.sub_tasks);
@@ -91,47 +92,58 @@ export default function CreateSubTask({ parentId }) {
   return (
     <>
       <div className="goal-modal-create-sub-task-container">
-        <div className="sub-task-list-input-field-container-left">
-          <h4 className="goal-modal-create-sub-task-header">
-            Create a sub-task:
-          </h4>
-          <form
-            className="goal-modal-create-sub-task-form"
-            onSubmit={handleSubmit}
-            type="submit"
-          >
-            <label htmlFor="name" className="edit-task-form-labels">
-              Name: <span style={{ color: "maroon" }}>*</span>
-            </label>
-            <input
-              className="edit-form-input"
-              placeholder={"Add a sub task..."}
-              type="text"
-              name="name"
-              maxLength="50"
-              required={true}
-              value={name}
-              onChange={handleNameChange}
-            ></input>
-            <label htmlFor="year" className="edit-task-form-labels">
-              Set a Due Date <span style={{ color: "maroon" }}>*</span>
-            </label>
-            <input
-              className="edit-form-date-input"
-              name="year"
-              required={true}
-              type="date"
-              min={restrictedDay}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            ></input>
-
-            <button type="submit" className="submit-sub-task">
-              Create
-            </button>
-          </form>
-        </div>
-        <div className="sub-task-list-display-right">{displayList}</div>
+        <div className="sub-task-list-display">{displayList}</div>
+        {showAdd && (
+          <div className="sub-task-list-input-field-container-left">
+            {/* <h4 className="goal-modal-create-sub-task-header">
+              Create a sub-task:
+            </h4> */}
+            <form
+              className="goal-modal-create-sub-task-form"
+              onSubmit={handleSubmit}
+              type="submit"
+            >
+              <div className="sub-task-input-container">
+                <label htmlFor="name" className="sub-task-input-labels">
+                  Name: <span style={{ color: "maroon" }}>*</span>
+                  <input
+                    className="sub-task-inputs"
+                    placeholder={"Add a sub task..."}
+                    type="text"
+                    name="name"
+                    maxLength="50"
+                    required={true}
+                    value={name}
+                    onChange={handleNameChange}
+                  ></input>
+                </label>
+                <label htmlFor="year" className="sub-task-input-labels">
+                  Set a Due Date <span style={{ color: "maroon" }}>*</span>
+                  <input
+                    className="sub-task-inputs"
+                    name="year"
+                    required={true}
+                    type="date"
+                    min={restrictedDay}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  ></input>
+                </label>
+              </div>
+              <div className="sub-task-button-container">
+                <button type="submit" className="submit-sub-task">
+                  Create
+                </button>
+                <div
+                  onClick={() => setShowAdd(false)}
+                  className="cancel-sub-task"
+                >
+                  Cancel
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </>
   );

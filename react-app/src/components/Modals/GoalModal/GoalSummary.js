@@ -4,6 +4,8 @@ import { getGoalThunk, editGoalThunk } from "../../../store/goals";
 import Notes from "../../ReusableComponents/Notes";
 import { getCurrentWeek, useDate } from "../../../context/Date";
 import "./GoalModal.css";
+import CreateSubTask from "./CreateSubTask";
+import CreateSubGoal from "./CreateSubGoal";
 
 // Helper functions
 const getWeekStartDate = (year, weekNumber) => {
@@ -31,6 +33,8 @@ export default function GoalSummary({}) {
   const [status, setStatus] = useState("4");
   const [date, setDate] = useState("");
   const [parentId, setParentId] = useState("");
+  const [addSubTask, setAddSubTask] = useState(false);
+  const [addSubGoal, setAddSubGoal] = useState(false);
 
   // References
   const descriptionAreaRef = useRef(null);
@@ -175,6 +179,42 @@ export default function GoalSummary({}) {
                     });
                   }}
                 ></textarea>
+              </div>
+            </div>
+            <div className="modal-body-section-container ">
+              <div className="habit-week-icon-container">
+                <i class="fa-regular fa-square-check"></i>
+              </div>
+              <div className="habit-week-container-right">
+                <div className="habit-week-container-right-heading">
+                  <h3 className="habit-modal-sub-headings">Sub-Goals</h3>
+                  <i
+                    class="fa-solid fa-plus add-sub"
+                    onClick={() => setAddSubGoal((prev) => !prev)}
+                  ></i>
+                </div>
+                <CreateSubGoal
+                  showAdd={addSubGoal}
+                  setShowAdd={setAddSubGoal}
+                />
+              </div>
+            </div>
+            <div className="modal-body-section-container ">
+              <div className="habit-week-icon-container">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <div className="habit-week-container-right">
+                <div className="habit-week-container-right-heading">
+                  <h3 className="habit-modal-sub-headings">Sub-Tasks</h3>
+                  <i
+                    class="fa-solid fa-plus add-sub"
+                    onClick={() => setAddSubTask((prev) => !prev)}
+                  ></i>
+                </div>
+                <CreateSubTask
+                  showAdd={addSubTask}
+                  setShowAdd={setAddSubTask}
+                />
               </div>
             </div>
             {singleGoal.parent_id && (

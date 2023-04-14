@@ -166,6 +166,7 @@
   overflow-y: scroll;
   /* border: 1px solid red; */
   max-height: 70%;
+  padding-top: 0.15rem;
 }
 
 .edit-goal-button {
@@ -217,25 +218,105 @@
 
 .goal-modal-create-sub-task-container {
   width: 95%;
-  height: 19rem;
   display: flex;
+  flex-direction: column;
 }
 
 .sub-task-list-input-field-container-left {
-  width: 40%;
+  width: 100%;
 }
 
-.sub-task-list-display-right {
-  width: 60%;
-  border: 1px solid lightgray;
-  margin-left: 1rem;
+.goal-modal-create-sub-task-form {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+}
+
+.sub-task-input-labels {
+  width: 47.5%;
+  font-size: 14px;
+}
+
+.sub-task-input-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub-task-button-container {
+  display: flex;
+  margin-top: 0.75rem;
+}
+
+.sub-task-inputs {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid lightgray;
+  font-size: 14px;
+  padding: 0.25rem 0;
+}
+
+.sub-task-inputs:hover,
+.sub-task-inputs:focus {
+  outline: 1.5px solid #719ece;
+}
+
+.sub-task-list-display {
+  width: 100%;
+  border: 1px solid lightgray;
   overflow-y: scroll;
+  max-height: 10rem;
+  height: 10rem;
+  border-radius: 3px;
+}
+
+.habit-week-container-right-heading {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.add-sub {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-sub:hover {
+  font-weight: 600;
+}
+
+.add-sub:active,
+.cancel-sub-task:active {
+  transform: translateY(2px);
 }
 
 .submit-sub-task {
-  width: 100%;
+  width: 20%;
+  height: 1.5rem;
+  border-radius: 5px;
+  background-color: rgb(51, 51, 51);
+  color: rgb(224, 223, 223);
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-sub-task {
+  width: 20%;
+  height: 1.5rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border: 1px solid lightgray;
+  background-color: transparent;
+  margin-left: 0.25rem;
+  cursor: pointer;
+}
+
+.submit-sub-task:hover {
+}
+
+.submit-sub-task:active {
+  transform: translateY(2px);
 }
 
 .goal-modal-sub-goal-container {
@@ -254,17 +335,11 @@
 
 .sub-goal-list-display {
   width: 60%;
-  border: 1px solid lightgray;
   margin-left: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   overflow-y: scroll;
-}
-
-.submit-sub-task {
-  border: 1px solid lightgray;
-  background-color: transparent;
-  margin-top: 1rem;
+  height: 10rem;
 }
 
 /* Goal Sumamry Page */
@@ -450,7 +525,6 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   /* display: none; */
   position: absolute;
   opacity: 0;
-  border: 1px solid red;
   width: 96%;
   left: 0;
   height: 90%;
