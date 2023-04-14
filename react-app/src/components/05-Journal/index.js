@@ -28,7 +28,6 @@ export default function Journal() {
   const dispatch = useDispatch();
   const journal = useSelector((state) => state.journals.journal);
   const images = useSelector((state) => state.journals.images);
-  const randomQuote = getRandomQuote();
 
   // UseStates
   const [textField1, setTextField1] = useState("1.\n2.\n3.");
@@ -37,8 +36,8 @@ export default function Journal() {
   const [textField4, setTextField4] = useState("1.\n2.\n3.");
   const [textField5, setTextField5] = useState("");
   const [textField6, setTextField6] = useState("");
-  const [author, setAuthor] = useState(randomQuote.author);
-  const [quote, setQuote] = useState(randomQuote.text);
+  const [author, setAuthor] = useState("");
+  const [quote, setQuote] = useState("");
 
   // Date context and date changing functionality
   const {
@@ -81,7 +80,6 @@ export default function Journal() {
 
     data.append("image", file);
     data.append("journal_id", journalId);
-
 
     dispatch(addImageThunk(data));
   };
@@ -158,8 +156,8 @@ export default function Journal() {
   }, [year, journalDateString]);
 
   useEffect(() => {
-    setQuote(journal.text || randomQuote.text);
-    setAuthor(journal.author || randomQuote.author);
+    setQuote(journal.text);
+    setAuthor(journal.author);
     setTextField1(journal.text_field1 || "1.\n2.\n3.");
     setTextField2(journal.text_field2 || "1.\n2.\n3.");
     setTextField3(journal.text_field3 || "");
