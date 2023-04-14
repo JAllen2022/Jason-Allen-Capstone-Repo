@@ -19,6 +19,7 @@ class Task(db.Model):
     completed=db.Column(db.Boolean)
     parent_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("tasks.id")))
     notes=db.Column(db.Text)
+    # status=db.Column(db.String(30))
 
     children=db.relationship("Task", backref=db.backref('parent', remote_side=[id]))
 

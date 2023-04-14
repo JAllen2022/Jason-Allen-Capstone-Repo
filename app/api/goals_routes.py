@@ -77,7 +77,9 @@ def add_goal():
             week=form.data["week"],
             due_date=form.data["due_date"],
             priority=form.data["priority"],
-            status=form.data["status"]
+            status=form.data["status"],
+            completed=False,
+            description=""
         )
 
         db.session.add(goal)

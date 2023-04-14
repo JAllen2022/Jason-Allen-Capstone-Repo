@@ -103,7 +103,8 @@ def add_task():
         name=form_data["name"],
         parent_id= form_data["parent_id"] if form_data.get("parent_id") else None,
         due_date =form_data["due_date"],
-        priority = form_data["priority"]
+        priority = form_data["priority"],
+        description=""
     )
 
     if form_data.get("goals") is not None:

@@ -63,6 +63,13 @@ export default function GoalModal({ itemId }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+    }
+  }, [name]);
+
   const closeMenu = () => {
     setShowMenu(false);
   };
