@@ -148,16 +148,18 @@ export default function Journal() {
 
   useEffect(() => {
     dispatch(getJournalThunk({ year, date: journalDateString }));
-    if (!journal.id) {
+    if (!journal.id || journalDateString !== journal.date) {
       const randomQuote = getRandomQuote();
       setQuote(randomQuote.text);
       setAuthor(randomQuote.author);
+      console.log("we are in here doing the thing");
     }
   }, [year, journalDateString]);
 
   useEffect(() => {
-    setQuote(journal.text);
-    setAuthor(journal.author);
+    const randomQuote = getRandomQuote();
+    setQuote(journal.text || randomQuote.text);
+    setAuthor(journal.author || randomQuote.author);
     setTextField1(journal.text_field1 || "1.\n2.\n3.");
     setTextField2(journal.text_field2 || "1.\n2.\n3.");
     setTextField3(journal.text_field3 || "");
