@@ -15,7 +15,6 @@ export default function ListItem({
   empty,
   taskBool,
   subTask,
-  setTab,
   subGoal,
   indivSubTask,
   weekday,
@@ -104,12 +103,10 @@ export default function ListItem({
     if (taskBool) {
       if (indivSubTask) {
         dispatch(getTaskThunk(item.id));
-        setTab("summary");
       } else setModalContent(<TaskModal itemId={item.id} />);
     } else {
       if (subGoal) {
         dispatch(getGoalThunk(item.id));
-        setTab("summary");
       } else setModalContent(<GoalModal itemId={item.id} />);
     }
   };

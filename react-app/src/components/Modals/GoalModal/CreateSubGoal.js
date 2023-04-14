@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addGoalThunk } from "../../../store/goals";
 import { getCurrentWeek } from "../../../context/Date";
 
-export default function CreateSubGoal({ parentId, setTab }) {
+export default function CreateSubGoal({ setShowAdd, showAdd }) {
   const [name, setName] = useState("");
   const [timeFrame, setTimeFrame] = useState("");
   const [date, setDate] = useState("");
@@ -106,7 +106,7 @@ export default function CreateSubGoal({ parentId, setTab }) {
   if (singleGoal.sub_goals) {
     const array = Object.values(singleGoal.sub_goals);
     displayList = array.map((item) => (
-      <ListItem subGoal={true} setTab={setTab} key={item.id} item={item} />
+      <ListItem subGoal={true} key={item.id} item={item} />
     ));
   }
   if (displayList.length < defaultListHeight) {
@@ -133,115 +133,130 @@ export default function CreateSubGoal({ parentId, setTab }) {
   }
 
   return (
-    <div className="goal-modal-sub-goal-container">
-      <div className="create-sub-goal-container">
-        <h4>Create a Sub-Goal:</h4>
-        <form className="sub-goal-list-form-container" onSubmit={handleSubmit}>
-          <label htmlFor="name" className="edit-task-form-labels">
-            Name: <span style={{ color: "maroon" }}>*</span>
-          </label>
-          <input
-            className="edit-form-input"
-            placeholder={"Add a sub goal..."}
-            name="name"
-            type="text"
-            maxLength="50"
-            required={true}
-            value={name}
-            onChange={handleNameChange}
-          ></input>
-
-          <label htmlFor="time-frame" className="edit-task-form-labels">
-            Time Frame <span style={{ color: "maroon" }}>*</span>
-          </label>
-          <select
-            className="edit-form-select-input"
-            name="time-frame"
-            defaultValue={null}
-            required={true}
-            value={timeFrame}
-            onChange={(e) => setTimeFrame(e.target.value)}
+    <div className="goal-modal-create-sub-task-container">
+      <div className="sub-task-list-display">{displayList}</div>
+      {showAdd && (
+        <div className="sub-task-list-input-field-container-left">
+          <form
+            className="goal-modal-create-sub-task-form"
+            onSubmit={handleSubmit}
           >
-            <option value={""} disabled={true}>
-              Select time frame
-            </option>
-            <option value="year">Yearly</option>
-            <option value="month">Monthly</option>
-            <option value="week">Weekly</option>
-          </select>
-          <label htmlFor="priority" className="edit-task-form-labels">
-            Priority
-          </label>
-          <select
-            className="edit-form-select-input"
-            name="priority"
-            defaultValue={null}
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          >
-            <option value={""} disabled={true}>
-              Select priority
-            </option>
-            <option value="1">Priority 1</option>
-            <option value="2">Priority 2</option>
-            <option value="3">Priority 3</option>
-            <option value="4">Priority 4</option>
-          </select>
+            <div className="sub-task-input-container">
+              <label htmlFor="name" className="sub-task-input-labels">
+                Name: <span style={{ color: "maroon" }}>*</span>
+                <input
+                  className="edit-form-input"
+                  placeholder={"Add a sub goal..."}
+                  name="name"
+                  type="text"
+                  maxLength="50"
+                  required={true}
+                  value={name}
+                  onChange={handleNameChange}
+                ></input>
+              </label>
 
-          <label htmlFor="date" className="edit-task-form-labels">
-            Set a Due Date <span style={{ color: "maroon" }}>*</span>
-          </label>
-          {timeFrame === "year" && (
-            <select
-              className="edit-form-date-input"
-              name="date"
-              type="number"
-              required={true}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            >
-              <option value={null}></option>
-              {yearArray.map((month, index) => (
-                <option key={index} value={month}>
-                  {month}
-                </option>
-              ))}
-            </select>
-          )}
-          {timeFrame === "month" && (
-            <input
-              className="edit-form-date-input"
-              name="date"
-              type="month"
-              min={new Date().toISOString().slice(0, 7)}
-              required={true}
-              value={date}
-              onChange={(e) => {
-                const yearMonth = e.target.value.split("-");
-                const formattedDate = `${yearMonth[0]}-${yearMonth[1]}`;
-                setDate(formattedDate);
-              }}
-            />
-          )}
-          {timeFrame === "week" && (
-            <input
-              className="edit-form-date-input"
-              name="date"
-              type="week"
-              min={new Date().toISOString().slice(0, 7)}
-              required={true}
-              value={date}
-              onChange={(e) => {
-                console.log("checking week ", e.target.value);
-                setDate(e.target.value);
-              }}
-            />
-          )}
+              <label htmlFor="time-frame" className="sub-task-input-labels">
+                Time Frame <span style={{ color: "maroon" }}>*</span>
+                <select
+                  className="edit-form-select-input"
+                  name="time-frame"
+                  defaultValue={null}
+                  required={true}
+                  value={timeFrame}
+                  onChange={(e) => setTimeFrame(e.target.value)}
+                >
+                  <option value={""} disabled={true}>
+                    Select time frame
+                  </option>
+                  <option value="year">Yearly</option>
+                  <option value="month">Monthly</option>
+                  <option value="week">Weekly</option>
+                </select>
+              </label>
+              <label htmlFor="priority" className="sub-task-input-labels">
+                Priority
+                <select
+                  className="edit-form-select-input"
+                  name="priority"
+                  defaultValue={null}
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                >
+                  <option value={""} disabled={true}>
+                    Select priority
+                  </option>
+                  <option value="1">Priority 1</option>
+                  <option value="2">Priority 2</option>
+                  <option value="3">Priority 3</option>
+                  <option value="4">Priority 4</option>
+                </select>
+              </label>
 
-          <button className="submit-sub-task">Create</button>
-        </form>
-      </div>
-      <div className="sub-goal-list-display">{displayList}</div>
+              <label htmlFor="date" className="sub-task-input-labels">
+                Set a Due Date <span style={{ color: "maroon" }}>*</span>
+                {timeFrame === "year" && (
+                  <select
+                    className="edit-form-date-input"
+                    name="date"
+                    type="number"
+                    required={true}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  >
+                    <option value={null}></option>
+                    {yearArray.map((month, index) => (
+                      <option key={index} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                )}
+                {timeFrame === "month" && (
+                  <input
+                    className="edit-form-date-input"
+                    name="date"
+                    type="month"
+                    min={new Date().toISOString().slice(0, 7)}
+                    required={true}
+                    value={date}
+                    onChange={(e) => {
+                      const yearMonth = e.target.value.split("-");
+                      const formattedDate = `${yearMonth[0]}-${yearMonth[1]}`;
+                      setDate(formattedDate);
+                    }}
+                  />
+                )}
+                {timeFrame === "week" && (
+                  <input
+                    className="edit-form-date-input"
+                    name="date"
+                    type="week"
+                    min={new Date().toISOString().slice(0, 7)}
+                    required={true}
+                    value={date}
+                    onChange={(e) => {
+                      console.log("checking week ", e.target.value);
+                      setDate(e.target.value);
+                    }}
+                  />
+                )}
+              </label>
+            </div>
+            <div className="sub-task-button-container">
+              <button type="submit" className="submit-sub-task">
+                Create
+              </button>
+              <div
+                onClick={() => setShowAdd(false)}
+                className="cancel-sub-task"
+              >
+                Cancel
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

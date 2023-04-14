@@ -239,6 +239,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .sub-task-button-container {
@@ -487,6 +488,7 @@ input:checked + .slider:before {
 
 .modal-body-section-container {
   display: flex;
+  margin-bottom: 1rem;
 }
 
 .description-input {
@@ -499,6 +501,7 @@ input:checked + .slider:before {
   width: 95%;
   resize: none;
   border-radius: 3px;
+  overflow-y: scroll;
 }
 
 .description-input:hover,
@@ -520,8 +523,8 @@ input:checked + .slider:before {
   font-family: Times, serif;
 }
 
-input[type="week"]::-webkit-calendar-picker-indicator,
-input[type="month"]::-webkit-calendar-picker-indicator {
+input[type="week"].priority-change-input::-webkit-calendar-picker-indicator,
+input[type="month"].priority-change-input::-webkit-calendar-picker-indicator {
   /* display: none; */
   position: absolute;
   opacity: 0;
@@ -529,4 +532,8 @@ input[type="month"]::-webkit-calendar-picker-indicator {
   left: 0;
   height: 90%;
   cursor: pointer;
+}
+
+#goal-modal-sub-task-container {
+  margin-bottom: 2rem;
 }

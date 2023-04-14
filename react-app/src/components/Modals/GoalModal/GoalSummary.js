@@ -149,6 +149,13 @@ export default function GoalSummary({}) {
     }
   }, [singleGoal]);
 
+  useEffect(() => {
+    if (descriptionAreaRef.current) {
+      descriptionAreaRef.current.style.height = "auto";
+      descriptionAreaRef.current.style.height = `${descriptionAreaRef.current.scrollHeight}px`;
+    }
+  }, [description]);
+
   return (
     <div className="habit-modal-body-container">
       <div className="habit-modal-body-left">

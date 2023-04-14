@@ -91,7 +91,7 @@ export default function CreateSubTask({ showAdd, setShowAdd }) {
 
   return (
     <>
-      <div className="goal-modal-create-sub-task-container">
+      <div id="goal-modal-sub-task-container" className="goal-modal-create-sub-task-container">
         <div className="sub-task-list-display">{displayList}</div>
         {showAdd && (
           <div className="sub-task-list-input-field-container-left">
