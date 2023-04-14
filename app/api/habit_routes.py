@@ -183,9 +183,9 @@ def edit_habit(id):
         habit.notes=form.data["notes"]
 
 
-        g_diff = form.data["goal_to_complete"] if form.data["goal_to_complete"] else 0
-        a_diff = form.data["actually_completed"] if form.data["actually_completed"] else 0
-        goal_difference = int(habit_instance.goal_to_complete)-g_diff
+        g_diff = int(form.data["goal_to_complete"]) if form.data["goal_to_complete"] else 0
+        a_diff = int(form.data["actually_completed"]) if form.data["actually_completed"] else 0
+        goal_difference = int(habit_instance.goal_to_complete)- g_diff
         accomplished_difference  = habit_instance.actually_completed-a_diff
 
         habit_instance.year= form.data["year"]

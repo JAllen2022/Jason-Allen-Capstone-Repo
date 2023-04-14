@@ -1,6 +1,13 @@
 .delete-modal-container {
   /* border: 1px solid red; */
   width: 25rem;
+  padding: 1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(226, 224, 211, 0.4),
+    rgba(226, 224, 211, 1),
+    rgba(226, 224, 211, 0.4)
+  );
 }
 
 .delete-modal-inner-text-title {
@@ -21,7 +28,7 @@
   color: black;
   width: 6rem;
   height: 3rem;
-  border-radius: 30%;
+  border-radius: 4rem;
   opacity: 0.7;
   cursor: pointer;
   display: flex;

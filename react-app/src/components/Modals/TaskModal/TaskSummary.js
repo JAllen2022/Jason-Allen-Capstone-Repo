@@ -272,6 +272,13 @@ export default function TaskSummary() {
     dispatch(getAllGoalsThunk());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (descriptionAreaRef.current) {
+      descriptionAreaRef.current.style.height = "auto";
+      descriptionAreaRef.current.style.height = `${descriptionAreaRef.current.scrollHeight}px`;
+    }
+  }, [description]);
+
   const durationOptions = [
     <option value={null}>None</option>,
     <option value="15 minutes">15 minutes</option>,
@@ -313,7 +320,7 @@ export default function TaskSummary() {
                   className="description-input"
                   placeholder={"Add a more detailed description..."}
                   type="text"
-                  value={description}
+                  value={description || ""}
                   rows={4}
                   onChange={(e) => {
                     setDescription(e.target.value);
