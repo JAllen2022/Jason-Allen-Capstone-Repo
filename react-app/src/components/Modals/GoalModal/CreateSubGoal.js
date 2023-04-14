@@ -85,7 +85,7 @@ export default function CreateSubGoal({ setShowAdd, showAdd }) {
     if (name.length && emptyStringCheck) {
       const res = dispatch(addGoalThunk(newListItem));
     }
-
+    setShowAdd(false);
     setName("");
     setDate("");
     setTimeFrame("");

@@ -570,25 +570,27 @@ export default function TaskSummary() {
             </>
           )}
         </div>
-        <div className="habit-modal-action-options">
-          <div className="habit-modal-right-title">Actions:</div>
-          <div
-            className="habit-modal-action-button"
-            onClick={() =>
-              setModalContent(
-                <DeleteConfirmation
-                  item={singleTask}
-                  instanceId={singleTask.id}
-                  taskBool={true}
-                />
-              )
-            }
-          >
-            {" "}
-            <i className="fa-solid fa-trash habit-button-icon"></i>
-            Delete
+        {tab === "summary" && (
+          <div className="habit-modal-action-options">
+            <div className="habit-modal-right-title">Actions:</div>
+            <div
+              className="habit-modal-action-button"
+              onClick={() =>
+                setModalContent(
+                  <DeleteConfirmation
+                    item={singleTask}
+                    instanceId={singleTask.id}
+                    taskBool={true}
+                  />
+                )
+              }
+            >
+              {" "}
+              <i className="fa-solid fa-trash habit-button-icon"></i>
+              Delete
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
