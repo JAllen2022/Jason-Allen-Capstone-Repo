@@ -521,7 +521,8 @@ input:checked + .slider:before {
 }
 
 input[type="week"].priority-change-input::-webkit-calendar-picker-indicator,
-input[type="month"].priority-change-input::-webkit-calendar-picker-indicator {
+input[type="month"].priority-change-input::-webkit-calendar-picker-indicator,
+input[type="date"].priority-change-input::-webkit-calendar-picker-indicator {
   /* display: none; */
   position: absolute;
   opacity: 0;

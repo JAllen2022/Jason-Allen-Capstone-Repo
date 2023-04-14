@@ -39,6 +39,7 @@ export default function TaskSummary() {
   const [completed, setCompleted] = useState(false);
   const [description, setDescription] = useState(singleTask.description);
   const [addSubTask, setAddSubTask] = useState(false);
+  console.log("checking task duration ~~~~~~~~", taskDuration);
 
   const dispatch = useDispatch();
   const descriptionAreaRef = useRef(null);
@@ -67,9 +68,9 @@ export default function TaskSummary() {
 
     // Changing due date back to time in database
     const newDate = new Date(
-      dueDate.slice(0, 4),
-      parseInt(dueDate.slice(5, 7)) - 1,
-      dueDate.slice(8)
+      e.target.value.slice(0, 4),
+      parseInt(e.target.value.slice(5, 7)) - 1,
+      e.target.value.slice(8)
     );
     const day = newDate.getDate();
     const month = newDate.toLocaleString("default", { month: "long" });
@@ -82,16 +83,16 @@ export default function TaskSummary() {
 
     let editItem = {
       ...singleTask,
-      description,
-      priority,
-      parent_id: parentId,
-      task_duration: taskDuration,
+      // description,
+      // priority,
+      // parent_id: parentId,
+      // task_duration: taskDuration,
       //   assign_date: assignDate,
       due_date: newTimeStr,
-      goals: goal_ids,
+      // goals: goal_ids,
       //   recurring_frequency: recurringFrequency,
       //   recurring_date: recurringDate,
-      completed: completed ? true : false,
+      // completed: completed ? true : false,
     };
 
     if (fetchDates.includes(newTimeStr)) {
@@ -239,8 +240,8 @@ export default function TaskSummary() {
       //Find all goals that we are able to set as parents
     }
 
-    let relatedGoals = Object.values(singleTask.goals);
-    let relatedGoalIds = Object.values(singleTask.goals).map((ele) => ele.id);
+    let relatedGoals;
+    let relatedGoalIds;
     if (singleTask.goals) {
       relatedGoals = Object.values(singleTask.goals);
       relatedGoalIds = Object.values(singleTask.goals).map((ele) => ele.id);
@@ -264,12 +265,37 @@ export default function TaskSummary() {
 
       setGoalOptions(displayGoalOptions);
     }
-  }, [singleTask, allTasks, allGoals]);
+  }, [singleTask]);
 
   useEffect(() => {
     dispatch(getAllTasksThunk());
     dispatch(getAllGoalsThunk());
   }, [dispatch]);
+
+  const durationOptions = [
+    <option value={null}>None</option>,
+    <option value="15 minutes">15 minutes</option>,
+    <option value="30 minutes">30 minutes</option>,
+    <option value="45 minutes">45 minutes</option>,
+  ];
+  for (let i = 1; i < 5; i++) {
+    for (let j = 0; j <= 45; j += 15) {
+      const value = i * 60 + j;
+      durationOptions.push(
+        <option value={`${i} hours, ${j} minutes`}>
+          {i} hours, {j} minutes
+        </option>
+      );
+    }
+  }
+  const now = new Date();
+  const yearS = now.getFullYear();
+  const monthS = now.getMonth() + 1;
+  const day = now.getDate();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const addZero = (num) => (num < 10 ? "0" + num : num);
+  const restrictedDay = yearS + "-" + addZero(monthS) + "-" + addZero(day);
 
   return (
     <div className="habit-modal-body-container">
@@ -394,6 +420,21 @@ export default function TaskSummary() {
           {tab === "summary" ? (
             <>
               <div className="habit-modal-right-title">Details:</div>
+              <label htmlFor="due-date" className="habit-modal-action-button">
+                <i className="fa-regular fa-calendar habit-button-icon"></i>
+
+                <input
+                  className="priority-change-input"
+                  name="due-date"
+                  type="date"
+                  min={restrictedDay}
+                  value={dueDate}
+                  onChange={(e) => {
+                    setDueDate(e.target.value);
+                    handleSubmit(e);
+                  }}
+                ></input>
+              </label>
               <label htmlFor="priority" className="habit-modal-action-button">
                 <i className="fa-solid fa-fire habit-button-icon"></i>
                 <select
@@ -412,6 +453,44 @@ export default function TaskSummary() {
                   <option value="2">🟧 Priority 2</option>
                   <option value="3">🟦 Priority 3</option>
                   <option value="4">⬜️ No priority</option>
+                </select>
+              </label>
+              <label htmlFor="duration" className="habit-modal-action-button">
+                <i class="fa-regular fa-clock habit-button-icon"></i>
+
+                <select
+                  className="priority-change-input"
+                  name="duration"
+                  value={taskDuration || ""}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    setTaskDuration(e.target.value);
+                    handleGeneralSubmit({
+                      ...singleTask,
+                      task_duration: e.target.value,
+                    });
+                  }}
+                >
+                  {durationOptions}
+                </select>
+              </label>
+              <label htmlFor="completed" className="habit-modal-action-button">
+                <i class="fa-regular fa-square-check habit-button-icon"></i>
+
+                <select
+                  className="priority-change-input"
+                  name="completed"
+                  value={completed}
+                  onChange={(e) => {
+                    setPriority(e.target.value);
+                    handleGeneralSubmit({
+                      ...singleTask,
+                      completed: !completed,
+                    });
+                  }}
+                >
+                  <option value={true}>Completed </option>
+                  <option value={false}>Not Completed</option>
                 </select>
               </label>
               {/* <div className="summary-item-container">
