@@ -11,7 +11,7 @@ const EDIT_GOAL = "goals/EDIT_GOAL";
 const DELETE_GOAL = "goals/DELETE_GOAL";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Action Creators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+// Comments
 const getGoals = (goals) => ({
   type: GET_GOALS,
   payload: goals,
